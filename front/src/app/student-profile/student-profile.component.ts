@@ -25,9 +25,8 @@ export class StudentProfileComponent implements OnInit {
     this.readonly = !this.readonly;
   }
   save() {
-    
     this.readonly = !this.readonly;
-    console.log(this.Student)
+    console.log(this.Student);
   }
   discard() {
     this.readonly = !this.readonly;
