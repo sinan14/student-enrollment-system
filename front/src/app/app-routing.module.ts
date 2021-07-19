@@ -1,3 +1,4 @@
+import { AdminDataTableComponent } from './admin-data-table/admin-data-table.component';
 import { DatatableComponent } from './datatable/datatable.component';
 import { StudentProfileComponent } from './student-profile/student-profile.component';
 import { HomeComponent } from './home/home.component';
@@ -13,7 +14,8 @@ const routes: Routes = [
   { path:'register',component: StudentRegisterComponent },
   { path:'login',component:LoginComponent },
   {path:'student',component:StudentProfileComponent},
-  {path:'datatable',component:DatatableComponent}
+  {path:'datatable',component:DatatableComponent},
+  {path:'admintable',component:AdminDataTableComponent}
 ];
 
 @NgModule({

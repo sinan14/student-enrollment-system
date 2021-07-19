@@ -18,6 +18,7 @@ import { CommonModule } from '@angular/common';
 
 import { StudentProfileComponent } from './student-profile/student-profile.component';
 import { DatatableComponent } from './datatable/datatable.component';
+import { AdminDataTableComponent } from './admin-data-table/admin-data-table.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { DatatableComponent } from './datatable/datatable.component';
     FooterComponent,
     StudentProfileComponent,
     DatatableComponent,
+    AdminDataTableComponent,
   ],
   imports: [
     BrowserModule,
