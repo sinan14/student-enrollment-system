@@ -16,8 +16,8 @@ import { HomeComponent } from './home/home.component';
 import { FooterComponent } from './footer/footer.component';
 import { CommonModule } from '@angular/common';
 
-import { NgYasYearPickerModule } from 'ngy-year-picker/ngy-year-picker';
 import { StudentProfileComponent } from './student-profile/student-profile.component';
+import { DatatableComponent } from './datatable/datatable.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +28,7 @@ import { StudentProfileComponent } from './student-profile/student-profile.compo
     HomeComponent,
     FooterComponent,
     StudentProfileComponent,
+    DatatableComponent,
   ],
   imports: [
     BrowserModule,

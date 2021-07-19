@@ -1,3 +1,4 @@
+import { DatatableComponent } from './datatable/datatable.component';
 import { StudentProfileComponent } from './student-profile/student-profile.component';
 import { HomeComponent } from './home/home.component';
 import { NgModule } from '@angular/core';
@@ -11,7 +12,8 @@ const routes: Routes = [
   { path: '', component: HomeComponent },
   { path:'register',component: StudentRegisterComponent },
   { path:'login',component:LoginComponent },
-  {path:'student',component:StudentProfileComponent}
+  {path:'student',component:StudentProfileComponent},
+  {path:'datatable',component:DatatableComponent}
 ];
 
 @NgModule({
