@@ -6,13 +6,28 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./student-profile.component.css'],
 })
 export class StudentProfileComponent implements OnInit {
+  Student = {
+    Name: '',
+    Email: '',
+    Phone: '',
+    State: '',
+    HighestQualification: '',
+    PassOutYear: '',
+    SkillSet: '',
+    EmploymentStatus: '',
+    Course: '',
+    Year: '',
+  };
+
   constructor() {}
   readonly: boolean = true;
   update() {
     this.readonly = !this.readonly;
   }
   save() {
+    
     this.readonly = !this.readonly;
+    console.log(this.Student)
   }
   discard() {
     this.readonly = !this.readonly;

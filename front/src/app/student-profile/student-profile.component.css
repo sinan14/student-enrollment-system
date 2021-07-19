@@ -45,7 +45,10 @@ section {
   padding: 5px 10px;
   color: #000;
 }
-
+input {
+  width: 100%;
+  border-collapse: collapse;
+}
 .inputF:focus {
   outline: none;
 }
@@ -60,4 +63,8 @@ section {
 .inputFocus {
   border-style: hidden;
   outline: yellow;
+  background-color: aquamarine;
+}
+.editModeOn {
+  background-color: azure;
 }
