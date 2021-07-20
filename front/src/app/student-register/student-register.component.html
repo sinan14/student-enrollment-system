@@ -39,16 +39,26 @@
                   />
                 </div>
                 <div class="form-group">
-                  <input
+                  <select
                     class="form-control"
-                    type="number"
-                    min="2010"
-                    max="2021"
-                    step="1"
-                    placeholder="year you passed your Highest Qualification * "
-                    formControlName="PassOfYear"
-                  />
+                    formControlName="HighestQualification"
+                  >
+                    <option class="hidden" value="" disabled selected>
+                      Highest Qualification *
+                    </option>
+                    <option value="PostGraduateInCS">
+                      Post Graduate In Computer Science
+                    </option>
+                    <option value="GraduateInCS">
+                      Graduate In Computer Science
+                    </option>
+                    <option value="Graduate">Graduate In Other Streams</option>
+                    <option value="PostGraduate">
+                      Post GraduateIn Other Streams
+                    </option>
+                  </select>
                 </div>
+
                 <div class="form-group">
                   <select class="form-control" formControlName="Course">
                     <option class="hidden" value="" disabled selected>
@@ -63,6 +73,18 @@
 
                     <option value="MachineLearining">Machine Learining</option>
                   </select>
+                </div>
+
+                <div class="form-group">
+                  <input
+                    class="form-control"
+                    type="text"
+                    placeholder="Date of Birth"
+                    min="1990-01-01" max="2005-01-01"
+                    formControlName="DOB"
+                    onfocus="(this.type='date')"
+                    onblur="(this.type='text')"
+                  />
                 </div>
 
                 <div class="form-group">
@@ -138,15 +160,6 @@
                     </label>
                   </div>
                 </div> -->
-                <div class="form-group">
-                  <select class="form-control" formControlName="Sex">
-                    <option class="hidden" value="" disabled selected>
-                      Gender *
-                    </option>
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                  </select>
-                </div>
               </div>
               <!-- closed -->
               <!-- open next  -->
@@ -161,25 +174,26 @@
                   />
                 </div>
                 <div class="form-group">
-                  <select
-                    class="form-control"
-                    formControlName="HighestQualification"
-                  >
+                  <select class="form-control" formControlName="Sex">
                     <option class="hidden" value="" disabled selected>
-                      Highest Qualification *
+                      Gender *
                     </option>
-                    <option value="PostGraduateInCS">
-                      Post Graduate In Computer Science
-                    </option>
-                    <option value="GraduateInCS">
-                      Graduate In Computer Science
-                    </option>
-                    <option value="Graduate">Graduate In Other Streams</option>
-                    <option value="PostGraduate">
-                      Post GraduateIn Other Streams
-                    </option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
                   </select>
                 </div>
+                <div class="form-group">
+                  <input
+                    class="form-control"
+                    type="number"
+                    min="2010"
+                    max="2021"
+                    step="1"
+                    placeholder="when you awarded highest degree "
+                    formControlName="PassOfYear"
+                  />
+                </div>
+
                 <div class="form-group">
                   <textarea
                     formControlName="SkillSet"

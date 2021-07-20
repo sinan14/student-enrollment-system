@@ -18,6 +18,10 @@ const StudentSchema = new Schema({
     type: String,
     required: true,
   },
+  DOB: {
+    type:Date,
+    required:true
+  },
   Course: {
     type: String,
     required: true,

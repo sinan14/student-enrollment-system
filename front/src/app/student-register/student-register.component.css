@@ -16,7 +16,7 @@
   background: #f8f9fa;
   font-weight: bold;
   color: #383d41;
-  margin-top: 30%;
+  margin-top: 65%;
   margin-bottom: 3%;
   cursor: pointer;
 }
@@ -51,6 +51,9 @@
   .register-left p {
    margin-bottom: 0px;
    color:red;
+  }
+  .register-left input {
+    margin-bottom: 10px;
   }
 }
 .register .register-form{
@@ -101,3 +104,14 @@
   margin-bottom: -15%;
   color: #495057;
 }
+@media (max-width:720px){
+
+
+[type="submit"] {
+
+ margin-right: 80px;
+}}
+[type="submit"] {
+
+  margin-right: 280px;
+ }

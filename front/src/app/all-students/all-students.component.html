@@ -1,1 +1,38 @@
-<p>all-students works!</p>
+<div class="card">
+  <div class="card-header">All Students</div>
+  <div class="card-body">
+    <div class="">
+      <h4>Students List</h4>
+      <table class="table table-responsive table-bordered">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>DOB</th>
+            <th>Sex</th>
+            <th>Qualification</th>
+            <th>Applied Course</th>
+            <th>Go</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let Student of Students">
+            <td>{{ Student.Name }}</td>
+            <td>{{ Student.DOB }}</td>
+            <td>{{ Student.Sex }}</td>
+            <td>{{ Student.HighestQualification }}</td>
+            <td>{{ Student.Course }}</td>
+            <td>
+              <button
+                class="btn btn-warning"
+                style="cursor: pointer"
+                style="margin-left: 20px"
+              >
+                View
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
