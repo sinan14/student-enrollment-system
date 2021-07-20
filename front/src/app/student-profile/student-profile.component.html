@@ -12,7 +12,7 @@
                 alt="student dp"
               />
               
-              <h3>Mohammed Sinan M</h3>
+              <h3>{{Student.Name}}</h3>
             </div>
             <div class="card-body">
               <p class="mb-0">
@@ -31,16 +31,17 @@
               </h3>
             </div>
             <div class="card-body pt-0" ngForm #sampleForm="ngForm">
-              <table class="table table-responsive">
+              <table class="table table-bordered table-responsive">
                 <tr>
                   <th width="30%">Student Name</th>
                   <td width="2%">:</td>
                   <td [class.editModeOn]="readonly == false">
                     <input
+                    type="text"
                       [(ngModel)]="Student.Name"
                       [ngClass]="{
                         inputFocus: readonly == false,
-                        inputF: readonly
+                        inputBorderAtReadOnly: readonly
                       }"
                        [ngModelOptions]="{standalone:true}"
                       [readonly]="readonly"
@@ -52,10 +53,11 @@
                   <td width="2%">:</td>
                   <td [class.editModeOn]="readonly == false">
                     <input
+                    type="text"
                       [(ngModel)]="Student.Email"
                       [ngClass]="{
                         inputFocus: readonly == false,
-                        inputF: readonly
+                        inputBorderAtReadOnly: readonly
                       }"
                        [ngModelOptions]="{standalone:true}"
                       [readonly]="readonly"
@@ -67,10 +69,26 @@
                   <td width="2%">:</td>
                   <td [class.editModeOn]="readonly == false">
                     <input
+                    type="text"
                       [(ngModel)]="Student.Phone"
                       [ngClass]="{
                         inputFocus: readonly == false,
-                        inputF: readonly
+                        inputBorderAtReadOnly: readonly
+                      }"
+                       [ngModelOptions]="{standalone:true}"
+                      [readonly]="readonly"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <th width="30%">Date Of Birth</th>
+                  <td width="2%">:</td>
+                  <td [class.editModeOn]="readonly == false">
+                    <input type="date"
+                      [(ngModel)]="Student.DOB"
+                      [ngClass]="{
+                        inputFocus: readonly == false,
+                        inputBorderAtReadOnly: readonly
                       }"
                        [ngModelOptions]="{standalone:true}"
                       [readonly]="readonly"
@@ -85,11 +103,12 @@
                       [(ngModel)]="Student.State"
                       [ngClass]="{
                         inputFocus: readonly == false,
-                        inputF: readonly
+                        inputBorderAtReadOnly: readonly
                       }"
                        [ngModelOptions]="{standalone:true}"
                       [readonly]="readonly"
                     />
+
                   </td>
                 </tr>
 
@@ -101,7 +120,7 @@
                       [(ngModel)]="Student.HighestQualification"
                       [ngClass]="{
                         inputFocus: readonly == false,
-                        inputF: readonly
+                        inputBorderAtReadOnly: readonly
                       }"
                        [ngModelOptions]="{standalone:true}"
                       [readonly]="readonly"
@@ -113,10 +132,14 @@
                   <td width="2%">:</td>
                   <td [class.editModeOn]="readonly == false">
                     <input
+                    type="number"
+                    min="2010"
+                    max="2021"
+                    step="1"
                       [(ngModel)]="Student.PassOutYear"
                       [ngClass]="{
                         inputFocus: readonly == false,
-                        inputF: readonly
+                        inputBorderAtReadOnly: readonly
                       }"
                        [ngModelOptions]="{standalone:true}"
                       [readonly]="readonly"
@@ -128,10 +151,11 @@
                   <td width="2%">:</td>
                   <td [class.editModeOn]="readonly == false">
                     <input
+                    type="text"
                       [(ngModel)]="Student.SkillSet"
                       [ngClass]="{
                         inputFocus: readonly == false,
-                        inputF: readonly
+                        inputBorderAtReadOnly: readonly
                       }"
                        [ngModelOptions]="{standalone:true}"
                       [readonly]="readonly"
@@ -142,11 +166,12 @@
                   <th width="30%">Employment Status</th>
                   <td width="2%">:</td>
                   <td [class.editModeOn]="readonly == false">
-                    <input
+                    <input 
+                    type="text"
                       [(ngModel)]="Student.EmploymentStatus"
                       [ngClass]="{
                         inputFocus: readonly == false,
-                        inputF: readonly
+                        inputBorderAtReadOnly: readonly
                       }"
                        [ngModelOptions]="{standalone:true}"
                       [readonly]="readonly"
@@ -157,11 +182,12 @@
                   <th width="30%">Technology Training</th>
                   <td width="2%">:</td>
                   <td [class.editModeOn]="readonly == false">
-                    <input
+                    <input 
+                    type="text"
                       [(ngModel)]="Student.Course"
                       [ngClass]="{
                         inputFocus: readonly == false,
-                        inputF: readonly
+                        inputBorderAtReadOnly: readonly
                       }"
                        [ngModelOptions]="{standalone:true}"
                       [readonly]="readonly"
@@ -172,11 +198,14 @@
                   <th width="30%">Year</th>
                   <td width="2%">:</td>
                   <td [class.editModeOn]="readonly == false">
-                    <input
+                    <input type="number"
+                    min="2010"
+                    max="2022"
+                    step="1"
                       [(ngModel)]="Student.Year"
                       [ngClass]="{
                         inputFocus: readonly == false,
-                        inputF: readonly
+                        inputBorderAtReadOnly: readonly
                       }"
                        [ngModelOptions]="{standalone:true}"
                       [readonly]="readonly"

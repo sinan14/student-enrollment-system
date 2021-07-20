@@ -49,16 +49,14 @@ input {
   width: 100%;
   border-collapse: collapse;
 }
-.inputF:focus {
+.inputBorderAtReadOnly:focus {
   outline: none;
 }
-.inputF {
+.inputBorderAtReadOnly {
   border-top-style: hidden;
   border-right-style: hidden;
   border-left-style: hidden;
   border-bottom-style: hidden;
-
-  /* background-color: #eee; */
 }
 .inputFocus {
   border-style: hidden;

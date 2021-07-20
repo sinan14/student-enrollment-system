@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StudentProfileComponent implements OnInit {
   Student = {
+    Id:'',
     Name: '',
     Email: '',
     Phone: '',
@@ -16,6 +17,7 @@ export class StudentProfileComponent implements OnInit {
     SkillSet: '',
     EmploymentStatus: '',
     Course: '',
+    DOB:'',
     Year: '',
   };
 

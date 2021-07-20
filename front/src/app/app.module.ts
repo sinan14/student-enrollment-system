@@ -19,6 +19,7 @@ import { CommonModule } from '@angular/common';
 import { StudentProfileComponent } from './student-profile/student-profile.component';
 import { DatatableComponent } from './datatable/datatable.component';
 import { AdminDataTableComponent } from './admin-data-table/admin-data-table.component';
+import { AllStudentsComponent } from './all-students/all-students.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { AdminDataTableComponent } from './admin-data-table/admin-data-table.com
     StudentProfileComponent,
     DatatableComponent,
     AdminDataTableComponent,
+    AllStudentsComponent,
   ],
   imports: [
     BrowserModule,
