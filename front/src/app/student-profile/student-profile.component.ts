@@ -22,58 +22,52 @@ export class StudentProfileComponent implements OnInit {
     DOB: '',
     // Year: '',
   };
-  id:string;
+  id: string;
 
-  constructor(private http: HttpClient,private route:ActivatedRoute,private router:Router) {}
+  constructor(
+    private http: HttpClient,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
   readonly: boolean = true;
   update() {
     this.readonly = !this.readonly;
   }
-  editProfile(item:any)
-  {
-    return this.http.put(`http://localhost:3000/students/${this.id}`,{"Student":item})
-    .subscribe(data => { 
-      console.log(data)
-    })
+  editProfile(item: any) {
+    return this.http
+      .put(`http://localhost:3000/students/${this.id}`, { Student: item })
+      .subscribe((data) => {
+        console.log(data);
+      });
   }
-  updateProfile()
-  {
-    
+  updateProfile() {
     this.editProfile(this.Student);
-    this.router.navigate([`/students/${this.id}`])
+    this.router.navigate([`/students/${this.id}`]);
     this.readonly = !this.readonly;
   }
 
   discard() {
     this.readonly = !this.readonly;
   }
-  getStudentById(){
+  getStudentById() {
     return this.http.get<any>(`http://localhost:3000/students/${this.id}`);
   }
-
 
   ngOnInit(): void {
     this.id = this.route.snapshot.params['_id'];
     console.log(`param is ${this.id}`);
-    // the Id is the one we specified in out routing module
-    this.getStudentById()
-    .subscribe((data:any)=>{
+    // the id is the one we specified in our routing module
+    this.getStudentById().subscribe((data: any) => {
       this.Student = JSON.parse(JSON.stringify(data));
-      console.log(this.Student)
-    })
+      console.log(this.Student);
+    });
   }
 
-  destroyProfile(){
-    return this.http.delete(`http://localhost:3000/students/${this.id}`)
+  destroyProfile() {
+    return this.http.delete(`http://localhost:3000/students/${this.id}`);
   }
-  deleteProfile(){
-    this.deleteProfile()
-  
-    
-    this.router.navigate(['/books'])
+  deleteProfile() {
+    this.deleteProfile();
+    this.router.navigate(['/books']);
   }
-
-
-
-
 }

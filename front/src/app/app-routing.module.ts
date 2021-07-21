@@ -11,16 +11,15 @@ import { LoginComponent } from './login/login.component';
 import { NavHeaderComponent } from './nav-header/nav-header.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
-
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'register', component: StudentRegisterComponent },
   { path: 'login', component: LoginComponent },
-  {path:'resetPassword',component:ResetPasswordComponent,},
+  { path: 'resetPassword', component: ResetPasswordComponent },
   { path: 'students', component: AllStudentsComponent },
 
   { path: 'students/:_id', component: StudentProfileComponent },
-  { path: 'pay', component: StudentPaymentComponent },
+  { path: 'pay/:_id', component: StudentPaymentComponent },
 
   { path: 'datatable', component: DatatableComponent },
   { path: 'admintable', component: AdminDataTableComponent },

@@ -19,7 +19,9 @@
             <th>Sex</th>
             <th>Qualification</th>
             <th>Applied Course</th>
-            <th>Go</th>
+            <th>Status</th>
+            <th>Approve</th>
+            <th>Go To Details</th>
           </tr>
         </thead>
         <tbody>
@@ -29,13 +31,21 @@
             <td>{{ Student.Sex }}</td>
             <td>{{ Student.HighestQualification }}</td>
             <td>{{ Student.Course }}</td>
+            <td>{{Student.Status}}</td>
             <td>
               <button
-                class="btn btn-warning"
-                style="cursor: pointer"
-                style="margin-left: 20px"
+                class="btn btn-sm btn-warning"
+                style="cursor: pointer; margin-left: 20px"
               >
                 <a [routerLink]="['/students', Student._id]">View</a>
+              </button>
+            </td>
+            <td>
+              <button
+                class="btn btn-success btn-sm ml-1"
+                style="cursor: pointer"
+              >
+                <a [routerLink]="['/pay', Student._id]">Approve</a>
               </button>
             </td>
           </tr>

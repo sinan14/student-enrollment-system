@@ -24,21 +24,20 @@ export class AllStudentsComponent implements OnInit {
       State: '',
       District: '',
       Post: '',
-      Pincode: '',
+      PinCode: '',
+      Status:''
     },
   ];
 
-  constructor(private http: HttpClient,private router:Router) {}
+  constructor(private http: HttpClient, private router: Router) {}
   getStudents() {
     return this.http.get('http://localhost:3000/students');
   }
-
+ 
   ngOnInit(): void {
     this.getStudents().subscribe((data) => {
       this.Students = JSON.parse(JSON.stringify(data));
       console.log(this.Students);
-      
     });
   }
- 
 }

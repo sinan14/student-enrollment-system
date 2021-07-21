@@ -59,6 +59,10 @@ const StudentSchema = new Schema({
     type: Number,
     required: true,
   },
+  Status: {
+    type:String,
+    
+  }
 });
 
 module.exports = mongoose.model("Student", StudentSchema);
