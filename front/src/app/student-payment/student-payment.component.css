@@ -1,12 +1,12 @@
-/* body {
-  
-} */
-
-* {
-  box-sizing: border-box;
+.body1 {
   font-family: Arial;
   font-size: 17px;
   padding: 8px;
+}
+
+* {
+  box-sizing: border-box;
+ 
 }
 
 .row {
@@ -69,6 +69,9 @@ label {
   margin-bottom: 20px;
   padding: 7px 0;
   font-size: 24px;
+}
+.icon-container i {
+  margin: 0 5px;
 }
 
 .btn {

@@ -1,4 +1,6 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-student-profile',
@@ -7,31 +9,71 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StudentProfileComponent implements OnInit {
   Student = {
-    Id:'',
+    _id: '',
     Name: '',
     Email: '',
     Phone: '',
     State: '',
     HighestQualification: '',
-    PassOutYear: '',
+    PassOfYear: '',
     SkillSet: '',
     EmploymentStatus: '',
     Course: '',
-    DOB:'',
-    Year: '',
+    DOB: '',
+    // Year: '',
   };
+  id:string;
 
-  constructor() {}
+  constructor(private http: HttpClient,private route:ActivatedRoute,private router:Router) {}
   readonly: boolean = true;
   update() {
     this.readonly = !this.readonly;
   }
-  save() {
-    this.readonly = !this.readonly;
-    console.log(this.Student);
+  editProfile(item:any)
+  {
+    return this.http.put(`http://localhost:3000/students/${this.id}`,{"Student":item})
+    .subscribe(data => { 
+      console.log(data)
+    })
   }
+  updateProfile()
+  {
+    
+    this.editProfile(this.Student);
+    this.router.navigate([`/students/${this.id}`])
+    this.readonly = !this.readonly;
+  }
+
   discard() {
     this.readonly = !this.readonly;
   }
-  ngOnInit(): void {}
+  getStudentById(){
+    return this.http.get<any>(`http://localhost:3000/students/${this.id}`);
+  }
+
+
+  ngOnInit(): void {
+    this.id = this.route.snapshot.params['_id'];
+    console.log(`param is ${this.id}`);
+    // the Id is the one we specified in out routing module
+    this.getStudentById()
+    .subscribe((data:any)=>{
+      this.Student = JSON.parse(JSON.stringify(data));
+      console.log(this.Student)
+    })
+  }
+
+  destroyProfile(){
+    return this.http.delete(`http://localhost:3000/students/${this.id}`)
+  }
+  deleteProfile(){
+    this.deleteProfile()
+  
+    
+    this.router.navigate(['/books'])
+  }
+
+
+
+
 }

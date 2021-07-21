@@ -26,7 +26,7 @@ const StudentSchema = new Schema({
     type: String,
     required: true,
   },
-  SkilSet: {
+  SkillSet: {
     type: String,
   },
   HighestQualification: {

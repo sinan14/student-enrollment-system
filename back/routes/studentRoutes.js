@@ -4,12 +4,7 @@ const jwt = require("jsonwebtoken");
 const StudentData = require("../model/student");
 const { verifyToken } = require("../middleware");
 
-router.get("/students", (req, res) => {
-  StudentData.find()
-    .then((Students) => {
-    res.send(Students);
-  });
-});
+
 
 router.post("/login", function (req, res) {
   console.log(req.body);
@@ -52,6 +47,30 @@ router.post("/register", function (req, res) {
     .catch(function (error) {
       res.send(false);
     });
+});
+
+router.get("/students", (req, res) => {
+  StudentData.find()
+    .then((Students) => {
+    res.send(Students);
+  });
+});
+
+router.get("/students/:id", async (req, res) => {
+
+  const Student = await StudentData.findById(req.params.id);
+  // console.log(Student)
+  return res.send(Student);
+});
+
+router.put("/students/:id",  async (req, res) => {
+  const { id } = req.params;
+  console.log(req.body.Student);
+  const Student = await StudentData.findByIdAndUpdate(id, { ...req.body.Student });
+});
+
+router.delete("/students/:id", verifyToken, async (req, res) => {
+  await StudentData.findByIdAndDelete(req.params.id);
 });
 
 module.exports = router;
