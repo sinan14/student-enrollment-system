@@ -24,6 +24,7 @@ import { AdminDataTableComponent } from './admin-data-table/admin-data-table.com
 import { AllStudentsComponent } from './all-students/all-students.component';
 import { StudentPaymentComponent } from './student-payment/student-payment.component';
 import { FooterComponent } from './footer/footer.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { FooterComponent } from './footer/footer.component';
     AdminDataTableComponent,
     AllStudentsComponent,
     StudentPaymentComponent,
+    ResetPasswordComponent
   ],
   imports: [
     BrowserModule,

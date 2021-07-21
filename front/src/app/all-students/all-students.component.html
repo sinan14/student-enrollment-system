@@ -3,7 +3,15 @@
   <div class="card-body">
     <div class="">
       <h4>Students List</h4>
-      <table class="table table-responsive table-bordered">
+      <table
+        class="
+          table
+          table-responsive-sm
+          table-responsive-md
+          table-responsive-lg
+          table-bordered
+        "
+      >
         <thead>
           <tr>
             <th>Name</th>
@@ -26,9 +34,8 @@
                 class="btn btn-warning"
                 style="cursor: pointer"
                 style="margin-left: 20px"
-                
-              ><a [routerLink]="['/students', Student._id]" >View</a>
-                
+              >
+                <a [routerLink]="['/students', Student._id]">View</a>
               </button>
             </td>
           </tr>
