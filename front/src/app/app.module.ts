@@ -20,6 +20,7 @@ import { StudentProfileComponent } from './student-profile/student-profile.compo
 import { DatatableComponent } from './datatable/datatable.component';
 import { AdminDataTableComponent } from './admin-data-table/admin-data-table.component';
 import { AllStudentsComponent } from './all-students/all-students.component';
+import { StudentPaymentComponent } from './student-payment/student-payment.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { AllStudentsComponent } from './all-students/all-students.component';
     DatatableComponent,
     AdminDataTableComponent,
     AllStudentsComponent,
+    StudentPaymentComponent,
   ],
   imports: [
     BrowserModule,
