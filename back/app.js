@@ -9,6 +9,7 @@ const studentRoutes = require("./routes/studentRoutes");
 const app = express();
 
 
+
 //*************************** connecting our database ****************************
 const dbUrl ='mongodb://localhost:27017/project-mean';
 

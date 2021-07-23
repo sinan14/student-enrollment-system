@@ -3,6 +3,7 @@ const router = express.Router();
 const jwt = require("jsonwebtoken");
 const StudentData = require("../model/student");
 const { verifyToken } = require("../middleware");
+const nodemailer = require("nodemailer");
 
 
 
@@ -50,27 +51,35 @@ router.post("/register", function (req, res) {
 });
 
 router.get("/students", (req, res) => {
-  StudentData.find()
-    .then((Students) => {
+  StudentData.find().then((Students) => {
     res.send(Students);
   });
 });
 
 router.get("/students/:id", async (req, res) => {
-
   const Student = await StudentData.findById(req.params.id);
   // console.log(Student)
   return res.send(Student);
 });
 
-router.put("/students/:id",  async (req, res) => {
+router.put("/students/:id", async (req, res) => {
   const { id } = req.params;
   console.log(req.body.Student);
-  const Student = await StudentData.findByIdAndUpdate(id, { ...req.body.Student });
+  const Student = await StudentData.findByIdAndUpdate(id, {
+    ...req.body.Student,
+  });
 });
 
 router.delete("/students/:id", verifyToken, async (req, res) => {
   await StudentData.findByIdAndDelete(req.params.id);
+});
+// ************************************************  Mail   **************************************************
+router.get("/studentmail/:id", async (req, res) => {
+  // const _id = req.params._id;
+  
+  console.log(req.params);
+  // const link = `localhost:4200/pay/${_id}`;
+  //       await sendEmail('sinuzar5@gmail.com', 'Password reset', link);
 });
 
 module.exports = router;
