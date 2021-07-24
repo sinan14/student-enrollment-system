@@ -47,6 +47,14 @@
                 formControlName="Email"
                 placeholder="Enter a valid email address"
               />
+              <span
+                  *ngIf="
+                    !loginForm.get('Email').valid &&
+                    loginForm.get('Email').touched
+                  "
+                  class="help-block"
+                  >Please enter valid email!</span
+                >
             </div>
             <div class="row px-3">
               <label class="mb-1">
@@ -58,6 +66,15 @@
                 formControlName="Password"
                 placeholder="Enter password"
               />
+              <span
+                  *ngIf="
+                    !loginForm.get('Password').valid &&
+                    loginForm.get('Password').touched
+                  "
+                  class="help-block"
+                  >Please enter valid password!</span
+                >
+
             </div>
             <div class="row px-3 mb-4">
               <div class="custom-control custom-checkbox custom-control-inline">

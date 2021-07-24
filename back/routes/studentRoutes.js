@@ -74,10 +74,10 @@ router.delete("/students/:id", verifyToken, async (req, res) => {
   await StudentData.findByIdAndDelete(req.params.id);
 });
 // ************************************************  Mail   **************************************************
-router.get("/studentmail/:id", async (req, res) => {
+router.post("/sendmail/", async (req, res) => {
   // const _id = req.params._id;
   
-  console.log(req.params);
+  console.log(req.body);
   // const link = `localhost:4200/pay/${_id}`;
   //       await sendEmail('sinuzar5@gmail.com', 'Password reset', link);
 });

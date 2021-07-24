@@ -1,3 +1,13 @@
+.container {
+  margin-top: 30px;
+}
+
+input.ng-invalid.ng-touched {
+  border: 2px solid red;
+}
+select.ng-invalid.ng-touched {
+  border: 2px solid red;
+}
 .register {
   background: -webkit-linear-gradient(left, #3931af, #00c6ff);
   margin-top: 3%;

@@ -25,6 +25,7 @@ import { AllStudentsComponent } from './all-students/all-students.component';
 import { StudentPaymentComponent } from './student-payment/student-payment.component';
 import { FooterComponent } from './footer/footer.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { CoursesComponent } from './courses/courses.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     AdminDataTableComponent,
     AllStudentsComponent,
     StudentPaymentComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    CoursesComponent
   ],
   imports: [
     BrowserModule,

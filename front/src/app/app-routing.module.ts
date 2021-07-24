@@ -10,18 +10,20 @@ import { StudentRegisterComponent } from './student-register/student-register.co
 import { LoginComponent } from './login/login.component';
 import { NavHeaderComponent } from './nav-header/nav-header.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { CoursesComponent } from './courses/courses.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
+  { path: '', component: CoursesComponent },
+  { path: 'courses', component: CoursesComponent },
   { path: 'register', component: StudentRegisterComponent },
   { path: 'login', component: LoginComponent },
   { path: 'resetPassword', component: ResetPasswordComponent },
   { path: 'students', component: AllStudentsComponent },
 
   { path: 'students/:_id', component: StudentProfileComponent },
-  { path: 'pay/:_id', component: StudentPaymentComponent },
+  { path: 'students/:_id/pay', component: StudentPaymentComponent },
 
-  { path: 'datatable', component: DatatableComponent },
+  { path: 'studentstable', component: DatatableComponent },
   { path: 'admintable', component: AdminDataTableComponent },
 ];
 
