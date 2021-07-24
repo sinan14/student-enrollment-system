@@ -42,7 +42,8 @@ export class StudentRegisterComponent implements OnInit {
     District: ['', Validators.required],
     Post: ['', Validators.required],
     PinCode: ['', [Validators.required,Validators.minLength(6)]],
-    gender: ['male',Validators.required]
+    Status:['inactive']
+    // gender: ['male',Validators.required]
   });
 
   registerStudent() {

@@ -202,7 +202,7 @@
                   >Please enter a valid Post Name!</span
                 >
                 </div>
-                <div class="radio" *ngFor="let gender of genders">
+                <!-- <div class="radio" *ngFor="let gender of genders">
                   <label>
                     <input
                       class=""
@@ -211,9 +211,7 @@
                       [value]="gender"
                     />{{ gender }}
                   </label>
-                  
-                  
-                </div>
+                </div> -->
               </div>
               <!-- closed -->
               <!-- open next  -->
@@ -352,8 +350,12 @@
                   value="Register"
                 />
               </div>
+              <span class="text-danger" *ngIf="!registerForm.valid && registerForm.touched" class="help-block"
+              >Please enter valid data!</span
+            >
               <!-- closed -->
             </div>
+           
             <!-- form closed -->
           </form>
         </div>
