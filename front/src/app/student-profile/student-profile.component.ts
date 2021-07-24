@@ -44,6 +44,7 @@ export class StudentProfileComponent implements OnInit {
     this.editProfile(this.Student);
     this.router.navigate([`/students/${this.id}`]);
     this.readonly = !this.readonly;
+    window.location.reload();
   }
 
   discard() {
