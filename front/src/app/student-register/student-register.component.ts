@@ -35,7 +35,7 @@ export class StudentRegisterComponent implements OnInit {
     DOB:['',Validators.required],
     Course: ['', Validators.required],
     HighestQualification: ['', Validators.required],
-    SkillSet:[''],
+    SkillSet:['',Validators.required],
     PassOfYear: ['', Validators.required],
     EmploymentStatus: ['', Validators.required],
     State: ['', Validators.required],
