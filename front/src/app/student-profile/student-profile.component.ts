@@ -29,31 +29,11 @@ export class StudentProfileComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router
   ) {}
+
   readonly: boolean = true;
   update() {
     this.readonly = !this.readonly;
   }
-  editProfile(item: any) {
-    return this.http
-      .put(`http://localhost:3000/students/${this.id}`, { Student: item })
-      .subscribe((data) => {
-        console.log(data);
-      });
-  }
-  updateProfile() {
-    this.editProfile(this.Student);
-    this.router.navigate([`/students/${this.id}`]);
-    this.readonly = !this.readonly;
-    window.location.reload();
-  }
-
-  discard() {
-    this.readonly = !this.readonly;
-  }
-  getStudentById() {
-    return this.http.get<any>(`http://localhost:3000/students/${this.id}`);
-  }
-
   ngOnInit(): void {
     this.id = this.route.snapshot.params['_id'];
     console.log(`param is ${this.id}`);
@@ -63,12 +43,39 @@ export class StudentProfileComponent implements OnInit {
       console.log(this.Student);
     });
   }
-
-  destroyProfile() {
-    return this.http.delete(`http://localhost:3000/students/${this.id}`);
+  editProfile(item: any) {
+    return this.http.put(`http://localhost:3000/students/${this.id}`, {
+      Student: item,
+    });
+    // .subscribe((data) => {
+    //   console.log(data);
+    // });
   }
+  updateProfile() {
+    this.editProfile(this.Student).subscribe((data) => {
+      this.Student = JSON.parse(JSON.stringify(data));
+      this.readonly = !this.readonly;
+    });
+    // this.router.navigate([`/students/${this.id}`]);
+    
+    // window.location.reload();
+  }
+
+  discard() {
+    this.readonly = !this.readonly;
+  }
+  getStudentById() {
+    return this.http.get<any>(`http://localhost:3000/students/${this.id}`);
+  }
+
+  
   deleteProfile() {
-    this.deleteProfile();
-    this.router.navigate(['/books']);
+    return this.http
+      .delete(`http://localhost:3000/students/${this.id}`)
+      .subscribe((data) => {
+        console.log(data);
+
+      });
+    
   }
 }

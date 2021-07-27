@@ -33,16 +33,15 @@ export class AllStudentsComponent implements OnInit {
   getStudents() {
     return this.http.get('http://localhost:3000/students');
   }
-  onSendEmail(id) {
-    console.log(id)
-    // return this.http.get('http://localhost:3000/sendmail/' + id);
-    return this.http.post('http://localhost:3000/sendmail',id)
-  }
-
-  ngOnInit(): void {
-    this.getStudents().subscribe((data) => {
+  ngOnInit(){
+    this.getStudents().subscribe((data)=>{
       this.Students = JSON.parse(JSON.stringify(data));
-      console.log(this.Students);
-    });
+    })
+  }
+  onSendEmail(id) {
+    console.log(id);
+    return this.http.get('http://localhost:3000/sendmail/' + id).subscribe((data) => {
+        // console.log(data);
+      });
   }
 }
