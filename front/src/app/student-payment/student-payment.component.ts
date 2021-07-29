@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-student-payment',
@@ -13,23 +14,34 @@ export class StudentPaymentComponent implements OnInit {
     Status: 'Active',
   };
   constructor(
-    private router: Router,
-    private http: HttpClient,
-    private route: ActivatedRoute
+    private _router: Router,
+    private _http: HttpClient,
+    private _activatedRoute: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    this.id = this.route.snapshot.params['_id'];
+    this.id = this._activatedRoute.snapshot.params['_id'];
   }
   editProfile(item: any) {
-    return this.http
-      .put(`http://localhost:3000/students/${this.id}`, { Student: item })
-      .subscribe((data) => {
-        console.log(data);
-      });
+    return this._http.put(`http://localhost:3000/students/${this.id}`, {
+      Student: item,
+    });
   }
   updateProfile() {
-    this.editProfile(this.Student);
-    this.router.navigate([`/students/${this.id}`]);
+    this.editProfile(this.Student).subscribe(
+      (data) => {
+        console.log(data);
+        this._router.navigate([`/students/${this.id}`]);
+      },
+      (errorMessage) => {
+        Swal.fire({
+          title: 'Warning!!',
+          text: 'Internal server Error',
+          icon: 'error',
+          timer: 1000,
+          showConfirmButton: false,
+        }).then((refresh) => {});
+      }
+    );
   }
 }

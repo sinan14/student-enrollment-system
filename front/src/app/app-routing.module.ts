@@ -1,3 +1,4 @@
+import { ErrorsComponent } from './Errors/errors.component';
 import { StudentPaymentComponent } from './student-payment/student-payment.component';
 import { AllStudentsComponent } from './all-students/all-students.component';
 import { AdminDataTableComponent } from './admin-data-table/admin-data-table.component';
@@ -13,18 +14,20 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { CoursesComponent } from './courses/courses.component';
 
 const routes: Routes = [
-  { path: '', component: CoursesComponent },
+  { path: '', component: CoursesComponent,pathMatch: 'full' },
   { path: 'courses', component: CoursesComponent },
   { path: 'register', component: StudentRegisterComponent },
   { path: 'login', component: LoginComponent },
   { path: 'resetPassword', component: ResetPasswordComponent },
   { path: 'students', component: AllStudentsComponent },
 
-  { path: 'students/:_id', component: StudentProfileComponent },
+  { path: 'students/:_id', component: StudentProfileComponent,pathMatch: 'full' },
   { path: 'students/:_id/pay', component: StudentPaymentComponent },
 
   { path: 'studentstable', component: DatatableComponent },
   { path: 'admintable', component: AdminDataTableComponent },
+  {path:'error',component:ErrorsComponent,},
+  {path: '**',component:CoursesComponent}
 ];
 
 @NgModule({

@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const bcrypt = require('bcrypt')
 
 const StudentSchema = new Schema({
   Name: {
@@ -61,8 +62,31 @@ const StudentSchema = new Schema({
   },
   Status: {
     type:String,
-    
+    required:true
+  },
+  Password: {
+    type:String
   }
 });
+StudentSchema.statics.hashPassword = function hashPassword(Password){
+  return bcrypt.hashSync(Password,10);
+}
+
+// StudentSchema.methods.isValid = function(hashedpassword){
+//   return bcrypt.compareSync(hashedpassword, this.Password);
+// }
+
+StudentSchema.statics.findAndValidate = async function (Email, Password) {
+  const foundUser = await this.findOne({ Email });
+  const isValid = await bcrypt.compare(Password, foundUser.Password);
+  return isValid ? foundUser : false;
+}
+
+// StudentSchema.pre('save', async function (next) {
+//   if (!this.isModified('Password')) return next();
+//   this.Password = await bcrypt.hash(this.Password, 10);
+//   next();
+// })
+
 
 module.exports = mongoose.model("Student", StudentSchema);

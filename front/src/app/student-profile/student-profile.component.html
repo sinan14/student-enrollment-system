@@ -197,6 +197,22 @@
                       />
                     </td>
                   </tr>
+                  <tr>
+                    <th width="30%">Password</th>
+                    <td width="2%">:</td>
+                    <td [class.editModeOn]="readonly == false">
+                      <input
+                        [ngModelOptions]="{ standalone: true }"
+                        type="text"
+                        [(ngModel)]="Student.Password"
+                        [ngClass]="{
+                          inputFocus: readonly == false,
+                          inputBorderAtReadOnly: readonly
+                        }"
+                        [readonly]="readonly"
+                      />
+                    </td>
+                  </tr>
                   <!-- <tr>
                     <th width="30%">Year</th>
                     <td width="2%">:</td>

@@ -26,6 +26,7 @@ import { StudentPaymentComponent } from './student-payment/student-payment.compo
 import { FooterComponent } from './footer/footer.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { CoursesComponent } from './courses/courses.component';
+import { ErrorsComponent } from './Errors/errors.component';
 
 @NgModule({
   declarations: [

@@ -29,18 +29,20 @@ export class AllStudentsComponent implements OnInit {
     },
   ];
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private _http: HttpClient, private router: Router) {}
   getStudents() {
-    return this.http.get('http://localhost:3000/students');
+    return this._http.get('http://localhost:3000/students');
   }
-  ngOnInit(){
-    this.getStudents().subscribe((data)=>{
+  ngOnInit() {
+    this.getStudents().subscribe((data) => {
       this.Students = JSON.parse(JSON.stringify(data));
-    })
+    });
   }
   onSendEmail(id) {
     console.log(id);
-    return this.http.get('http://localhost:3000/sendmail/' + id).subscribe((data) => {
+    return this._http
+      .get(`http://localhost:3000/students/${id}/sendmail/`)
+      .subscribe((data) => {
         // console.log(data);
       });
   }

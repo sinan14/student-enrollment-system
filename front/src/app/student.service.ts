@@ -5,25 +5,25 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class StudentServiceService {
-  constructor(private http: HttpClient) {}
+  constructor(private _http: HttpClient) {}
   fetchStudent(id: any) {
-    return this.http.get('http://localhost:3000/students/' + id);
+    return this._http.get('http://localhost:3000/students/' + id);
   }
   fetchStudents() {
-    return this.http.get('http://localhost:3000/students');
+    return this._http.get('http://localhost:3000/students');
   }
 
   destroyStudent(id: any) {
-    return this.http.delete('http://localhost:3000/students/' + id);
+    return this._http.delete('http://localhost:3000/students/' + id);
   }
   editStudent(student: any) {
     console.log('client update');
-    return this.http.put('http://localhost:3000/students/', student);
+    return this._http.put('http://localhost:3000/students/', student);
     // .subscribe(data =>{console.log(data)})
   }
 
   newStudent(item: any) {
-    return this.http
+    return this._http
       .post('http://localhost:3000/insert', { student: item })
       .subscribe((data) => {
         console.log(data);
