@@ -25,7 +25,7 @@ router.put(
   wrapAsync(async (req, res) => {
     console.log(req.body);
     const { email, password } = req.body;
-    const employee = await empData.findOneAndUpdate( email ,{password});
+    const employee = await empData.findOneAndUpdate( email ,{ password });
     if (employee) {
       res.status(200).send({status:true})
     } else {

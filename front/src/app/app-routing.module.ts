@@ -31,7 +31,7 @@ const routes: Routes = [
   {path:'resetEmployeePassword',component:ResetEmpPasswordComponent},
   { path: 'students', component: AllStudentsComponent },
 
-  { path: 'students/:_id',canActivate:[StudentsGuard], component: StudentProfileComponent,pathMatch: 'full' },
+  { path: 'students/:_id', component: StudentProfileComponent,pathMatch: 'full' },
   { path: 'students/:_id/pay', component: StudentPaymentComponent },
 
   { path: 'studentstable', component: DatatableComponent },

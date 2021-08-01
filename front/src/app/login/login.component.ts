@@ -39,14 +39,14 @@ export class LoginComponent {
           // console.log(response.id)
           this._router.navigate([`students/${response.id}`]);
         } else {
-          Swal.fire().then((refresh) => {
-            this.loginForm.reset({
-              title: 'warning!!',
-              showConfirmButton: false,
-              timer: 1000,
-              text: 'user not found',
-              icon: 'error',
-            });
+          Swal.fire({
+            title: 'warning!!',
+            showConfirmButton: false,
+            timer: 1000,
+            text: 'Email not registered',
+            icon: 'error',
+          }).then((refresh) => {
+            this.loginForm.reset();
           });
         }
       },

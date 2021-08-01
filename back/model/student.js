@@ -84,15 +84,15 @@ const StudentSchema = new Schema({
 //   return bcrypt.compareSync(hashedpassword, this.Password);
 // }
 
-StudentSchema.statics.findAndValidate = async function (Email, Password) {
-  const foundUser = await this.findOne({ Email });
-  // const isValid = await bcrypt.compare(Password, foundUser.Password);
-  if (foundUser) {
-    return foundUser;
-  } else {
-    return false;
-  }
-};
+// StudentSchema.statics.findAndValidate = async function (Email, Password) {
+//   const foundUser = await this.findOne({ Email,Password });
+//   // const isValid = await bcrypt.compare(Password, foundUser.Password);
+//   if (foundUser) {
+//     return foundUser;
+//   } else {
+//     return false;
+//   }
+// };
 
 // StudentSchema.pre("save", async function (next) {
 //   if (!this.isModified("Password")) return next();

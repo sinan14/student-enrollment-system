@@ -6,6 +6,50 @@ const StudentData = require("../model/student");
 const { verifyToken } = require("../middleware");
 const nodemailer = require("nodemailer");
 
+//************************        register route ***************************************/
+router.post(
+  "/register",
+  wrapAsync(async function (req, res) {
+    const user = new StudentData({ ...req.body.user });
+    console.log(user);
+    user
+      .save()
+      .then(function (data) {
+        res.send({ status: true });
+      })
+      .catch(function (error) {
+        res.send({ status: false });
+      });
+  })
+);
+
+//*********************************************** login routes ********************************** */
+router.post(
+  "/login",
+  wrapAsync(async function (req, res) {
+    console.log(req.body);
+    const { Email, Password } = req.body;
+    // const foundUser = await StudentData.findAndValidate(Email, Password);
+    StudentData.findOne(
+      { Email: Email, Password: Password },
+      function (err, foundUser) {
+        if (err) {
+          res.send({ status: false, data: "you havenot registered" });
+        } else if (foundUser) {
+          const id = foundUser._id;
+          console.log("an user loginned");
+          req.session.role = "user";
+          const payload = { subject: Email, admin: false };
+          const token = jwt.sign(payload, "secretKey", { expiresIn: "1h" });
+          res.send({ status: true, token, id, role: req.session.role });
+        } else {
+          res.send({ status: false, data: "NOT FOUND" });
+        }
+      }
+    );
+  })
+);
+
 router.get(
   "",
   wrapAsync(async (req, res) => {
