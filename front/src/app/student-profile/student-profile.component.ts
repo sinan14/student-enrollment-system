@@ -233,10 +233,19 @@ export class StudentProfileComponent implements OnInit {
   }
 
   add_pic() {
-    
     const formData = new FormData();
     formData.append('img', this.photoUpdateForm.get('img')!.value);
     this.uploadPic(formData).subscribe((res) => {
+      
+      setTimeout(()=>{
+        this.ngOnInit()
+      },7000)
+
+
+
+
+
+      // this.ngOnInit();
       // Swal.fire({
       //   title: 'Good Job!!',
       //   text: 'profile updated successfully',

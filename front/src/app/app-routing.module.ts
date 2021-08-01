@@ -17,9 +17,10 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { CoursesComponent } from './courses/courses.component';
 import { EmployeeFormComponent } from './employee-form/employee-form.component';
 import { LoginEmployeeComponent } from './login-employee/login-employee.component';
-
+// import { }
 const routes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
+  
   { path: 'home', component: HomeComponent },
   { path: 'courses', component: CoursesComponent },
   { path: 'register', component: StudentRegisterComponent },

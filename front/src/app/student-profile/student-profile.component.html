@@ -19,19 +19,18 @@
               <form *ngIf="showEditButton" [formGroup]="photoUpdateForm" (ngSubmit)="add_pic()">
                 <div class="form-group">
                   <input
-                    *ngIf="changephoto"
+                    
                     type="file"
                     width="150px"
                     class="form-control"
                     placeholder="Upload image"
-                    (change)="selectImage($event)"
+                   
                     accept="image/png, image/gif, image/jpeg"
                     required
                   />
                 </div>
                 <input
-                  
-                  (click)="changeOption()"
+                   (change)="selectImage($event)"
                   style="width: 100px"
                   class="btn btn-sm btn-success"
                   type="submit"
