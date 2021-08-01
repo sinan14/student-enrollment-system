@@ -8,9 +8,33 @@
             <div class="card-header bg-transparent text-center">
               <img
                 class="profile_img"
-                src="https://source.unsplash.com/600x300/?student"
+                [src]="
+                  'data:image/' +
+                    Student.image.contentType +
+                    ';base64,' +
+                    Student.imageUrl | safe
+                "
                 alt="student dp"
               />
+              <form [formGroup]="photoUpdateForm" (ngSubmit)="add_pic()">
+                <div class="form-group">
+                  <input
+                    *ngIf=""
+                    type="file"
+                    class="form-control"
+                    placeholder="Upload image"
+                    (change)="selectImage($event)"
+                    accept="image/png, image/gif, image/jpeg"
+                    required
+                  />
+                </div>
+                <input
+                  style="width: 100px"
+                  class="btn btn-sm btn-success"
+                  type="submit"
+                  value="change"
+                />
+              </form>
 
               <h3>{{ Student.Name }}</h3>
             </div>
@@ -30,7 +54,7 @@
                 <i class="fa fa-address-card mr-1"></i>General Information
               </h3>
             </div>
-            <form (ngSubmit)="updateProfile()" >
+            <form (ngSubmit)="updateProfile()">
               <div class="card-body pt-0">
                 <table class="table table-bordered table-responsive">
                   <tr>
@@ -86,11 +110,19 @@
                     <td width="2%">:</td>
                     <td [class.editModeOn]="readonly == false">
                       <input
+                        *ngIf="readonly"
+                        [ngClass]="{
+                          inputBorderAtReadOnly: readonly
+                        }"
+                        type="text" readonly
+                        [value]="Student.DOB | date"
+                      />
+                      <input
+                        *ngIf="!readonly"
                         [ngModelOptions]="{ standalone: true }"
-                        [(ngModel)]="Student.DOB "
+                        [(ngModel)]="Student.DOB"
                         onfocus="(this.type='date')"
                         onblur="(this.type='text')"
-
                         [ngClass]="{
                           inputFocus: readonly == false,
                           inputBorderAtReadOnly: readonly
@@ -237,13 +269,21 @@
                   <button (click)="update()" class="btn btn-sm btn-warning">
                     Update
                   </button>
-                  <button type="button" (click)="deleteProfile()"  class="btn btn-sm btn-danger">Delete</button>
+                  <button
+                    type="button"
+                    (click)="deleteProfile()"
+                    class="btn btn-sm btn-danger"
+                  >
+                    Delete
+                  </button>
                 </div>
                 <div *ngIf="readonly == false">
-                  <button  class="btn btn-success btn-sm">
-                    Save
-                  </button>
-                  <button type="button" (click)="discard()" class="btn btn-info btn-sm">
+                  <button class="btn btn-success btn-sm">Save</button>
+                  <button
+                    type="button"
+                    (click)="discard()"
+                    class="btn btn-info btn-sm"
+                  >
                     Discard
                   </button>
                 </div>

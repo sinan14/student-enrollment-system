@@ -19,8 +19,6 @@ import { StudentRegisterComponent } from './student-register/student-register.co
 import { NavHeaderComponent } from './nav-header/nav-header.component';
 
 import { StudentProfileComponent } from './student-profile/student-profile.component';
-import { DatatableComponent } from './datatable/datatable.component';
-import { NewdatatableComponent } from './newdatatable/newdatatable.component';
 import { AdminDataTableComponent } from './admin-data-table/admin-data-table.component';
 import { AllStudentsComponent } from './all-students/all-students.component';
 import { StudentPaymentComponent } from './student-payment/student-payment.component';
@@ -32,6 +30,7 @@ import { EmployeeFormComponent } from './employee-form/employee-form.component';
 import { LoginEmployeeComponent } from './login-employee/login-employee.component';
 import { ResetEmpPasswordComponent } from './reset-emp-password/reset-emp-password.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { SafePipe } from './safe.pipe';
 
 @NgModule({
   declarations: [
@@ -42,7 +41,8 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     HomeComponent,
     FooterComponent,
     StudentProfileComponent,
-    DatatableComponent,
+    SafePipe,
+    
     AdminDataTableComponent,
     AllStudentsComponent,
     StudentPaymentComponent,

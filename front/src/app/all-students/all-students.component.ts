@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
-import { tap } from 'rxjs/operators'
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-all-students',
@@ -29,8 +29,8 @@ export class AllStudentsComponent implements OnInit {
       PinCode: '',
       Status: '',
       PaymentDate: '',
-      ApprovalDate:'',
-      CreationDate:''
+      ApprovalDate: '',
+      CreationDate: '',
     },
   ];
 
@@ -40,9 +40,7 @@ export class AllStudentsComponent implements OnInit {
   }
   ngOnInit() {
     this.getStudents().subscribe((data) => {
-      
       this.Students = JSON.parse(JSON.stringify(data));
-      console.log(this.Students)
     });
   }
 
@@ -59,10 +57,9 @@ export class AllStudentsComponent implements OnInit {
       this._http.put(`http://localhost:3000/students/${id}`, {
         Student: { ApprovalDate: new Date() },
       }),
-    ]) .pipe(tap(console.log))
-    .subscribe();
-
-
+    ])
+      .pipe(tap(console.log))
+      .subscribe();
 
     // return this._http.get(`http://localhost:3000/students/${id}/sendmail/`)
     //   .subscribe((data) => {

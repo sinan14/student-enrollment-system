@@ -10,6 +10,6 @@ export class AppComponent implements OnInit {
   title = 'Student-Enrollment-System';
 
   ngOnInit() {
-    AOS.int();
+    
   }
 }
