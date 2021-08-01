@@ -9,14 +9,14 @@ import Swal from 'sweetalert2';
 export class AuthGuard implements CanActivate {
   constructor(private _auth: AuthService, private _router: Router) {}
   canActivate(): boolean {
-    if (this._auth.loggedIn() && this._auth.getUser() == 'admin') {
+    if (this._auth.loggedIn() && (this._auth.getUser() == 'admin' || this._auth.getUser()== 'employee')) {
       console.log('true');
-      Swal.fire('Are You Sure').then(() => {});
+      // Swal.fire('Are You Sure').then(() => {});
       return true;
     } else {
       localStorage.removeItem('token');
-      Swal.fire('you have no admin privilage').then(() => {
-        this._router.navigate(['/login']);
+      Swal.fire({icon:'info',text:'you are not allowed to do that',timer:1500,}).then(() => {
+        this._router.navigate(['/']);
       });
       return false;
     }

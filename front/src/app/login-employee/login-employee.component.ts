@@ -39,7 +39,7 @@ export class LoginEmployeeComponent implements OnInit {
           localStorage.setItem('token', response.token);
           localStorage.setItem('role', response.role);
           // console.log(response.id)
-          this._router.navigate([`employees/${response.id}`]);
+          this._router.navigate([`/`]);
         } else {
           Swal.fire().then((refresh) => {
             this.emploginForm.reset({

@@ -5,10 +5,16 @@ const jwt = require("jsonwebtoken");
 const StudentData = require("../model/student");
 const { verifyToken } = require("../middleware");
 const nodemailer = require("nodemailer");
-const multer = require("multer")
-var imagedest= __dirname
+const multer = require("multer");
+var imagedest = __dirname;
 var upload = multer({ dest: imagedest });
-const fs = require('fs')
+const fs = require("fs");
+const generator = require("generate-password");
+// var password = generator.generate({
+// 	length: 8,
+// 	numbers: true,
+// symbols: true
+// });
 
 //************************        register route ***************************************/
 router.post(
@@ -92,7 +98,6 @@ router.get(
   })
 );
 
-
 //************************ profile update */
 router.put(
   "/:id",
@@ -127,32 +132,6 @@ router.put(
     );
   })
 );
-
-// app.put("/book", upload.single("img"), (req, res) => {
-//   console.log(req.body);
-//   (id = req.body._id),
-//     (title = req.body.title),
-//     (author = req.body.author),
-//     (description = req.body.description),
-//     (genre = req.body.genre),
-//     BookData.updateOne(
-//       { _id: id },
-//       {
-//         $set: {
-//           title: title,
-//           author: author,
-//           description: description,
-//           genre: genre,
-//           image: {
-//             data: fs.readFileSync(req.file.path),
-//             contentType: "image",
-//           },
-//         },
-//       }
-//     ).then(function (book) {
-//       res.send(book);
-//     });
-// });
 
 router.delete(
   "/:id",

@@ -39,7 +39,8 @@ router.post(
   wrapAsync(async function (req, res) {
     console.log(req.body);
     const { email, password } = req.body;
-    if (email == "admin@gmail.com" && password == "Admin@11") {
+    console.log(email)
+    if (email == "admin@ictak.com" && password == "Admin@11") {
       req.session.role = "admin";
       console.log("admin login success");
       const payload = { subject: email, admin: true };

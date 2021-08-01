@@ -1,10 +1,31 @@
-body {
+/* body {
   color: #000;
   overflow-x: hidden;
   height: 100%;
   background-color: #b0bec5;
   background-repeat: no-repeat;
+} */
+/*  whole  */
+
+section {
+  background: #67b26f; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #4ca2cd,
+    #67b26f
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #4ca2cd,
+    #67b26f
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  padding: 0;
+  margin: 0;
+  font-family: "Lato", sans-serif;
+  color: #000;
 }
+
+/**  toggle */
 #ul1 {
   margin: 5px 0px 10px 30px;
   display: block;
@@ -58,6 +79,8 @@ input.ng-invalid.ng-touched {
 .help-block {
   color: red;
 }
+
+/**********************  toggle                           * */
 .card0 {
   box-shadow: 0px 4px 8px 0px #757575;
   border-radius: 0px;
@@ -83,6 +106,7 @@ input.ng-invalid.ng-touched {
   border-right: 1px solid #eeeeee;
 }
 
+/* ********************** social media */
 .facebook {
   background-color: #3b5998;
   color: #fff;
@@ -115,6 +139,7 @@ input.ng-invalid.ng-touched {
   height: 35px;
   cursor: pointer;
 }
+/* ********************** social media */
 
 .line {
   height: 1px;

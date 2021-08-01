@@ -1,3 +1,4 @@
+import { AuthService } from './../auth.service';
 import { data } from 'jquery';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
@@ -14,26 +15,30 @@ import Swal from 'sweetalert2';
 export class StudentProfileComponent implements OnInit {
   id: string;
   image: '';
+  changephoto: boolean;
+  false;
+  showEditButton: boolean = false;
+  showDeleteButton: boolean = false;
+  changeOption() {
+    this.changephoto = !this.changephoto;
+  }
+
+  readonly: boolean = true;
+  update() {
+    this.readonly = !this.readonly;
+  }
+  discard() {
+    this.readonly = !this.readonly;
+    this.ngOnInit();
+  }
+  getStudentById() {
+    return this._http.get<any>(`http://localhost:3000/students/${this.id}`);
+  }
+
   photoUpdateForm: FormGroup = new FormGroup({
     img: new FormControl(''),
   });
-
-  studentUpdateForm: FormGroup =  new FormGroup({
-    Name: new FormControl('this.Student.Name',[Validators.required]),
-    Email: new FormControl('this.Student.Email',[Validators.required]),
-    Phone: new FormControl('this.Student.Phone',[Validators.required]),
-    State: new FormControl('this.Student.State',[Validators.required]),
-    HighestQualification: new FormControl('this.Student.HighestQualification',[Validators.required]),
-    PassOfYear:  new FormControl('this.Student.PassOfYear',[Validators.required]),
-    SkillSet: new FormControl('this.Student.SkillSet',[Validators.required]),
-    EmploymentStatus: new FormControl('this.Student.EmploymentStatus',[Validators.required]),
-    Course: new FormControl('this.Student.Course',[Validators.required]),
-    DOB: new FormControl('this.Student.DOB',[Validators.required]),
-    Password: new FormControl('this.Student.Password',[Validators.required]),
-    // img:new FormControl('')
-  });
-
-  
+  studentUpdateForm: FormGroup;
 
   Student: StudentModel = {
     _id: '',
@@ -58,14 +63,40 @@ export class StudentProfileComponent implements OnInit {
   constructor(
     private _http: HttpClient,
     private _ActivatedRoute: ActivatedRoute,
-    private _router: Router
+    private _router: Router,
+    private _auth: AuthService
   ) {}
 
-  readonly: boolean = true;
-  update() {
-    this.readonly = !this.readonly;
+  isAllowedToEdit() {
+    if (
+      this._auth.loggedIn() &&
+      (this._auth.getUser() == 'admin' || this._auth.getUser() == 'user')
+    ) {
+      console.log('true');
+      this.showEditButton = true;
+      return true;
+    } else {
+      // this._router.navigate(['/'])
+      this.showDeleteButton = false;
+      return false;
+    }
   }
+
+  isAdmin() {
+    if (this._auth.loggedIn() && this._auth.getUser() == 'admin') {
+      this.showDeleteButton = true;
+      return true;
+    } else {
+      this.showDeleteButton = false;
+      return false;
+    }
+  }
+
   ngOnInit(): void {
+    this.isAllowedToEdit();
+    this.isAdmin();
+    this.changephoto = false;
+    this.readonly = true;
     this.id = this._ActivatedRoute.snapshot.params['_id'];
 
     this.getStudentById().subscribe(
@@ -75,9 +106,34 @@ export class StudentProfileComponent implements OnInit {
         }
         this.Student = JSON.parse(JSON.stringify(studentData));
         console.log(this.Student);
-        this.Student.imageUrl = this.arrayBufferToBase64(this.Student.image.data.data);
-        console.log("*************************************")
-        // console.log (this.Student.imageUrl)
+        this.Student.imageUrl = this.arrayBufferToBase64(
+          this.Student.image.data.data
+        );
+        this.studentUpdateForm = new FormGroup({
+          Name: new FormControl(this.Student.Name, [Validators.required]),
+          Email: new FormControl(this.Student.Email, [Validators.required]),
+          Phone: new FormControl(this.Student.Phone, [Validators.required]),
+          State: new FormControl(this.Student.State, [Validators.required]),
+          HighestQualification: new FormControl(
+            this.Student.HighestQualification,
+            [Validators.required]
+          ),
+          PassOfYear: new FormControl(this.Student.PassOfYear, [
+            Validators.required,
+          ]),
+          SkillSet: new FormControl(this.Student.SkillSet, [
+            Validators.required,
+          ]),
+          EmploymentStatus: new FormControl(this.Student.EmploymentStatus, [
+            Validators.required,
+          ]),
+          Course: new FormControl(this.Student.Course, [Validators.required]),
+          DOB: new FormControl(this.Student.DOB, [Validators.required]),
+          Password: new FormControl(this.Student.Password, [
+            Validators.required,
+          ]),
+          // img:new FormControl('')
+        });
       },
       (errorMessage) => {
         this._router.navigate([`/students`]);
@@ -93,9 +149,13 @@ export class StudentProfileComponent implements OnInit {
       }
     );
   }
-
-  updateProfile() {
-    this.editProfile(this.Student).subscribe(
+  updateStudent() {
+    // console.log(this.studentUpdateForm.value);
+    if (this.studentUpdateForm.invalid && (this._auth.loggedIn && (this._auth.getUser() == 'admin' || this._auth.getUser() == 'user'))) {
+      console.log(this.studentUpdateForm.value)
+      return;
+    }
+    this.editProfile(this.studentUpdateForm.value).subscribe(
       (studentData: any) => {
         if (studentData.error) {
           Swal.fire({
@@ -108,19 +168,19 @@ export class StudentProfileComponent implements OnInit {
             this.readonly = !this.readonly;
             this._router.navigate(['/error'], { state: studentData });
           });
+        } else {
+          Swal.fire({
+            title: 'Good Job!!',
+            text: 'profile updated successfully',
+            icon: 'success',
+            timer: 500,
+            showConfirmButton: false,
+          }).then((refresh) => {
+            this.Student = JSON.parse(JSON.stringify(studentData));
+            this.readonly = !this.readonly;
+            this.ngOnInit();
+          });
         }
-        Swal.fire({
-          title: 'Good Job!!',
-          text: 'profile updated successfully',
-          icon: 'success',
-          timer: 500,
-          showConfirmButton: false,
-        }).then((refresh) => {
-          this.Student = JSON.parse(JSON.stringify(studentData));
-          this.readonly = !this.readonly;
-          this.ngOnInit();
-          // window.location.reload();
-        });
       },
       (errorMessage) => {
         Swal.fire({
@@ -134,14 +194,6 @@ export class StudentProfileComponent implements OnInit {
         });
       }
     );
-  }
-
-  discard() {
-    this.readonly = !this.readonly;
-    this.ngOnInit();
-  }
-  getStudentById() {
-    return this._http.get<any>(`http://localhost:3000/students/${this.id}`);
   }
 
   deleteProfile() {
@@ -179,12 +231,21 @@ export class StudentProfileComponent implements OnInit {
       pic
     );
   }
+
   add_pic() {
+    
     const formData = new FormData();
     formData.append('img', this.photoUpdateForm.get('img')!.value);
     this.uploadPic(formData).subscribe((res) => {
-      console.log(res);
-      this.ngOnInit();
+      // Swal.fire({
+      //   title: 'Good Job!!',
+      //   text: 'profile updated successfully',
+      //   icon: 'success',
+      //   timer: 500,
+      //   showConfirmButton: false,
+      // }).then((refresh) => {
+      //   this.ngOnInit();
+      // });
     });
   }
 }

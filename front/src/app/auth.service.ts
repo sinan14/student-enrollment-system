@@ -1,11 +1,20 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Injectable()
 export class AuthService {
-  constructor(private _http: HttpClient) {}
+  constructor(private _http: HttpClient,private _router:Router) {}
   //*************** register employee and student ***************/
+  logOut(){
+    localStorage.removeItem('token');
+    localStorage.removeItem('role')
+    // localStorage.clear()
+    Swal.fire('we will miss you').then(() => {
+      this._router.navigate(['/login']);
+    });
+  }
 
   registerUser(item: any) {
     return this._http.post('http://localhost:3000/students/register', {

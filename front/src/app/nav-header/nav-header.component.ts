@@ -18,10 +18,10 @@ ngOnInit(){
   title = 'ProductManagement';
   constructor(public _auth: AuthService, private _router: Router, private router:RouterModule) {}
   logoutUser() {
-    localStorage.removeItem('token');
-    Swal.fire('we will miss you').then(() => {
-      this._router.navigate(['/login']);
-    });
+    this._auth.logOut()
+    // Swal.fire('we will miss you').then(() => {
+    //   this._router.navigate(['/login']);
+    // });
   }
   loggedUser() {
     this._router.navigate(['/books']);

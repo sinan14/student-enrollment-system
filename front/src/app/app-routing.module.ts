@@ -1,3 +1,4 @@
+import { AuthGuard } from './auth.guard';
 import { StudentsGuard } from './students.guard';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ResetEmpPasswordComponent } from './reset-emp-password/reset-emp-password.component';
@@ -27,7 +28,7 @@ const routes: Routes = [
   { path: 'employeelogin', component: LoginEmployeeComponent },
   { path: 'resetPassword', component: ResetPasswordComponent },
   { path: 'resetEmployeePassword', component: ResetEmpPasswordComponent },
-  { path: 'students', component: AllStudentsComponent },
+  { path: 'students',canActivate:[AuthGuard], component: AllStudentsComponent },
   {
     path: 'students/:_id',
     component: StudentProfileComponent,

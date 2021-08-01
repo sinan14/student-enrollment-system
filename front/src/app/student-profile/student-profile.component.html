@@ -16,11 +16,12 @@
                 "
                 alt="student dp"
               />
-              <form [formGroup]="photoUpdateForm" (ngSubmit)="add_pic()">
+              <form *ngIf="showEditButton" [formGroup]="photoUpdateForm" (ngSubmit)="add_pic()">
                 <div class="form-group">
                   <input
-                    *ngIf=""
+                    *ngIf="changephoto"
                     type="file"
+                    width="150px"
                     class="form-control"
                     placeholder="Upload image"
                     (change)="selectImage($event)"
@@ -29,12 +30,23 @@
                   />
                 </div>
                 <input
+                  
+                  (click)="changeOption()"
                   style="width: 100px"
                   class="btn btn-sm btn-success"
                   type="submit"
                   value="change"
                 />
               </form>
+              <!-- <button
+                *ngIf="changephoto"
+                (click)="changeOption()"
+                style="width: 100px"
+                class="btn btn-sm btn-success"
+                type="button"
+              >
+                change
+              </button> -->
 
               <h3>{{ Student.Name }}</h3>
             </div>
@@ -54,7 +66,8 @@
                 <i class="fa fa-address-card mr-1"></i>General Information
               </h3>
             </div>
-            <form (ngSubmit)="updateProfile()">
+            <!-- <form (ngSubmit)="updateProfile()"> -->
+            <form [formGroup]="studentUpdateForm" (ngSubmit)="updateStudent()">
               <div class="card-body pt-0">
                 <table class="table table-bordered table-responsive">
                   <tr>
@@ -63,8 +76,7 @@
                     <td [class.editModeOn]="readonly == false">
                       <input
                         type="text"
-                        [ngModelOptions]="{ standalone: true }"
-                        [(ngModel)]="Student.Name"
+                        [value]="Student.Name"
                         [ngClass]="{
                           inputFocus: readonly == false,
                           inputBorderAtReadOnly: readonly
@@ -79,8 +91,8 @@
                     <td [class.editModeOn]="readonly == false">
                       <input
                         type="text"
-                        [ngModelOptions]="{ standalone: true }"
-                        [(ngModel)]="Student.Email"
+                        formControlName="Email"
+                        [value]="Student.Email"
                         [ngClass]="{
                           inputFocus: readonly == false,
                           inputBorderAtReadOnly: readonly
@@ -95,8 +107,8 @@
                     <td [class.editModeOn]="readonly == false">
                       <input
                         type="text"
-                        [ngModelOptions]="{ standalone: true }"
-                        [(ngModel)]="Student.Phone"
+                        formControlName="Phone"
+                        [value]="Student.Phone"
                         [ngClass]="{
                           inputFocus: readonly == false,
                           inputBorderAtReadOnly: readonly
@@ -109,18 +121,11 @@
                     <th width="30%">Date Of Birth</th>
                     <td width="2%">:</td>
                     <td [class.editModeOn]="readonly == false">
+                      <!-- <p *ngIf="readonly"> {{ Student.DOB | date  }} </p> -->
+
                       <input
-                        *ngIf="readonly"
-                        [ngClass]="{
-                          inputBorderAtReadOnly: readonly
-                        }"
-                        type="text" readonly
-                        [value]="Student.DOB | date"
-                      />
-                      <input
-                        *ngIf="!readonly"
-                        [ngModelOptions]="{ standalone: true }"
-                        [(ngModel)]="Student.DOB"
+                        formControlName="DOB"
+                        [value]="Student.DOB"
                         onfocus="(this.type='date')"
                         onblur="(this.type='text')"
                         [ngClass]="{
@@ -136,8 +141,8 @@
                     <td width="2%">:</td>
                     <td [class.editModeOn]="readonly == false">
                       <input
-                        [ngModelOptions]="{ standalone: true }"
-                        [(ngModel)]="Student.State"
+                        formControlName="State"
+                        [value]="Student.State"
                         [ngClass]="{
                           inputFocus: readonly == false,
                           inputBorderAtReadOnly: readonly
@@ -152,8 +157,8 @@
                     <td width="2%">:</td>
                     <td [class.editModeOn]="readonly == false">
                       <input
-                        [ngModelOptions]="{ standalone: true }"
-                        [(ngModel)]="Student.HighestQualification"
+                        formControlName="HighestQualification"
+                        [value]="Student.HighestQualification"
                         [ngClass]="{
                           inputFocus: readonly == false,
                           inputBorderAtReadOnly: readonly
@@ -167,12 +172,12 @@
                     <td width="2%">:</td>
                     <td [class.editModeOn]="readonly == false">
                       <input
+                        formControlName="PassOfYear"
                         type="number"
                         min="2010"
                         max="2021"
                         step="1"
-                        [ngModelOptions]="{ standalone: true }"
-                        [(ngModel)]="Student.PassOfYear"
+                        [value]="Student.PassOfYear"
                         [ngClass]="{
                           inputFocus: readonly == false,
                           inputBorderAtReadOnly: readonly
@@ -186,9 +191,9 @@
                     <td width="2%">:</td>
                     <td [class.editModeOn]="readonly == false">
                       <input
-                        [ngModelOptions]="{ standalone: true }"
+                        formControlName="SkillSet"
                         type="text"
-                        [(ngModel)]="Student.SkillSet"
+                        [value]="Student.SkillSet"
                         [ngClass]="{
                           inputFocus: readonly == false,
                           inputBorderAtReadOnly: readonly
@@ -202,11 +207,11 @@
                     <td width="2%">:</td>
                     <td [class.editModeOn]="readonly == false">
                       <input
-                        [ngModelOptions]="{ standalone: true }"
+                        formControlName="EmploymentStatus"
                         type="text"
-                        [(ngModel)]="Student.EmploymentStatus"
+                        [value]="Student.EmploymentStatus"
                         [ngClass]="{
-                          inputFocus: readonly == false,
+                          inputFocus: !readonly,
                           inputBorderAtReadOnly: readonly
                         }"
                         [readonly]="readonly"
@@ -216,13 +221,13 @@
                   <tr>
                     <th width="30%">Technology Training</th>
                     <td width="2%">:</td>
-                    <td [class.editModeOn]="readonly == false">
+                    <td [class.editModeOn]="!readonly">
                       <input
-                        [ngModelOptions]="{ standalone: true }"
+                        formControlName="Course"
                         type="text"
-                        [(ngModel)]="Student.Course"
+                        [value]="Student.Course"
                         [ngClass]="{
-                          inputFocus: readonly == false,
+                          inputFocus: !readonly,
                           inputBorderAtReadOnly: readonly
                         }"
                         [readonly]="readonly"
@@ -232,11 +237,11 @@
                   <tr>
                     <th width="30%">Password</th>
                     <td width="2%">:</td>
-                    <td [class.editModeOn]="readonly == false">
+                    <td [class.editModeOn]="!readonly">
                       <input
-                        [ngModelOptions]="{ standalone: true }"
+                        formControlName="Password"
                         type="text"
-                        [(ngModel)]="Student.Password"
+                        [value]="Student.Password"
                         [ngClass]="{
                           inputFocus: readonly == false,
                           inputBorderAtReadOnly: readonly
@@ -245,31 +250,12 @@
                       />
                     </td>
                   </tr>
-                  <!-- <tr>
-                    <th width="30%">Year</th>
-                    <td width="2%">:</td>
-                    <td [class.editModeOn]="readonly == false">
-                      <input
-                        type="number"
-                        min="2010"
-                        max="2022"
-                        step="1"
-                        [(ngModel)]="Student.Year"
-                        [ngModelOptions]="{ standalone: true }"
-                        [ngClass]="{
-                          inputFocus: readonly == false,
-                          inputBorderAtReadOnly: readonly
-                        }"
-                        [readonly]="readonly"
-                      />
-                    </td>
-                  </tr> -->
                 </table>
                 <div *ngIf="readonly">
-                  <button (click)="update()" class="btn btn-sm btn-warning">
+                  <button *ngIf="showEditButton" (click)="update()" class="btn btn-sm btn-warning">
                     Update
                   </button>
-                  <button
+                  <button *ngIf="showDeleteButton"
                     type="button"
                     (click)="deleteProfile()"
                     class="btn btn-sm btn-danger"
@@ -277,9 +263,10 @@
                     Delete
                   </button>
                 </div>
-                <div *ngIf="readonly == false">
-                  <button class="btn btn-success btn-sm">Save</button>
-                  <button
+                
+                <div *ngIf="!readonly">
+                  <button *ngIf="showEditButton" class="btn btn-success btn-sm">Save</button>
+                  <button *ngIf="showEditButton"
                     type="button"
                     (click)="discard()"
                     class="btn btn-info btn-sm"
