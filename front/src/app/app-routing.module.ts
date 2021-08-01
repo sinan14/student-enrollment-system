@@ -20,7 +20,8 @@ import { EmployeeFormComponent } from './employee-form/employee-form.component';
 import { LoginEmployeeComponent } from './login-employee/login-employee.component';
 
 const routes: Routes = [
-  { path: '', component: CoursesComponent,pathMatch: 'full' },
+  { path: '', component: HomeComponent,pathMatch: 'full' },
+  {path:'home',component:HomeComponent},
   { path: 'courses', component: CoursesComponent },
   { path: 'register', component: StudentRegisterComponent },
   {path:'employeeregister',component:EmployeeFormComponent},

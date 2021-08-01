@@ -34,7 +34,7 @@ h1, h2, h3, h4, h5, h6 {
 # Header
 --------------------------------------------------------------*/
 #header {
-    height: 30px;
+    height: 90px;
     transition: all 0.5s;
     z-index: 997;
     background: linear-gradient(45deg, #1de099, #1dc8cd);
@@ -46,7 +46,7 @@ h1, h2, h3, h4, h5, h6 {
   
   #header.header-scrolled {
     background: linear-gradient(45deg, #1de099, #1dc8cd);
-    height: 0px;
+    height: 70px;
     transition: all 0.5s ;
   }
   
