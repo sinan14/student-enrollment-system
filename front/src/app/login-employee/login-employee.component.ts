@@ -1,19 +1,20 @@
-import { Component } from '@angular/core';
-import { AuthService } from '../auth.service';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import Swal from 'sweetalert2';
+import { AuthService } from '../auth.service';
 import { FormBuilder, Validators } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'],
+  selector: 'app-login-employee',
+  templateUrl: './login-employee.component.html',
+  styleUrls: ['./login-employee.component.css'],
 })
-export class LoginComponent {
+export class LoginEmployeeComponent implements OnInit {
   error: string = null;
   passwordReg =
     /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,}$/;
   emailReg = /^[a-z0-9.%+]+@[a-z09.-]+.[a-z]{2,4}/;
+  empReg = /emp/ig;
   constructor(
     private _auth: AuthService,
     private _router: Router,
@@ -21,26 +22,27 @@ export class LoginComponent {
   ) {}
 
   ngOnInit() {}
-  loginForm = this._fb.group({
-    Email: ['', [Validators.pattern(this.emailReg), Validators.required]],
-    Password: ['', [Validators.pattern(this.passwordReg), Validators.required]],
+  emploginForm = this._fb.group({
+    email: ['', [Validators.pattern(this.emailReg), Validators.required]],
+    password: ['', [Validators.pattern(this.passwordReg), Validators.required]],
+    employeeId: ['', [Validators.required, Validators.pattern(this.empReg)]],
   });
 
   loginUser() {
-    if (!this.loginForm) {
+    if (!this.emploginForm.valid) {
       return;
     }
-    console.log(this.loginForm);
-    this._auth.loginUser(this.loginForm.value).subscribe(
+    console.log(this.emploginForm);
+    this._auth.loginEmployee(this.emploginForm.value).subscribe(
       (response) => {
         if (response.status) {
           localStorage.setItem('token', response.token);
           localStorage.setItem('role', response.role);
           // console.log(response.id)
-          this._router.navigate([`students/${response.id}`]);
+          this._router.navigate([`employees/${response.id}`]);
         } else {
           Swal.fire().then((refresh) => {
-            this.loginForm.reset({
+            this.emploginForm.reset({
               title: 'warning!!',
               showConfirmButton: false,
               timer: 1000,
@@ -58,7 +60,7 @@ export class LoginComponent {
           text: 'some internal error',
           icon: 'error',
         }).then(() => {
-          this.loginForm.reset();
+          this.emploginForm.reset();
         });
       }
     );

@@ -15,6 +15,7 @@ const cors = require("cors");
 const jwt = require("jsonwebtoken");
 const loginRoutes = require("./routes/loginRoutes");
 const studentRoutes = require("./routes/studentRoutes");
+const employeeRoutes = require("./routes/employeeRoutes")
 
 //*************************** connecting our database ****************************
 const dbUrl = "mongodb://localhost:27017/project-mean";
@@ -48,6 +49,7 @@ const sessionConfig = {
 app.use(session(sessionConfig));
 app.use("/", loginRoutes);
 app.use("/students", studentRoutes);
+app.use("/employee",employeeRoutes)
 
 app.use((err, req, res, next) => {
   const { statusCode = 500 } = err;

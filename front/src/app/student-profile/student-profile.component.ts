@@ -42,22 +42,14 @@ export class StudentProfileComponent implements OnInit {
     // the id is the one we specified in our routing module
     this.getStudentById().subscribe(
       (studentData: any) => {
-        console.log(studentData);
         if (studentData.error) {
           this._router.navigate(['/error'], { state: studentData });
         }
-
         this.Student = JSON.parse(JSON.stringify(studentData));
-        // console.log(this.Student)
       },
       (errorMessage) => {
         this._router.navigate([`/students`]);
         Swal.fire('danger!!', 'some internal error', 'error');
-        // .then(
-        //   (refresh) => {
-        //     this._router.navigate([`/students`]);
-        //   }
-        // );
       }
     );
   }
@@ -93,10 +85,9 @@ export class StudentProfileComponent implements OnInit {
         }).then((refresh) => {
           this.Student = JSON.parse(JSON.stringify(studentData));
           this.readonly = !this.readonly;
+          this.ngOnInit();
           // window.location.reload();
         });
-
-
       },
       (errorMessage) => {
         Swal.fire({

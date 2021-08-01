@@ -19,9 +19,12 @@
             <th>Sex</th>
             <th>Qualification</th>
             <th>Applied Course</th>
+            <th>Payment Date</th>
+            <th>Approval Date</th>
             <th>Status</th>
-            <th>Approve</th>
             <th>Go To Details</th>
+            <th>Approve</th>
+
           </tr>
         </thead>
         <tbody >
@@ -31,6 +34,13 @@
             <td>{{ Student.Sex }}</td>
             <td>{{ Student.HighestQualification }}</td>
             <td>{{ Student.Course }}</td>
+            <td *ngIf="Student.PaymentDate"> {{Student.PaymentDate | date}}</td>
+            <td *ngIf="!Student.PaymentDate"> Not Paid</td>
+
+            <td *ngIf="Student.ApprovalDate"> {{Student.ApprovalDate | date}}</td>
+            <td *ngIf="!Student.ApprovalDate">Not Approved</td>
+
+
             <td>{{ Student.Status }}</td>
             <td>
               <button

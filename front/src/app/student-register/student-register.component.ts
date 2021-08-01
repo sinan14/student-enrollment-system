@@ -2,14 +2,14 @@ import { AuthService } from './../auth.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
-import { FormBuilder, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-student-register',
   templateUrl: './student-register.component.html',
   styleUrls: ['./student-register.component.css'],
 })
-export class StudentRegisterComponent implements OnInit {
+export class StudentRegisterComponent {
   constructor(
     private _router: Router,
     private _fb: FormBuilder,
@@ -17,16 +17,9 @@ export class StudentRegisterComponent implements OnInit {
   ) {}
   emailReg = /^[a-z0-9.%+]+@[a-z09.-]+.[a-z]{2,4}/;
   phoneReg = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
-  model1: Date;
-  genders = ['male', 'female'];
 
-  ngOnInit(): void {
-    this.registerForm.patchValue({
-      userData: {
-        username: 'Anna',
-      },
-    });
-  }
+  
+
   registerForm = this._fb.group({
     Name: ['', Validators.required],
     Email: ['', [Validators.required, Validators.pattern(this.emailReg)]],
@@ -41,11 +34,15 @@ export class StudentRegisterComponent implements OnInit {
     State: ['', Validators.required],
     District: ['', Validators.required],
     Post: ['', Validators.required],
-    PinCode: ['', [Validators.required, Validators.minLength(6)]],
+    PinCode: ['', Validators.required],
     Status: ['inactive'],
+    CreationDate: new Date(),
+    PaymentDate: [''],
+    ApprovalDate: [''],
     // gender: ['male',Validators.required]
   });
 
+  
   registerStudent() {
     if (this.registerForm.invalid) {
       return;
@@ -60,7 +57,6 @@ export class StudentRegisterComponent implements OnInit {
             icon: 'success',
           }).then(() => {
             this.registerForm.reset();
-            
           });
         } else {
           Swal.fire({

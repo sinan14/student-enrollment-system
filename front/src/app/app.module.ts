@@ -20,6 +20,7 @@ import { NavHeaderComponent } from './nav-header/nav-header.component';
 
 import { StudentProfileComponent } from './student-profile/student-profile.component';
 import { DatatableComponent } from './datatable/datatable.component';
+import { NewdatatableComponent } from './newdatatable/newdatatable.component';
 import { AdminDataTableComponent } from './admin-data-table/admin-data-table.component';
 import { AllStudentsComponent } from './all-students/all-students.component';
 import { StudentPaymentComponent } from './student-payment/student-payment.component';
@@ -27,6 +28,10 @@ import { FooterComponent } from './footer/footer.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { CoursesComponent } from './courses/courses.component';
 import { ErrorsComponent } from './Errors/errors.component';
+import { EmployeeFormComponent } from './employee-form/employee-form.component';
+import { LoginEmployeeComponent } from './login-employee/login-employee.component';
+import { ResetEmpPasswordComponent } from './reset-emp-password/reset-emp-password.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +47,11 @@ import { ErrorsComponent } from './Errors/errors.component';
     AllStudentsComponent,
     StudentPaymentComponent,
     ResetPasswordComponent,
-    CoursesComponent
+    CoursesComponent,
+    EmployeeFormComponent,
+    LoginEmployeeComponent,
+    ResetEmpPasswordComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,

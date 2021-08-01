@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { AuthService } from '../auth.service';
 
+
 @Component({
   selector: 'app-nav-header',
   templateUrl: './nav-header.component.html',
@@ -11,13 +12,13 @@ import { AuthService } from '../auth.service';
 })
 export class NavHeaderComponent implements OnInit {
 
-ngOnInit(){}
+ngOnInit(){
+}
 
   title = 'ProductManagement';
-  constructor(public _auth: AuthService, private _router: Router) {}
+  constructor(public _auth: AuthService, private _router: Router, private router:RouterModule) {}
   logoutUser() {
     localStorage.removeItem('token');
-    localStorage.clear();
     Swal.fire('we will miss you').then(() => {
       this._router.navigate(['/login']);
     });
@@ -25,5 +26,26 @@ ngOnInit(){}
   loggedUser() {
     this._router.navigate(['/books']);
   }
+
+  hero(){
+    document.getElementById("hero").scrollIntoView();
+  }
+  
+  about(){
+    document.getElementById("about").scrollIntoView();
+  }
+  courses(){
+    document.getElementById("courses").scrollIntoView();
+  }
+  gallery(){
+    document.getElementById("gallery").scrollIntoView();
+  }
+  team(){
+    document.getElementById("team").scrollIntoView();
+  }
+  contact(){
+    document.getElementById("contact").scrollIntoView();
+  }
+
 }
 

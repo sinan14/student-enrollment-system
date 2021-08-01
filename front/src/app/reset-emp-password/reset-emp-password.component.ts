@@ -10,11 +10,11 @@ import {
 } from '@angular/forms';
 
 @Component({
-  selector: 'app-reset-password',
-  templateUrl: './reset-password.component.html',
-  styleUrls: ['./reset-password.component.css'],
+  selector: 'app-reset-emp-password',
+  templateUrl: './reset-emp-password.component.html',
+  styleUrls: ['./reset-emp-password.component.css'],
 })
-export class ResetPasswordComponent implements OnInit {
+export class ResetEmpPasswordComponent implements OnInit {
   emailReg = /^[a-z0-9.%+]+@[a-z09.-]+.[a-z]{2,4}/;
   passwordReg =
     /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,}$/;
@@ -24,12 +24,12 @@ export class ResetPasswordComponent implements OnInit {
   constructor(private router: Router, private _auth: AuthService) {}
   ngOnInit(): void {
     this.resetForm = new FormGroup({
-      Email: new FormControl(null, [
+      email: new FormControl(null, [
         Validators.required,
         Validators.pattern(this.emailReg),
       ]),
-      DOB: new FormControl(null, [Validators.required]),
-      Password: new FormControl(null, [
+      dob: new FormControl(null, [Validators.required]),
+      password: new FormControl(null, [
         Validators.required,
         Validators.pattern(this.passwordReg),
       ]),
@@ -49,7 +49,8 @@ export class ResetPasswordComponent implements OnInit {
   passValidator(control: AbstractControl) {
     if (control && (control.value !== null || control.value !== undefined)) {
       const cnfpassValue = control.value;
-      const passControl = control.root.get('Password');
+
+      const passControl = control.root.get('password');
       if (passControl) {
         const passValue = passControl.value;
         if (passValue !== cnfpassValue || passValue === '') {
@@ -63,11 +64,11 @@ export class ResetPasswordComponent implements OnInit {
     return null;
   }
   onSubmit() {
-    if (!this.resetForm.valid) {
+    if(!this.resetForm.valid){
+      this.resetForm.reset()
       return;
     }
-    
-    this._auth.resetStudentPassword(this.resetForm.value).subscribe(
+    this._auth.resetEmployeePassword(this.resetForm.value).subscribe(
       (response) => {
         if (response.status) {
           Swal.fire({

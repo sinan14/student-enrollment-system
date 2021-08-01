@@ -7,8 +7,40 @@
       <button type="submit"><a routerLink="/login">login</a></button>
     </div>
 
-    <div class="col-xs-10 col-sm-10 col-md-9 register-right">
+    <div class="col-xs-12 col-sm-10 col-md-9 register-right">
+      <ul
+        style="width: 200px"
+        class="nav nav-tabs nav-justified"
+        id="myTab"
+        role="tablist"
+      >
+        <li class="nav-item">
+          <a
+            class="nav-link active"
+            id="home-tab"
+            data-toggle="tab"
+            routerLink="/register"
+            role="tab"
+            aria-controls="home"
+            aria-selected="true"
+            >Student</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            id="profile-tab"
+            data-toggle="tab"
+            routerLink="/employeeregister"
+            role="tab"
+            aria-controls="profile"
+            aria-selected="false"
+            >Employee</a
+          >
+        </li>
+      </ul>
       <div class="tab-content" id="myTabContent">
+        <!-- form of studentts -->
         <div
           class="tab-pane fade show active"
           id="home"
@@ -29,15 +61,14 @@
                     formControlName="Name"
                   />
                   <span
-                  *ngIf="
-                    !registerForm.get('Name').valid &&
-                    registerForm.get('Name').touched
-                  "
-                  class="help-block"
-                  >Please enter a valid name!</span
-                >
+                    *ngIf="
+                      !registerForm.get('Name').valid &&
+                      registerForm.get('Name').touched
+                    "
+                    class="help-block"
+                    >Name cannot be blank!</span
+                  >
                 </div>
-
                 <div class="form-group">
                   <input
                     type="text"
@@ -46,13 +77,13 @@
                     formControlName="Phone"
                   />
                   <span
-                  *ngIf="
-                    !registerForm.get('Phone').valid &&
-                    registerForm.get('Phone').touched
-                  "
-                  class="help-block"
-                  >Please enter a valid phone!</span
-                >
+                    *ngIf="
+                      !registerForm.get('Phone').valid &&
+                      registerForm.get('Phone').touched
+                    "
+                    class="help-block"
+                    >enter a valid phone number!</span
+                  >
                 </div>
                 <div class="form-group">
                   <select
@@ -74,44 +105,36 @@
                     </option>
                   </select>
                   <span
-                  *ngIf="
-                    !registerForm.get('HighestQualification').valid &&
-                    registerForm.get('HighestQualification').touched
-                  "
-                  class="help-block"
-                  >Please Choose a valid Qualification!</span
-                >
+                    *ngIf="
+                      !registerForm.get('HighestQualification').valid &&
+                      registerForm.get('HighestQualification').touched
+                    "
+                    class="help-block"
+                    >Qualification cannot be blank!</span
+                  >
                 </div>
-
                 <div class="form-group">
                   <select class="form-control" formControlName="Course">
                     <option class="hidden" value="" disabled selected>
                       Interested Course *
                     </option>
-
                     <option value="MeanStack">Mean Stack</option>
-
                     <option value="Cybersecurity">Cyber Security</option>
-
                     <option value="Data Science">Data Science</option>
-
                     <option value="MachineLearining">Machine Learining</option>
                   </select>
                   <span
-                  *ngIf="
-                    !registerForm.get('Course').valid &&
-                    registerForm.get('Course').touched
-                  "
-                  class="help-block"
-                  >Please choosea valid 
-                  course!</span
-                >
+                    *ngIf="
+                      !registerForm.get('Course').valid &&
+                      registerForm.get('Course').touched
+                    "
+                    class="help-block"
+                    >course cannot be empty!</span
+                  >
                 </div>
-
                 <div class="form-group">
                   <input
                     class="form-control"
-                    type="text"
                     placeholder="Date of Birth"
                     min="1990-01-01"
                     max="2005-01-01"
@@ -120,16 +143,14 @@
                     onblur="(this.type='text')"
                   />
                   <span
-                  *ngIf="
-                    !registerForm.get('DOB').valid &&
-                    registerForm.get('DOB').touched
-                  "
-                  class="help-block"
-                  >Please enter a valid DOB!</span
-                >
-                  
+                    *ngIf="
+                      !registerForm.get('DOB').valid &&
+                      registerForm.get('DOB').touched
+                    "
+                    class="help-block"
+                    >DOB cannot be empty!</span
+                  >
                 </div>
-
                 <div class="form-group">
                   <select class="form-control" formControlName="State">
                     <option class="hidden" value="" disabled selected>
@@ -177,15 +198,14 @@
                     <option value="West Bengal">West Bengal</option>
                   </select>
                   <span
-                  *ngIf="
-                    !registerForm.get('State').valid &&
-                    registerForm.get('State').touched
-                  "
-                  class="help-block"
-                  >Please choose a valid state!</span
-                >
+                    *ngIf="
+                      !registerForm.get('State').valid &&
+                      registerForm.get('State').touched
+                    "
+                    class="help-block"
+                    >state cannot be empty!</span
+                  >
                 </div>
-
                 <div class="form-group">
                   <input
                     class="form-control"
@@ -194,28 +214,15 @@
                     formControlName="Post"
                   />
                   <span
-                  *ngIf="
-                    !registerForm.get('Post').valid &&
-                    registerForm.get('Post').touched
-                  "
-                  class="help-block"
-                  >Please enter a valid Post Name!</span
-                >
+                    *ngIf="
+                      !registerForm.get('Post').valid &&
+                      registerForm.get('Post').touched
+                    "
+                    class="help-block"
+                    >Post Name cannot be empty!</span
+                  >
                 </div>
-                <!-- <div class="radio" *ngFor="let gender of genders">
-                  <label>
-                    <input
-                      class=""
-                      type="radio"
-                      formControlName="gender"
-                      [value]="gender"
-                    />{{ gender }}
-                  </label>
-                </div> -->
-              </div>
-              <!-- closed -->
-              <!-- open next  -->
-
+                </div>
               <div class="col-md-6">
                 <div class="form-group">
                   <input
@@ -225,13 +232,13 @@
                     formControlName="Email"
                   />
                   <span
-                  *ngIf="
-                    !registerForm.get('Email').valid &&
-                    registerForm.get('Email').touched
-                  "
-                  class="help-block"
-                  >Please enter a valid email!</span
-                >
+                    *ngIf="
+                      !registerForm.get('Email').valid &&
+                      registerForm.get('Email').touched
+                    "
+                    class="help-block"
+                    >enter a valid email!</span
+                  >
                 </div>
                 <div class="form-group">
                   <select class="form-control" formControlName="Sex">
@@ -242,13 +249,13 @@
                     <option value="female">Female</option>
                   </select>
                   <span
-                  *ngIf="
-                    !registerForm.get('Sex').valid &&
-                    registerForm.get('Sex').touched
-                  "
-                  class="help-block"
-                  >Please choose correct gender!</span
-                >
+                    *ngIf="
+                      !registerForm.get('Sex').valid &&
+                      registerForm.get('Sex').touched
+                    "
+                    class="help-block"
+                    >gender cannot be empty!</span
+                  >
                 </div>
                 <div class="form-group">
                   <input
@@ -261,15 +268,14 @@
                     formControlName="PassOfYear"
                   />
                   <span
-                  *ngIf="
-                    !registerForm.get('PassOfYear').valid &&
-                    registerForm.get('PassOfYear').touched
-                  "
-                  class="help-block"
-                  >Please choose a valid year!</span
-                >
+                    *ngIf="
+                      !registerForm.get('PassOfYear').valid &&
+                      registerForm.get('PassOfYear').touched
+                    "
+                    class="help-block"
+                    >choose a valid year!</span
+                  >
                 </div>
-
                 <div class="form-group">
                   <input
                     type="text"
@@ -278,14 +284,13 @@
                     placeholder="skillSets, you can include soft skills too"
                   />
                   <span
-                  *ngIf="
-                    !registerForm.get('SkillSet').valid &&
-                    registerForm.get('SkillSet').touched
-                  "
-                  class="help-block"
-                  >Please enter your skills</span
-                >
-
+                    *ngIf="
+                      !registerForm.get('SkillSet').valid &&
+                      registerForm.get('SkillSet').touched
+                    "
+                    class="help-block"
+                    >skills cannot be empty</span
+                  >
                 </div>
                 <div class="form-group">
                   <select
@@ -300,14 +305,13 @@
                     <option value="Employed">Employed</option>
                   </select>
                   <span
-                  *ngIf="
-                    !registerForm.get('EmploymentStatus').valid &&
-                    registerForm.get('EmploymentStatus').touched
-                  "
-                  class="help-block"
-                  >Please enter a valid status!</span
-                >
-                  
+                    *ngIf="
+                      !registerForm.get('EmploymentStatus').valid &&
+                      registerForm.get('EmploymentStatus').touched
+                    "
+                    class="help-block"
+                    >status cannot be empty!</span
+                  >
                 </div>
                 <div class="form-group">
                   <input
@@ -317,13 +321,13 @@
                     formControlName="District"
                   />
                   <span
-                  *ngIf="
-                    !registerForm.get('District').valid &&
-                    registerForm.get('District').touched
-                  "
-                  class="help-block"
-                  >Please enter a valid district!</span
-                >
+                    *ngIf="
+                      !registerForm.get('District').valid &&
+                      registerForm.get('District').touched
+                    "
+                    class="help-block"
+                    >District cannot be empty!</span
+                  >
                 </div>
                 <div class="form-group">
                   <input
@@ -333,15 +337,14 @@
                     formControlName="PinCode"
                   />
                   <span
-                  *ngIf="
-                    !registerForm.get('PinCode').valid &&
-                    registerForm.get('PinCode').touched
-                  "
-                  class="help-block"
-                  >Please enter a valid pin code!</span
-                >
+                    *ngIf="
+                      !registerForm.get('PinCode').valid &&
+                      registerForm.get('PinCode').touched
+                    "
+                    class="help-block"
+                    >Enter valid pin code!</span
+                  >
                 </div>
-
                 <input
                   class="text-center ml-10"
                   [disabled]="registerForm.invalid"
@@ -350,12 +353,14 @@
                   value="Register"
                 />
               </div>
-              <span class="text-danger" *ngIf="!registerForm.valid && registerForm.touched" class="help-block"
-              >Please enter valid data!</span
-            >
+              <span
+                
+                *ngIf="!registerForm.valid && registerForm.touched"
+                class="help-block"
+                >enter valid data!</span
+              >
               <!-- closed -->
             </div>
-           
             <!-- form closed -->
           </form>
         </div>

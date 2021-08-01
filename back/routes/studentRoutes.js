@@ -26,43 +26,103 @@ router.get(
     return res.send(false);
   })
 );
+router.put(
+  "/reset",
+  wrapAsync(async (req, res) => {
+    console.log(req.body);
+    const { Email, Password } = req.body;
+    // const student = await StudentData.findOne(Email);
+    const student = await StudentData.findOneAndUpdate(Email, { Password });
+    if (student) {
+      // await student.update({Password})
+
+      res.status(200).send({ status: true });
+    } else {
+      res.send({ status: false });
+    }
+  })
+);
 
 router.put(
   "/:id",
   wrapAsync(async (req, res) => {
     const { id } = req.params;
-
+    console.log(id);
     console.log(req.body.Student);
-
-    // const Student = await StudentData.findByIdAndUpdate(id, {
-    //   ...req.body.Student,
-    // });
     const Student = await StudentData.findByIdAndUpdate(id, {
-      $set: {
-        Name: req.body.Student.Name,
-        Email: req.body.Student.Email,
-        Phone: req.body.Student.Phone,
-        State: req.body.Student.State,
-        HighestQualification: req.body.Student.HighestQualification,
-        PassOfYear: req.body.Student.PassOfYear,
-        SkillSet: req.body.Student.SkillSet,
-        EmploymentStatus: req.body.Student.EmploymentStatus,
-        Course: req.body.Student.Course,
-        DOB: req.body.Student.DOB,
-        Password: StudentData.hashPassword(req.body.Student.Password),
-        // Password:req.body.Student.Password
-      },
+      ...req.body.Student,
     });
 
+    // const Student = await StudentData.findByIdAndUpdate(id, {
+    //   $set: {
+    //     Name: req.body.Student.Name,
+    //     Email: req.body.Student.Email,
+    //     Phone: req.body.Student.Phone,
+    //     State: req.body.Student.State,
+    //     HighestQualification: req.body.Student.HighestQualification,
+    //     PassOfYear: req.body.Student.PassOfYear,
+    //     SkillSet: req.body.Student.SkillSet,
+    //     EmploymentStatus: req.body.Student.EmploymentStatus,
+    //     Course: req.body.Student.Course,
+    //     DOB: req.body.Student.DOB,
+    //     Password:req.body.Student.Password,
+    //   },
+    // });
+
+    console.log(Student);
     return res.send(Student);
   })
 );
+// router.put(
+//   "/:id/profilepic",
+//   upload.single("img"),
+//   wrapAsync(async (req, res) => {
+//     const { id } = req.params;
+//     await Bookdata.updateOne(
+//       { _id: id },
+//       {
+//         $set: {
+//           image: {
+//             data: fs.readFileSync(req.file.path),
+//             contentType: "image",
+//           },
+//         },
+//       }
+//     );
+//   })
+// );
+
+// app.put("/book", upload.single("img"), (req, res) => {
+//   console.log(req.body);
+//   (id = req.body._id),
+//     (title = req.body.title),
+//     (author = req.body.author),
+//     (description = req.body.description),
+//     (genre = req.body.genre),
+//     BookData.updateOne(
+//       { _id: id },
+//       {
+//         $set: {
+//           title: title,
+//           author: author,
+//           description: description,
+//           genre: genre,
+//           image: {
+//             data: fs.readFileSync(req.file.path),
+//             contentType: "image",
+//           },
+//         },
+//       }
+//     ).then(function (book) {
+//       res.send(book);
+//     });
+// });
 
 router.delete(
   "/:id",
   wrapAsync(async (req, res) => {
     const deletedStudent = await StudentData.findByIdAndDelete(req.params.id);
-    return res.send(deletedStudent);
+    return res.status(200).send(true);
   })
 );
 // ********************       Mail   **************************************************

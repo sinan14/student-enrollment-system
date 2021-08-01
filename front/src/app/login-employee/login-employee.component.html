@@ -1,5 +1,3 @@
-<!-- //*************************************************************************************** -->
-<!-- <div class="px-1 px-md-5 px-lg-1 px-xl-5 py-5 mx-auto"> -->
 <div class="card card0 border-0">
   <div class="row d-flex">
     <div class="col-lg-6">
@@ -25,7 +23,7 @@
         >
           <li class="nav-item">
             <a
-              class="nav-link"
+              class="nav-link active"
               data-toggle="tab"
               routerLink="/employeelogin"
               role="tab"
@@ -36,7 +34,7 @@
           </li>
           <li class="nav-item">
             <a
-              class="nav-link active"
+              class="nav-link"
               data-toggle="tab"
               routerLink="/login"
               role="tab"
@@ -47,7 +45,7 @@
         </ul>
       </div>
       <div id="heading">
-        <h3 class="login-heading">sign in as student</h3>
+        <h3>sign in as employee</h3>
       </div>
 
       <div class="card2 card border-0 px-4 py-5">
@@ -68,7 +66,7 @@
           <small class="or text-center">Or</small>
           <div class="line"></div>
         </div>
-        <form [formGroup]="loginForm" (ngSubmit)="loginUser()">
+        <form [formGroup]="emploginForm" (ngSubmit)="loginUser()">
           <div class="row px-3">
             <label class="mb-1">
               <h6 class="mb-0 text-sm">Email Address</h6>
@@ -76,16 +74,35 @@
             <input
               class="mb-4"
               type="text"
-              name="email"
-              formControlName="Email"
+              formControlName="email"
               placeholder="Enter a valid email address"
             />
             <span
               *ngIf="
-                !loginForm.get('Email').valid && loginForm.get('Email').touched
+                !emploginForm.get('email').valid &&
+                emploginForm.get('email').touched
               "
               class="help-block"
-              >Please enter valid email!</span
+              >enter valid email!</span
+            >
+          </div>
+          <div class="row px-3">
+            <label class="mb-1">
+              <h6 class="mb-0 text-sm">Employee Id</h6>
+            </label>
+            <input
+              class="mb-4"
+              type="text"
+              formControlName="employeeId"
+              placeholder="Enter Id"
+            />
+            <span
+              *ngIf="
+                !emploginForm.get('employeeId').valid &&
+                emploginForm.get('employeeId').touched
+              "
+              class="help-block"
+              >enter valid Id!</span
             >
           </div>
           <div class="row px-3">
@@ -93,15 +110,15 @@
               <h6 class="mb-0 text-sm">Password</h6>
             </label>
             <input
+              class="mb-4"
               type="password"
-              name="password"
-              formControlName="Password"
+              formControlName="password"
               placeholder="Enter password"
             />
             <span
               *ngIf="
-                !loginForm.get('Password').valid &&
-                loginForm.get('Password').touched
+                !emploginForm.get('password').valid &&
+                emploginForm.get('password').touched
               "
               class="help-block"
               >Please enter valid password!</span
@@ -119,7 +136,7 @@
                 >Remember me</label
               >
             </div>
-            <a [routerLink]="['/resetPassword']" class="ml-auto mb-0 text-sm"
+            <a [routerLink]="['/resetEmployeePassword']" class="ml-auto mb-0 text-sm"
               >Forgot Password?</a
             >
           </div>
@@ -127,7 +144,7 @@
             <button
               type="submit"
               class="btn btn-success float-right text-center"
-              [disabled]="loginForm.invalid"
+              [disabled]="emploginForm.invalid"
             >
               Login
             </button>
@@ -136,7 +153,7 @@
         <div class="row mb-4 px-3">
           <small class="font-weight-bold"
             >Don't have an account?
-            <a [routerLink]="['/register']" class="text-danger"
+            <a [routerLink]="['/employeeregister']" class="text-danger"
               >Register</a
             ></small
           >
@@ -144,10 +161,5 @@
       </div>
     </div>
   </div>
-  <!-- <div class="bg-blue py-4">
-            <div class="row px-3"> <small class="ml-4 ml-sm-5 mb-2">Copyright &copy; 2019. All rights reserved.</small>
-                <div class="social-contact ml-4 ml-sm-auto"> <span class="fa fa-facebook mr-4 text-sm"></span> <span class="fa fa-google-plus mr-4 text-sm"></span> <span class="fa fa-linkedin mr-4 text-sm"></span> <span class="fa fa-twitter mr-4 mr-sm-5 text-sm"></span> </div>
-            </div>
-        </div> -->
 </div>
 <!-- </div> -->

@@ -12,6 +12,7 @@ export class StudentPaymentComponent implements OnInit {
   id: string;
   Student = {
     Status: 'Active',
+    PaymentDate: new Date(),
   };
   constructor(
     private _router: Router,
@@ -24,7 +25,7 @@ export class StudentPaymentComponent implements OnInit {
   }
   editProfile(item: any) {
     return this._http.put(`http://localhost:3000/students/${this.id}`, {
-      Student: item,
+      Student: item
     });
   }
   updateProfile() {

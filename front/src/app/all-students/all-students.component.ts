@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { forkJoin } from 'rxjs';
+import { tap } from 'rxjs/operators'
 
 @Component({
   selector: 'app-all-students',
@@ -26,6 +28,9 @@ export class AllStudentsComponent implements OnInit {
       Post: '',
       PinCode: '',
       Status: '',
+      PaymentDate: '',
+      ApprovalDate:'',
+      CreationDate:''
     },
   ];
 
@@ -35,15 +40,36 @@ export class AllStudentsComponent implements OnInit {
   }
   ngOnInit() {
     this.getStudents().subscribe((data) => {
+      
       this.Students = JSON.parse(JSON.stringify(data));
+      console.log(this.Students)
     });
   }
-  onSendEmail(id) {
-    console.log(id);
+
+  edit(id) {
     return this._http
-      .get(`http://localhost:3000/students/${id}/sendmail/`)
-      .subscribe((data) => {
-        // console.log(data);
-      });
+      .put(`http://localhost:3000/students/${id}`, {
+        Student: { ApprovalDate: new Date() },
+      })
+      .subscribe(() => {});
+  }
+  onSendEmail(id) {
+    forkJoin([
+      this._http.get(`http://localhost:3000/students/${id}/sendmail/`),
+      this._http.put(`http://localhost:3000/students/${id}`, {
+        Student: { ApprovalDate: new Date() },
+      }),
+    ]) .pipe(tap(console.log))
+    .subscribe();
+
+
+
+    // return this._http.get(`http://localhost:3000/students/${id}/sendmail/`)
+    //   .subscribe((data) => {
+    //     return this._http.put(`http://localhost:3000/students/${id}`, {
+    //       Student: { ApprovalDate: new Date()}}).subscribe(()=>{})
+
+    //   });
+    // ;
   }
 }
