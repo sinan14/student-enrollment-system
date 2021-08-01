@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const bcrypt = require("bcrypt");
 
 const StudentSchema = new Schema({
   Name: {
@@ -86,7 +85,7 @@ const StudentSchema = new Schema({
 
 // StudentSchema.statics.findAndValidate = async function (Email, Password) {
 //   const foundUser = await this.findOne({ Email,Password });
-//   // const isValid = await bcrypt.compare(Password, foundUser.Password);
+// const isValid = await bcrypt.compare(Password, foundUser.Password);
 //   if (foundUser) {
 //     return foundUser;
 //   } else {

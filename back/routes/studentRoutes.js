@@ -5,6 +5,10 @@ const jwt = require("jsonwebtoken");
 const StudentData = require("../model/student");
 const { verifyToken } = require("../middleware");
 const nodemailer = require("nodemailer");
+const multer = require("multer")
+var imagedest= __dirname
+var upload = multer({ dest: imagedest });
+const fs = require('fs')
 
 //************************        register route ***************************************/
 router.post(
@@ -58,18 +62,6 @@ router.get(
     });
   })
 );
-
-router.get(
-  "/:id",
-  wrapAsync(async (req, res) => {
-    const Student = await StudentData.findById(req.params.id);
-    // console.log(Student)
-    if (Student) {
-      return res.send(Student);
-    }
-    return res.send(false);
-  })
-);
 router.put(
   "/reset",
   wrapAsync(async (req, res) => {
@@ -86,7 +78,22 @@ router.put(
     }
   })
 );
+//*************** students fetching  */
 
+router.get(
+  "/:id",
+  wrapAsync(async (req, res) => {
+    const Student = await StudentData.findById(req.params.id);
+    // console.log(Student)
+    if (Student) {
+      return res.send(Student);
+    }
+    return res.send(false);
+  })
+);
+
+
+//************************ profile update */
 router.put(
   "/:id",
   wrapAsync(async (req, res) => {
@@ -97,44 +104,29 @@ router.put(
       ...req.body.Student,
     });
 
-    // const Student = await StudentData.findByIdAndUpdate(id, {
-    //   $set: {
-    //     Name: req.body.Student.Name,
-    //     Email: req.body.Student.Email,
-    //     Phone: req.body.Student.Phone,
-    //     State: req.body.Student.State,
-    //     HighestQualification: req.body.Student.HighestQualification,
-    //     PassOfYear: req.body.Student.PassOfYear,
-    //     SkillSet: req.body.Student.SkillSet,
-    //     EmploymentStatus: req.body.Student.EmploymentStatus,
-    //     Course: req.body.Student.Course,
-    //     DOB: req.body.Student.DOB,
-    //     Password:req.body.Student.Password,
-    //   },
-    // });
-
     console.log(Student);
     return res.send(Student);
   })
 );
-// router.put(
-//   "/:id/profilepic",
-//   upload.single("img"),
-//   wrapAsync(async (req, res) => {
-//     const { id } = req.params;
-//     await Bookdata.updateOne(
-//       { _id: id },
-//       {
-//         $set: {
-//           image: {
-//             data: fs.readFileSync(req.file.path),
-//             contentType: "image",
-//           },
-//         },
-//       }
-//     );
-//   })
-// );
+//******************* profiel photo update  ******************************/
+router.put(
+  "/:id/profilepic",
+  upload.single("img"),
+  wrapAsync(async (req, res) => {
+    const { id } = req.params;
+    await StudentData.updateOne(
+      { _id: id },
+      {
+        $set: {
+          image: {
+            data: fs.readFileSync(req.file.path),
+            contentType: "image",
+          },
+        },
+      }
+    );
+  })
+);
 
 // app.put("/book", upload.single("img"), (req, res) => {
 //   console.log(req.body);
@@ -169,6 +161,7 @@ router.delete(
     return res.status(200).send(true);
   })
 );
+
 // ********************       Mail   **************************************************
 router.get(
   "/:id/sendmail",
