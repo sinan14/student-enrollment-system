@@ -39,12 +39,6 @@ export class StudentProfileComponent implements OnInit {
 
   Student: StudentModel = {
     _id: '',
-    Suid:'',
-    image: {
-      data: {},
-      contentType: '',
-    },
-    imageUrl: '',
     Name: '',
     Email: '',
     Phone: '',
@@ -56,6 +50,12 @@ export class StudentProfileComponent implements OnInit {
     Course: '',
     DOB: '',
     Password: '',
+    Suid:'',
+    image: {
+      data: {},
+      contentType: '',
+    },
+    imageUrl: '',
   };
 
   constructor(
@@ -238,20 +238,7 @@ export class StudentProfileComponent implements OnInit {
     const formData = new FormData();
     formData.append('img', this.photoUpdateForm.get('img')!.value);
     this.uploadPic(formData).subscribe((res) => {
-      setTimeout(() => {
-        this.ngOnInit();
-      }, 7000);
-
-      // this.ngOnInit();
-      // Swal.fire({
-      //   title: 'Good Job!!',
-      //   text: 'profile updated successfully',
-      //   icon: 'success',
-      //   timer: 500,
-      //   showConfirmButton: false,
-      // }).then((refresh) => {
-      //   this.ngOnInit();
-      // });
+    
     });
   }
 }

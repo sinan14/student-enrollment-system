@@ -3,6 +3,10 @@
   /* margin-top: 4%; */
   padding: 3%;
 }
+#section {
+  /* height: 100vh; */
+  margin-top:5.6rem;
+}
 .register-left {
   text-align: center;
   color: #fff;

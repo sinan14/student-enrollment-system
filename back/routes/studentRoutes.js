@@ -107,7 +107,6 @@ router.put(
     const Student = await StudentData.findByIdAndUpdate(id, {
       ...req.body.Student,
     });
-
     // console.log(Student);
     return res.send(Student);
   })
@@ -203,21 +202,20 @@ router.put(
       length:6
     });
     const { id } = req.params;
-    const { Course} = req.body.Student;
-    const { Email } = req.body.Student;
+    const {Course,Email,PaymentDate} = req.body.Student;
     const studentPass = `1@${password}`
     
     const first = Course.slice(0,4).toUpperCase();
     const suid = `${first}${uuid}`
-    console.log(suid)
-
-    console.log(`your password is        ${studentPass}`)
+    // console.log(suid)
+    // console.log(`your password is        ${studentPass}`)
     const student = StudentData.findByIdAndUpdate(
       { _id: id },
       {
         $set: {
           Password: studentPass,
-          Suid:suid
+          Suid:suid,
+          PaymentDate:PaymentDate
         }}
     )
     student.then(function (Student) {
@@ -257,10 +255,10 @@ router.put(
     transporter.sendMail(mailOptions, (err, response) => {
       if (err) {
         console.log("there is an error", err);
-        return res.send({ statud: false });
+        return res.send({ status: false });
       } else {
         // console.log("here is the res", response);
-        return res.send({ status: true });
+        return res.send(false);
       }
     });
   })

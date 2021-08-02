@@ -6,8 +6,13 @@
   background-repeat: no-repeat;
 } */
 /*  whole  */
+#login-sec {
+    /* height: 100vh !important; */
+    margin-top:5.6rem;
+}
 
 section {
+  /* margin-top: 300px !important; */
   background: #67b26f; /* fallback for old browsers */
   background: -webkit-linear-gradient(
     to right,

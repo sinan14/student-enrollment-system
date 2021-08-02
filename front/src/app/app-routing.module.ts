@@ -5,11 +5,11 @@ import { ResetEmpPasswordComponent } from './reset-emp-password/reset-emp-passwo
 import { ErrorsComponent } from './Errors/errors.component';
 import { StudentPaymentComponent } from './student-payment/student-payment.component';
 import { AllStudentsComponent } from './all-students/all-students.component';
-import { AdminDataTableComponent } from './admin-data-table/admin-data-table.component';
+// import { AdminDataTableComponent } from './admin-data-table/admin-data-table.component';
 import { StudentProfileComponent } from './student-profile/student-profile.component';
 import { HomeComponent } from './home/home.component';
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes,ExtraOptions } from '@angular/router';
 import { StudentRegisterComponent } from './student-register/student-register.component';
 import { LoginComponent } from './login/login.component';
 import { NavHeaderComponent } from './nav-header/nav-header.component';
@@ -18,9 +18,13 @@ import { CoursesComponent } from './courses/courses.component';
 import { EmployeeFormComponent } from './employee-form/employee-form.component';
 import { LoginEmployeeComponent } from './login-employee/login-employee.component';
 // import { }
+const routerOptions: ExtraOptions = {
+  scrollPositionRestoration: 'enabled',
+  anchorScrolling: 'enabled',
+  scrollOffset: [0, 64],
+};
 const routes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
-  
   { path: 'home', component: HomeComponent },
   { path: 'courses', component: CoursesComponent },
   { path: 'register', component: StudentRegisterComponent },
@@ -36,13 +40,13 @@ const routes: Routes = [
     pathMatch: 'full',
   },
   { path: 'students/:_id/pay', component: StudentPaymentComponent },
-  { path: 'admintable', component: AdminDataTableComponent },
+  // { path: 'admintable', component: AdminDataTableComponent },
   { path: 'error', component: ErrorsComponent },
   { path: '**', component: PageNotFoundComponent },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes,routerOptions)],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

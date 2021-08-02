@@ -18,8 +18,6 @@ export class StudentRegisterComponent {
   emailReg = /^[a-z0-9.%+]+@[a-z09.-]+.[a-z]{2,4}/;
   phoneReg = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
 
-  
-
   registerForm = this._fb.group({
     Name: ['', Validators.required],
     Email: ['', [Validators.required, Validators.pattern(this.emailReg)]],
@@ -42,7 +40,6 @@ export class StudentRegisterComponent {
     // gender: ['male',Validators.required]
   });
 
-  
   registerStudent() {
     if (this.registerForm.invalid) {
       return;

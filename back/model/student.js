@@ -6,8 +6,8 @@ const StudentSchema = new Schema({
     type: String,
     required: true,
   },
-  Suid:{
-    type:String,
+  Suid: {
+    type: String,
   },
   image: {
     data: Buffer,
@@ -15,10 +15,12 @@ const StudentSchema = new Schema({
   },
   Email: {
     type: String,
+    // unique: true,
     required: true,
   },
   Phone: {
     type: String,
+    // unique: true,
     required: true,
   },
   Sex: {
@@ -78,6 +80,9 @@ const StudentSchema = new Schema({
     required: true,
   },
 });
+
+module.exports = mongoose.model("Student", StudentSchema);
+
 // StudentSchema.statics.hashPassword = function hashPassword(Password) {
 //   return bcrypt.hashSync(Password, 10);
 // };
@@ -101,5 +106,3 @@ const StudentSchema = new Schema({
 //   this.Password = await bcrypt.hash(this.Password, 10);
 //   next();
 // });
-
-module.exports = mongoose.model("Student", StudentSchema);

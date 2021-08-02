@@ -1,11 +1,12 @@
-<section>
+<section id="login-sec">
   <div class="card card0 border-0">
     <div class="row d-flex">
       <div class="col-lg-6">
         <div class="card1 pb-5">
-          <!-- <div class="row">
- i deleted the  logo since a logo in nav bar
-          </div> -->
+          <div class="row">
+            <!-- i deleted the  logo since a logo in nav bar -->
+            <div class="logo"></div>
+          </div>
           <div class="row px-3 justify-content-center mt-4 mb-5 border-line">
             <img src="https://i.imgur.com/uNGdWHi.png" class="image" />
           </div>
@@ -43,9 +44,9 @@
           </ul>
         </div>
         <div id="heading">
-          <h3>sign in as employee</h3>
+          <h3><strong>Sign In As Employee</strong></h3>
         </div>
-  
+
         <div class="card2 card border-0 px-4 py-5">
           <div class="row mb-4 px-3">
             <h6 class="mb-0 mr-4 mt-2">Sign in with</h6>
@@ -134,7 +135,9 @@
                   >Remember me</label
                 >
               </div>
-              <a [routerLink]="['/resetEmployeePassword']" class="ml-auto mb-0 text-sm"
+              <a
+                [routerLink]="['/resetEmployeePassword']"
+                class="ml-auto mb-0 text-sm"
                 >Forgot Password?</a
               >
             </div>
@@ -160,10 +163,6 @@
       </div>
     </div>
   </div>
-
-
-
 </section>
-
 
 <!-- </div> -->

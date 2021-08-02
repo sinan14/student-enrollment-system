@@ -1,9 +1,14 @@
-body {
+/* body {
     color: #000;
     overflow-x: hidden;
     height: 100%;
     background-color: #B0BEC5;
     background-repeat: no-repeat
+} */
+#section {
+    /* height: 100vh !important; */
+    margin-top:5.6rem;
+
 }
 #ul1 {
     margin: 5px 0px 10px 30px;

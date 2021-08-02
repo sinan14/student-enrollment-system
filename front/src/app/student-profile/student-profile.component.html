@@ -1,12 +1,13 @@
-<section>
+<section id="section">
   <!-- Student Profile -->
-  <div class="student-profile py-4">
+  <div class="student-profile py-4 mt-10">
     <div class="container">
       <div class="row">
         <div class="col-lg-4">
           <div class="card shadow-sm">
             <div class="card-header bg-transparent text-center">
               <img
+                *ngIf="Student.image"
                 class="profile_img"
                 [src]="
                   'data:image/' +
@@ -16,21 +17,23 @@
                 "
                 alt="student dp"
               />
-              <form *ngIf="showEditButton" [formGroup]="photoUpdateForm" (ngSubmit)="add_pic()">
+              <form
+                *ngIf="showEditButton"
+                [formGroup]="photoUpdateForm"
+                (ngSubmit)="add_pic()"
+              >
                 <div class="form-group">
                   <input
-                    
                     type="file"
                     width="150px"
                     class="form-control"
                     placeholder="Upload image"
-                   
                     accept="image/png, image/gif, image/jpeg"
                     required
                   />
                 </div>
                 <input
-                   (change)="selectImage($event)"
+                  (change)="selectImage($event)"
                   style="width: 100px"
                   class="btn btn-sm btn-success"
                   type="submit"
@@ -51,9 +54,11 @@
             </div>
             <div class="card-body">
               <p class="mb-0">
-                <strong class="pr-1">Student ID:</strong>{{Student.Suid}}
+                <strong class="pr-1">Student ID:</strong>{{ Student.Suid }}
               </p>
-              <p class="mb-0"><strong class="pr-1">Batch:</strong>Mean-Stack</p>
+              <p class="mb-0">
+                <strong class="pr-1">Batch:</strong>{{ Student.Course }}
+              </p>
               <p class="mb-0"><strong class="pr-1">Section:</strong>Retail</p>
             </div>
           </div>
@@ -68,7 +73,7 @@
             <!-- <form (ngSubmit)="updateProfile()"> -->
             <form [formGroup]="studentUpdateForm" (ngSubmit)="updateStudent()">
               <div class="card-body pt-0">
-                <table class="table table-bordered table-responsive">
+                <table class="table table-responsive">
                   <tr>
                     <th width="30%">Student Name</th>
                     <td width="2%">:</td>
@@ -77,8 +82,8 @@
                         type="text"
                         [value]="Student.Name"
                         [ngClass]="{
-                          inputFocus: readonly == false,
-                          inputBorderAtReadOnly: readonly
+                          Border: !readonly,
+                          noBorder: readonly
                         }"
                         [readonly]="readonly"
                       />
@@ -93,8 +98,8 @@
                         formControlName="Email"
                         [value]="Student.Email"
                         [ngClass]="{
-                          inputFocus: readonly == false,
-                          inputBorderAtReadOnly: readonly
+                          Border: !readonly,
+                          noBorder: readonly
                         }"
                         [readonly]="readonly"
                       />
@@ -109,8 +114,8 @@
                         formControlName="Phone"
                         [value]="Student.Phone"
                         [ngClass]="{
-                          inputFocus: readonly == false,
-                          inputBorderAtReadOnly: readonly
+                          Border: !readonly,
+                          noBorder: readonly
                         }"
                         [readonly]="readonly"
                       />
@@ -128,8 +133,8 @@
                         onfocus="(this.type='date')"
                         onblur="(this.type='text')"
                         [ngClass]="{
-                          inputFocus: readonly == false,
-                          inputBorderAtReadOnly: readonly
+                          Border: !readonly,
+                          noBorder: readonly
                         }"
                         [readonly]="readonly"
                       />
@@ -143,8 +148,8 @@
                         formControlName="State"
                         [value]="Student.State"
                         [ngClass]="{
-                          inputFocus: readonly == false,
-                          inputBorderAtReadOnly: readonly
+                          Border: !readonly,
+                          noBorder: readonly
                         }"
                         [readonly]="readonly"
                       />
@@ -159,8 +164,8 @@
                         formControlName="HighestQualification"
                         [value]="Student.HighestQualification"
                         [ngClass]="{
-                          inputFocus: readonly == false,
-                          inputBorderAtReadOnly: readonly
+                          Border: !readonly,
+                          noBorder: readonly
                         }"
                         [readonly]="readonly"
                       />
@@ -178,8 +183,8 @@
                         step="1"
                         [value]="Student.PassOfYear"
                         [ngClass]="{
-                          inputFocus: readonly == false,
-                          inputBorderAtReadOnly: readonly
+                          Border: !readonly,
+                          noBorder: readonly
                         }"
                         [readonly]="readonly"
                       />
@@ -194,8 +199,8 @@
                         type="text"
                         [value]="Student.SkillSet"
                         [ngClass]="{
-                          inputFocus: readonly == false,
-                          inputBorderAtReadOnly: readonly
+                          Border: !readonly,
+                          noBorder: readonly
                         }"
                         [readonly]="readonly"
                       />
@@ -210,8 +215,8 @@
                         type="text"
                         [value]="Student.EmploymentStatus"
                         [ngClass]="{
-                          inputFocus: !readonly,
-                          inputBorderAtReadOnly: readonly
+                          Border: !readonly,
+                          noBorder: readonly
                         }"
                         [readonly]="readonly"
                       />
@@ -226,8 +231,8 @@
                         type="text"
                         [value]="Student.Course"
                         [ngClass]="{
-                          inputFocus: !readonly,
-                          inputBorderAtReadOnly: readonly
+                          Border: !readonly,
+                          noBorder: readonly
                         }"
                         [readonly]="readonly"
                       />
@@ -242,8 +247,8 @@
                         type="text"
                         [value]="Student.Password"
                         [ngClass]="{
-                          inputFocus: readonly == false,
-                          inputBorderAtReadOnly: readonly
+                          Border: !readonly,
+                          noBorder: readonly
                         }"
                         [readonly]="readonly"
                       />
@@ -251,10 +256,15 @@
                   </tr>
                 </table>
                 <div *ngIf="readonly">
-                  <button *ngIf="showEditButton" (click)="update()" class="btn btn-sm btn-warning">
+                  <button
+                    *ngIf="showEditButton"
+                    (click)="update()"
+                    class="btn btn-sm btn-warning"
+                  >
                     Update
                   </button>
-                  <button *ngIf="showDeleteButton"
+                  <button
+                    *ngIf="showDeleteButton"
                     type="button"
                     (click)="deleteProfile()"
                     class="btn btn-sm btn-danger"
@@ -262,10 +272,13 @@
                     Delete
                   </button>
                 </div>
-                
+
                 <div *ngIf="!readonly">
-                  <button *ngIf="showEditButton" class="btn btn-success btn-sm">Save</button>
-                  <button *ngIf="showEditButton"
+                  <button *ngIf="showEditButton" class="btn btn-success btn-sm">
+                    Save
+                  </button>
+                  <button
+                    *ngIf="showEditButton"
                     type="button"
                     (click)="discard()"
                     class="btn btn-info btn-sm"

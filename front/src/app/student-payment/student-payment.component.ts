@@ -47,7 +47,26 @@ export class StudentPaymentComponent implements OnInit {
           PaymentDate: new Date(),
         },
       })
-      .subscribe(() => {});
+      .subscribe(
+        (response) => {
+          if (response) {
+            Swal.fire({
+              title: 'Good Job',
+              icon: 'success',
+              text: 'payment accepted',
+            });
+          } else {
+            Swal.fire({
+              title: 'errpr',
+              icon: 'error',
+              text: 'something went wrong',
+            });
+          }
+        },
+        (errorMessage) => {
+          Swal.fire('danger!!', 'some internal error', 'error');
+        }
+      );
   }
   updateProfile() {
     this.editProfile(this.Student);
@@ -62,8 +81,7 @@ export class StudentPaymentComponent implements OnInit {
         }
         this.Student = JSON.parse(JSON.stringify(studentData));
         this.fee = this.courseFee[this.Student.Course];
- 
-        console.log(this.Student);
+        // console.log(this.Student);
       },
       (errorMessage) => {
         Swal.fire('danger!!', 'some internal error', 'error');

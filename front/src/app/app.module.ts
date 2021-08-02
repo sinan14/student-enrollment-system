@@ -11,15 +11,12 @@ import { TokenInterceptorService } from './token-interceptor.service';
 import { AuthGuard } from './auth.guard';
 import { CommonModule } from '@angular/common';
 
-
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { StudentRegisterComponent } from './student-register/student-register.component';
 import { NavHeaderComponent } from './nav-header/nav-header.component';
-
 import { StudentProfileComponent } from './student-profile/student-profile.component';
-import { AdminDataTableComponent } from './admin-data-table/admin-data-table.component';
 import { AllStudentsComponent } from './all-students/all-students.component';
 import { StudentPaymentComponent } from './student-payment/student-payment.component';
 import { FooterComponent } from './footer/footer.component';
@@ -32,7 +29,7 @@ import { ResetEmpPasswordComponent } from './reset-emp-password/reset-emp-passwo
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { SafePipe } from './safe.pipe';
 // import { NewdatatableComponent } from './newdatatable/newdatatable.component';
-
+// import { AdminDataTableComponent } from './admin-data-table/admin-data-table.component';
 
 @NgModule({
   declarations: [
@@ -45,8 +42,8 @@ import { SafePipe } from './safe.pipe';
     StudentProfileComponent,
     SafePipe,
     // NewdatatableComponent,
-    
-    AdminDataTableComponent,
+
+    // AdminDataTableComponent,
     AllStudentsComponent,
     StudentPaymentComponent,
     ResetPasswordComponent,
@@ -54,7 +51,7 @@ import { SafePipe } from './safe.pipe';
     EmployeeFormComponent,
     LoginEmployeeComponent,
     ResetEmpPasswordComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
   ],
   imports: [
     BrowserModule,
@@ -72,6 +69,6 @@ import { SafePipe } from './safe.pipe';
       multi: true,
     },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
