@@ -10,13 +10,8 @@ var imagedest = __dirname;
 var upload = multer({ dest: imagedest });
 const fs = require("fs");
 const generator = require("generate-password");
-// var password = generator.generate({
-// 	length: 8,
-// 	numbers: true,
-// symbols: true
-// });
 
-//************************        register route ***************************************/
+//************************        register route      *******************************/
 router.post(
   "/register",
   wrapAsync(async function (req, res) {
@@ -33,7 +28,7 @@ router.post(
   })
 );
 
-//*********************************************** login routes ********************************** */
+//************************      checks login            ************************ */
 router.post(
   "/login",
   wrapAsync(async function (req, res) {
@@ -60,6 +55,25 @@ router.post(
   })
 );
 
+//***************************    resets  student password   *************************/
+router.put(
+  "/reset",
+  wrapAsync(async (req, res) => {
+    // console.log(req.body);
+    const { Email, Password } = req.body;
+    // const student = await StudentData.findOne(Email);
+    const student = await StudentData.findOneAndUpdate(Email, { Password });
+    if (student) {
+      // await student.update({Password})
+      res.status(200).send({ status: true });
+    } else {
+      res.send({ status: false });
+    }
+  })
+);
+
+//***************************    Getting all student      *************************/
+
 router.get(
   "",
   wrapAsync(async (req, res) => {
@@ -68,23 +82,8 @@ router.get(
     });
   })
 );
-router.put(
-  "/reset",
-  wrapAsync(async (req, res) => {
-    console.log(req.body);
-    const { Email, Password } = req.body;
-    // const student = await StudentData.findOne(Email);
-    const student = await StudentData.findOneAndUpdate(Email, { Password });
-    if (student) {
-      // await student.update({Password})
 
-      res.status(200).send({ status: true });
-    } else {
-      res.send({ status: false });
-    }
-  })
-);
-//*************** students fetching  */
+//***************            student fetching By Id      *****************************/
 
 router.get(
   "/:id",
@@ -98,22 +97,23 @@ router.get(
   })
 );
 
-//************************ profile update */
+//************************        profile update        ******************************/
 router.put(
   "/:id",
   wrapAsync(async (req, res) => {
     const { id } = req.params;
-    console.log(id);
-    console.log(req.body.Student);
+    // console.log(id);
+    // console.log(req.body.Student);
     const Student = await StudentData.findByIdAndUpdate(id, {
       ...req.body.Student,
     });
 
-    console.log(Student);
+    // console.log(Student);
     return res.send(Student);
   })
 );
-//******************* profiel photo update  ******************************/
+
+//*******************           profiel photo update          ***********************/
 router.put(
   "/:id/profilepic",
   upload.single("img"),
@@ -133,6 +133,8 @@ router.put(
   })
 );
 
+//*************************    delete the student profile     *************************/
+
 router.delete(
   "/:id",
   wrapAsync(async (req, res) => {
@@ -141,11 +143,12 @@ router.delete(
   })
 );
 
-// ********************       Mail   **************************************************
+// ********************       Mail sends on approving               ***************
 router.get(
   "/:id/sendmail",
   wrapAsync(async (req, res) => {
     const { id } = req.params;
+    const { Email } = req.body.Student;
     console.log(id);
     const link = `localhost:4200/students/${id}/pay`;
     const transporter = nodemailer.createTransport({
@@ -162,7 +165,7 @@ router.get(
     });
     const mailOptions = {
       from: process.env.USER,
-      to: process.env.USER,
+      to: `${Email}`,
       // from: "sinuzar5@gmail.com",
       // to: "sinuzar5@gmail.com",
       subject: `pay your turion fee for ictak`,
@@ -178,8 +181,86 @@ router.get(
     transporter.sendMail(mailOptions, (err, response) => {
       if (err) {
         console.log("there is an error", err);
+        return res.send({ statud: false });
       } else {
         console.log("here is the res", response);
+        return res.send({ status: true });
+      }
+    });
+  })
+);
+
+//***************************          sends mail on accepting payment ***********/
+router.put(
+  "/:id/pay",
+  wrapAsync(async (req, res) => {
+    const password = generator.generate({
+      length: 8,
+      numbers: true,
+      symbols: true,
+    }); 
+    const uuid = generator.generate({
+      length:6
+    });
+    const { id } = req.params;
+    const { Course} = req.body.Student;
+    const { Email } = req.body.Student;
+    const studentPass = `1@${password}`
+    
+    const first = Course.slice(0,4).toUpperCase();
+    const suid = `${first}${uuid}`
+    console.log(suid)
+
+    console.log(`your password is        ${studentPass}`)
+    const student = StudentData.findByIdAndUpdate(
+      { _id: id },
+      {
+        $set: {
+          Password: studentPass,
+          Suid:suid
+        }}
+    )
+    student.then(function (Student) {
+      // console.log(Student)
+    });
+    const transporter = nodemailer.createTransport({
+      host: "smtp.gmail.com",
+      service: "gmail",
+      port: 587,
+      secure: false,
+      auth: {
+        user: process.env.USER,
+        pass: process.env.PASS,
+        // user: "sinuzar5@gmail.com",
+        // pass: "ningade mailinte password",
+      },
+    });
+    const mailOptions = {
+      from: process.env.USER,
+      to: `${Email}`,
+      // from: "sinuzar5@gmail.com",
+      // to: "sinuzar5@gmail.com",
+      subject: `payment received`,
+      // text:
+      //   `you are receiving this email because ictak approved your request for joining for\n\n` +
+      //   `Please click on the following link to pay the tution fee for the program\n\n` +
+      //   `${link}`,
+
+      html:`<p>you are receiving this email because ictak received\n\n
+       the payment done by you for the course\n\n
+      ${Course}, now you can login to our course for details and to see your profile
+      by using password : <strong><b><em>${studentPass}</em></b></strong>\n\n
+      your student id is : <b><em>${suid}</em></b>
+      you can also reset your password in your profile too
+      </p>`
+    };
+    transporter.sendMail(mailOptions, (err, response) => {
+      if (err) {
+        console.log("there is an error", err);
+        return res.send({ statud: false });
+      } else {
+        // console.log("here is the res", response);
+        return res.send({ status: true });
       }
     });
   })

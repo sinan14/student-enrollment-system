@@ -9,6 +9,7 @@ export class StudentServiceService {
   fetchStudent(id: any) {
     return this._http.get('http://localhost:3000/students/' + id);
   }
+
   fetchStudents() {
     return this._http.get('http://localhost:3000/students');
   }

@@ -1,3 +1,4 @@
+import { StudentServiceService } from './../student.service';
 import { AuthService } from './../auth.service';
 import { data } from 'jquery';
 import { HttpClient } from '@angular/common/http';
@@ -16,9 +17,8 @@ export class StudentProfileComponent implements OnInit {
   id: string;
   image: '';
   changephoto: boolean;
-  false;
-  showEditButton: boolean = false;
-  showDeleteButton: boolean = false;
+  showEditButton: boolean;
+  showDeleteButton: boolean;
   changeOption() {
     this.changephoto = !this.changephoto;
   }
@@ -31,9 +31,6 @@ export class StudentProfileComponent implements OnInit {
     this.readonly = !this.readonly;
     this.ngOnInit();
   }
-  getStudentById() {
-    return this._http.get<any>(`http://localhost:3000/students/${this.id}`);
-  }
 
   photoUpdateForm: FormGroup = new FormGroup({
     img: new FormControl(''),
@@ -42,6 +39,7 @@ export class StudentProfileComponent implements OnInit {
 
   Student: StudentModel = {
     _id: '',
+    Suid:'',
     image: {
       data: {},
       contentType: '',
@@ -64,7 +62,8 @@ export class StudentProfileComponent implements OnInit {
     private _http: HttpClient,
     private _ActivatedRoute: ActivatedRoute,
     private _router: Router,
-    private _auth: AuthService
+    private _auth: AuthService,
+    private _studentService: StudentServiceService
   ) {}
 
   isAllowedToEdit() {
@@ -99,7 +98,7 @@ export class StudentProfileComponent implements OnInit {
     this.readonly = true;
     this.id = this._ActivatedRoute.snapshot.params['_id'];
 
-    this.getStudentById().subscribe(
+    this._studentService.fetchStudent(this.id).subscribe(
       (studentData: any) => {
         if (studentData.error) {
           this._router.navigate(['/error'], { state: studentData });
@@ -136,7 +135,6 @@ export class StudentProfileComponent implements OnInit {
         });
       },
       (errorMessage) => {
-        this._router.navigate([`/students`]);
         Swal.fire('danger!!', 'some internal error', 'error');
       }
     );
@@ -151,8 +149,12 @@ export class StudentProfileComponent implements OnInit {
   }
   updateStudent() {
     // console.log(this.studentUpdateForm.value);
-    if (this.studentUpdateForm.invalid && (this._auth.loggedIn && (this._auth.getUser() == 'admin' || this._auth.getUser() == 'user'))) {
-      console.log(this.studentUpdateForm.value)
+    if (
+      this.studentUpdateForm.invalid &&
+      this._auth.loggedIn &&
+      (this._auth.getUser() == 'admin' || this._auth.getUser() == 'user')
+    ) {
+      console.log(this.studentUpdateForm.value);
       return;
     }
     this.editProfile(this.studentUpdateForm.value).subscribe(
@@ -236,14 +238,9 @@ export class StudentProfileComponent implements OnInit {
     const formData = new FormData();
     formData.append('img', this.photoUpdateForm.get('img')!.value);
     this.uploadPic(formData).subscribe((res) => {
-      
-      setTimeout(()=>{
-        this.ngOnInit()
-      },7000)
-
-
-
-
+      setTimeout(() => {
+        this.ngOnInit();
+      }, 7000);
 
       // this.ngOnInit();
       // Swal.fire({

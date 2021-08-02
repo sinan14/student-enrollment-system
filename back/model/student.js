@@ -6,6 +6,9 @@ const StudentSchema = new Schema({
     type: String,
     required: true,
   },
+  Suid:{
+    type:String,
+  },
   image: {
     data: Buffer,
     contentType: String,

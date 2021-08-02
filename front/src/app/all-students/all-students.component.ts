@@ -1,3 +1,4 @@
+import { StudentServiceService } from './../student.service';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
@@ -34,12 +35,10 @@ export class AllStudentsComponent implements OnInit {
     },
   ];
 
-  constructor(private _http: HttpClient, private router: Router) {}
-  getStudents() {
-    return this._http.get('http://localhost:3000/students');
-  }
+  constructor(private _http: HttpClient, private router: Router,private _studentService:StudentServiceService) {}
+
   ngOnInit() {
-    this.getStudents().subscribe((data) => {
+    this._studentService.fetchStudents().subscribe((data) => {
       this.Students = JSON.parse(JSON.stringify(data));
     });
   }
@@ -51,9 +50,9 @@ export class AllStudentsComponent implements OnInit {
       })
       .subscribe(() => {});
   }
-  onSendEmail(id) {
+  onSendEmail(id,Email) {
     forkJoin([
-      this._http.get(`http://localhost:3000/students/${id}/sendmail/`),
+      this._http.post(`http://localhost:3000/students/${id}/sendmail/`,{Student:{Email:`${Email}`}}),
       this._http.put(`http://localhost:3000/students/${id}`, {
         Student: { ApprovalDate: new Date() },
       }),

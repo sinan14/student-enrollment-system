@@ -10,6 +10,7 @@
             <input
               type="text"
               id="fname"
+              [value]="Student.Name"
               name="fullname"
               placeholder="sinan mohammed"
             />
@@ -18,6 +19,7 @@
               type="text"
               id="email"
               name="email"
+              [value]="Student.Email"
               placeholder="sinan@example.com"
             />
             <label for="adr"
@@ -30,7 +32,7 @@
               placeholder="Jawahar Street 323 third floor"
             />
             <label for="city"><i class="fa fa-institution"></i> City</label>
-            <input type="text" id="city" name="city" placeholder="MLP" />
+            <input type="text" [value]="Student.District" id="city" name="city" placeholder="MLP" />
 
             <div class="row">
               <div class="col-50">
@@ -39,12 +41,13 @@
                   type="text"
                   id="state"
                   name="state"
+                  [value]="Student.State"
                   placeholder="Kerala"
                 />
               </div>
               <div class="col-50">
                 <label for="zip">Zip</label>
-                <input type="text" id="zip" name="zip" placeholder="10001" />
+                <input type="text" [value]="Student.Post" id="zip" name="zip" placeholder="10001" />
               </div>
             </div>
           </div>
@@ -63,6 +66,7 @@
               type="text"
               id="cname"
               name="cardname"
+              [value]="Student.Name"
               placeholder="sinan mohammed"
             />
             <label for="ccnum">Credit card number</label>
@@ -104,7 +108,7 @@
             </div>
           </div>
         </div>
-        <input type="submit" (click)="updateProfile()" value="Continue to Pay " class="btn" />
+        <button type="submit" (click)="updateProfile()"  class="btn">procced to pay {{fee}}</button>
       </form>
     </div>
   </div>

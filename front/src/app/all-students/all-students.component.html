@@ -59,7 +59,7 @@
                 class="btn btn-success btn-sm ml-1"
                 style="cursor: pointer"
                 *ngIf="Student.Name"
-                (click)="onSendEmail(Student._id)"
+                (click)="onSendEmail(Student._id,Student.Email)"
               >
                 Approve
               </button>

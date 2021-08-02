@@ -31,6 +31,8 @@ import { LoginEmployeeComponent } from './login-employee/login-employee.componen
 import { ResetEmpPasswordComponent } from './reset-emp-password/reset-emp-password.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { SafePipe } from './safe.pipe';
+// import { NewdatatableComponent } from './newdatatable/newdatatable.component';
+
 
 @NgModule({
   declarations: [
@@ -42,6 +44,7 @@ import { SafePipe } from './safe.pipe';
     FooterComponent,
     StudentProfileComponent,
     SafePipe,
+    // NewdatatableComponent,
     
     AdminDataTableComponent,
     AllStudentsComponent,
