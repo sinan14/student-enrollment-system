@@ -12,6 +12,9 @@ import Swal from 'sweetalert2';
 export class StudentPaymentComponent implements OnInit {
   id: string;
   fee: number;
+  elevatedFee: number;
+  studentFee: number;
+  womenFee: number;
   studentId: string;
   courseFee = {
     MeanStack: 21000,
@@ -27,6 +30,8 @@ export class StudentPaymentComponent implements OnInit {
     State: '',
     Post: '',
     District: '',
+    Sex: '',
+    EmploymentStatus: '',
     Status: 'Active',
     PaymentDate: new Date(),
   };
@@ -81,10 +86,13 @@ export class StudentPaymentComponent implements OnInit {
         }
         this.Student = JSON.parse(JSON.stringify(studentData));
         this.fee = this.courseFee[this.Student.Course];
+        this.elevatedFee = this.fee * (10 / 100) + this.fee;
+        this.studentFee= (this.fee)/2;
+        this.womenFee = (this.fee)/2;
         // console.log(this.Student);
       },
       (errorMessage) => {
-        Swal.fire('danger!!', 'some internal error', 'error');
+        // Swal.fire('danger!!', 'some internal error', 'error');
       }
     );
   }

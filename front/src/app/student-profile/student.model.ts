@@ -12,6 +12,7 @@
         public Name: string,
         public Email: string,
         public Phone: string,
+        public Sex:string,
         public State: string,
         public HighestQualification: string,
         public PassOfYear: string,

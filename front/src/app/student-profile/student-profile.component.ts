@@ -22,7 +22,6 @@ export class StudentProfileComponent implements OnInit {
   changeOption() {
     this.changephoto = !this.changephoto;
   }
-
   readonly: boolean = true;
   update() {
     this.readonly = !this.readonly;
@@ -31,17 +30,17 @@ export class StudentProfileComponent implements OnInit {
     this.readonly = !this.readonly;
     this.ngOnInit();
   }
+  deleteProfile() {
+    this._studentService.destroyStudent(this.Student._id);
+  }
 
-  photoUpdateForm: FormGroup = new FormGroup({
-    img: new FormControl(''),
-  });
   studentUpdateForm: FormGroup;
-
   Student: StudentModel = {
     _id: '',
     Name: '',
     Email: '',
     Phone: '',
+    Sex: '',
     State: '',
     HighestQualification: '',
     PassOfYear: '',
@@ -50,7 +49,7 @@ export class StudentProfileComponent implements OnInit {
     Course: '',
     DOB: '',
     Password: '',
-    Suid:'',
+    Suid: '',
     image: {
       data: {},
       contentType: '',
@@ -109,6 +108,7 @@ export class StudentProfileComponent implements OnInit {
           this.Student.image.data.data
         );
         this.studentUpdateForm = new FormGroup({
+          Sex: new FormControl(this.Student.Sex, [Validators.required]),
           Name: new FormControl(this.Student.Name, [Validators.required]),
           Email: new FormControl(this.Student.Email, [Validators.required]),
           Phone: new FormControl(this.Student.Phone, [Validators.required]),
@@ -131,7 +131,6 @@ export class StudentProfileComponent implements OnInit {
           Password: new FormControl(this.Student.Password, [
             Validators.required,
           ]),
-          // img:new FormControl('')
         });
       },
       (errorMessage) => {
@@ -148,84 +147,61 @@ export class StudentProfileComponent implements OnInit {
     );
   }
   updateStudent() {
-    // console.log(this.studentUpdateForm.value);
     if (
       this.studentUpdateForm.invalid &&
       this._auth.loggedIn &&
       (this._auth.getUser() == 'admin' || this._auth.getUser() == 'user')
     ) {
-      console.log(this.studentUpdateForm.value);
+      // console.log(this.studentUpdateForm.value);
       return;
     }
-    this.editProfile(this.studentUpdateForm.value).subscribe(
-      (studentData: any) => {
-        if (studentData.error) {
-          Swal.fire({
-            title: 'warning!!',
-            text: 'something went wrong',
-            icon: 'error',
-            timer: 500,
-            showConfirmButton: false,
-          }).then((refresh) => {
-            this.readonly = !this.readonly;
-            this._router.navigate(['/error'], { state: studentData });
-          });
-        } else {
-          Swal.fire({
-            title: 'Good Job!!',
-            text: 'profile updated successfully',
-            icon: 'success',
-            timer: 500,
-            showConfirmButton: false,
-          }).then((refresh) => {
-            this.Student = JSON.parse(JSON.stringify(studentData));
-            this.readonly = !this.readonly;
-            this.ngOnInit();
-          });
-        }
-      },
-      (errorMessage) => {
-        Swal.fire({
-          title: 'danger!!',
-          text: 'some internal error',
-          icon: 'error',
-          timer: 1000,
-          showConfirmButton: false,
-        }).then((refresh) => {
-          this.readonly = !this.readonly;
-        });
-      }
-    );
-  }
-
-  deleteProfile() {
-    return this._http
-      .delete(`http://localhost:3000/students/${this.Student._id}`)
+    this._studentService
+      .editStudent(this.studentUpdateForm.value, this.Student._id)
       .subscribe(
-        (studentData) => {
-          this._router.navigate([`/students`]);
+        (studentData: any) => {
+          if (studentData.error) {
+            Swal.fire({
+              title: 'warning!!',
+              text: 'something went wrong',
+              icon: 'error',
+              timer: 500,
+              showConfirmButton: false,
+            }).then((refresh) => {
+              this.readonly = !this.readonly;
+              this._router.navigate(['/error'], { state: studentData });
+            });
+          } else {
+            Swal.fire({
+              title: 'Good Job!!',
+              text: 'profile updated successfully',
+              icon: 'success',
+              timer: 500,
+              showConfirmButton: false,
+            }).then((refresh) => {
+              this.Student = JSON.parse(JSON.stringify(studentData));
+              this.readonly = !this.readonly;
+              this.ngOnInit();
+            });
+          }
         },
         (errorMessage) => {
-          Swal.fire('danger!!', 'some internal error', 'error').then(
-            (refresh) => {}
-          );
+          Swal.fire({
+            title: 'danger!!',
+            text: 'some internal error',
+            icon: 'error',
+            timer: 1000,
+            showConfirmButton: false,
+          }).then((refresh) => {
+            this.readonly = !this.readonly;
+          });
         }
       );
   }
 
-  arrayBufferToBase64(buffer: any) {
-    var binary = '';
-    var bytes = [].slice.call(new Uint8Array(buffer));
-    bytes.forEach((b) => (binary += String.fromCharCode(b)));
-    return window.btoa(binary);
-  }
-  selectImage(event: any) {
-    if (event.target.files.length > 0) {
-      const file = event.target.files[0];
-      this.image = file;
-      this.photoUpdateForm.get('img')!.setValue(this.image);
-    }
-  }
+  photoUpdateForm: FormGroup = new FormGroup({
+    img: new FormControl(''),
+  });
+
   uploadPic(pic: any) {
     console.log(pic);
     return this._http.put(
@@ -234,11 +210,26 @@ export class StudentProfileComponent implements OnInit {
     );
   }
 
-  add_pic() {
+  addPic() {
     const formData = new FormData();
     formData.append('img', this.photoUpdateForm.get('img')!.value);
     this.uploadPic(formData).subscribe((res) => {
-    
+      console.log(res)
     });
+  }
+
+  //************************** don't touch **************************************/
+  selectImage(event: any) {
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      this.image = file;
+      this.photoUpdateForm.get('img')!.setValue(this.image);
+    }
+  }
+  arrayBufferToBase64(buffer: any) {
+    var binary = '';
+    var bytes = [].slice.call(new Uint8Array(buffer));
+    bytes.forEach((b) => (binary += String.fromCharCode(b)));
+    return window.btoa(binary);
   }
 }

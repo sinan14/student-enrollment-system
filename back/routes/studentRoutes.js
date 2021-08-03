@@ -118,6 +118,7 @@ router.put(
   upload.single("img"),
   wrapAsync(async (req, res) => {
     const { id } = req.params;
+    console.log(req.file)
     await StudentData.updateOne(
       { _id: id },
       {
