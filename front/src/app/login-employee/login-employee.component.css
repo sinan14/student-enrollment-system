@@ -8,7 +8,7 @@
 /*  whole  */
 #login-sec {
     /* height: 100vh !important; */
-    margin-top:5.6rem;
+    margin-top:4.2%;
 }
 
 section {
@@ -46,10 +46,10 @@ section {
   #myTab {
     margin: 10px 66px 10px 66px;
   }
-  .login-heading {
+  /* .login-heading {
     margin-top: 15px;
     text-align: center;
-  }
+  } */
 }
 
 .nav-tabs {

@@ -1,14 +1,24 @@
 .register {
-  background: -webkit-linear-gradient(left, #3931af, #00c6ff);
-  /* margin-top: 4%; */
+  /* background: -webkit-linear-gradient(left, #3931af, #00c6ff); */
+  background: #67b26f; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #4ca2cd,
+    #67b26f
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #4ca2cd,
+    #67b26f
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  margin-top: 4%;
   padding: 3%;
 }
+
+
 .register-left {
   text-align: center;
   color: #fff;
-}
-#section {
-  margin-top: 5.6rem;
 }
 
 .register-left button {
@@ -87,6 +97,8 @@
   margin-top: 3%;
   border: none;
   background: #0062cc;
+  /* background: #1de099; */
+  /* background: rgb(55, 177, 39); */
   border-radius: 1.5rem;
   width: 28%;
   float: right;
@@ -105,7 +117,9 @@
 .register .nav-tabs .nav-link.active {
   width: 100px;
   color: #0062cc;
+  /* color:#1de099; */
   border: 2px solid #0062cc;
+  /* border: 2px solid #1de099; */
   border-top-left-radius: 1.5rem;
   border-bottom-left-radius: 1.5rem;
 }

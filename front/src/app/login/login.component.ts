@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
@@ -9,8 +9,7 @@ import { FormBuilder, Validators } from '@angular/forms';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
-export class LoginComponent {
-  error: string = null;
+export class LoginComponent implements OnInit {
   passwordReg =
     /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,}$/;
   emailReg = /^[a-z0-9.%+]+@[a-z09.-]+.[a-z]{2,4}/;
@@ -27,40 +26,17 @@ export class LoginComponent {
   });
 
   loginUser() {
-    if (!this.loginForm) {
-      return;
-    }
-    console.log(this.loginForm);
-    this._auth.loginUser(this.loginForm.value).subscribe(
-      (response) => {
-        if (response.status) {
-          localStorage.setItem('token', response.token);
-          localStorage.setItem('role', response.role);
-          // console.log(response.id)
-          this._router.navigate([`students/${response.id}`]);
-        } else {
-          Swal.fire({
-            title: 'warning!!',
-            showConfirmButton: false,
-            timer: 1000,
-            text: 'Email not registered',
-            icon: 'error',
-          }).then((refresh) => {
-            this.loginForm.reset();
-          });
-        }
-      },
-      (errorMessage) => {
-        Swal.fire({
-          title: 'warning!!',
-          showConfirmButton: false,
-          timer: 1000,
-          text: 'some internal error',
-          icon: 'error',
-        }).then(() => {
-          this.loginForm.reset();
+    this._auth.loginUser(this.loginForm.value).subscribe((response) => {
+      if (response.status) {
+        localStorage.setItem('token', response.token);
+        console.log(response.token);
+        localStorage.setItem('role', response.role);
+        this._router.navigate(['/']);
+      } else {
+        Swal.fire('Warning!!', 'User not found!', 'error').then((refresh) => {
+          window.location.reload();
         });
       }
-    );
+    });
   }
 }
