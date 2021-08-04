@@ -79,6 +79,7 @@ const StudentSchema = new Schema({
     type: String,
     required: true,
   },
+  ExitExamMark: {},
 });
 
 module.exports = mongoose.model("Student", StudentSchema);

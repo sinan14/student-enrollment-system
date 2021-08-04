@@ -10,23 +10,82 @@ var imagedest = __dirname;
 var upload = multer({ dest: imagedest });
 const fs = require("fs");
 const generator = require("generate-password");
+//************************************************ */
+router.post("/book", upload.single("img"), verifyToken, (req, res) => {
+  console.log(req.body);
+  var book_item = {
+    id: req.body._id,
+    title: req.body.title,
+    author: req.body.author,
+    description: req.body.description,
+    genre: req.body.genre,
+    image: {
+      data: fs.readFileSync(req.file.path),
+      contentType: "image",
+    },
+  };
+  var book = BookData(book_item);
+  book.save((err, result) => {
+    if (err) {
+    }
+    res.send(result);
+  });
+});
+
+router.post("/register", upload.single("img"), (req, res) => {
+  console.log(req.body);
+  var Student = {
+    Name: req.body.Name,
+    Email: req.body.Email,
+    Phone: req.body.Phone,
+    Sex: req.body.Sex,
+    DOB: req.body.DOB,
+    Course: req.body.Course,
+    HighestQualification: req.body.HighestQualification,
+    SkillSet: req.body.SkillSet,
+    PassOfYear: req.body.PassOfYear,
+    EmploymentStatus: req.body.EmploymentStatus,
+    State: req.body.State,
+    District: req.body.District,
+    Post: req.body.Post,
+    PinCode: req.body.PinCode,
+    Status: req.body.Status,
+
+    CreationDate: req.body.CreationDate,
+    PaymentDate: req.body.PaymentDate,
+    ApprovalDate: req.body.ApprovalDate,
+    Password: "NEWREGISTER",
+    Suid: "New Register",
+    image: {
+      data: fs.readFileSync(req.file.path),
+      contentType: "image",
+    },
+  };
+  var student = StudentData(Student);
+  student.save((err, result) => {
+    if (err) {
+      res.send(false);
+    }
+    res.send(result);
+  });
+});
 
 //************************        register route      *******************************/
-router.post(
-  "/register",
-  wrapAsync(async function (req, res) {
-    const user = new StudentData({ ...req.body.user });
-    console.log(user);
-    user
-      .save()
-      .then(function (data) {
-        res.send({ status: true });
-      })
-      .catch(function (error) {
-        res.send({ status: false });
-      });
-  })
-);
+// router.post(
+//   "/register",
+//   wrapAsync(async function (req, res) {
+//     const user = new StudentData({ ...req.body.user });
+//     console.log(user);
+//     user
+//       .save()
+//       .then(function (data) {
+//         res.send({ status: true });
+//       })
+//       .catch(function (error) {
+//         res.send({ status: false });
+//       });
+//   })
+// );
 
 //************************      checks login            ************************ */
 router.post(
@@ -77,9 +136,12 @@ router.put(
 router.get(
   "",
   wrapAsync(async (req, res) => {
-    await StudentData.find().then((Students) => {
+    const Students = await StudentData.find();
+    if (Students) {
       res.send(Students);
-    });
+    } else {
+      res.send(false);
+    }
   })
 );
 

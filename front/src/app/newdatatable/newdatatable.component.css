@@ -4,6 +4,9 @@
     height: 50px;
     border-radius: 50%;
   }
+  #section {
+      margin-top:5rem;
+  }
   h4{
       text-align: center;
       color: white;

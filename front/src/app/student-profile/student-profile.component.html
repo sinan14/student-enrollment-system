@@ -17,25 +17,42 @@
                 "
                 alt="student dp"
               />
-              <!-- <form [formGroup]="photoUpdateForm" (ngSubmit)="addPic()"> -->
-                <div>
-                  <input
-                    type="file"
-                    (change)="selectImage($event)"
-                    accept="image/png, image/gif, image/jpeg"
-                  />
+              <form
+                *ngIf="changePhoto"
+                class="mb-3"
+                [formGroup]="photoUpdateForm"
+                (ngSubmit)="addPic()"
+              >
+                <div class="mb-3">
+                  <div class="form-file custom-file">
+                    <input
+                      class="form-file-input"
+                      type="file"
+                      (change)="selectImage($event)"
+                      accept="image/png, image/gif, image/jpeg"
+                    />
+                    <!-- <label class="form-file-label" for="image">
+                      <span class="form-file-text custom-file-label"
+                        >Choose image</span
+                      >
+                    </label> -->
+                  </div>
                 </div>
-                <button (click)="addPic()"  class="btn btn-primary">change</button>
-              <!-- </form> -->
-              <!-- <button
-                *ngIf="changephoto"
+                <input
+                  type="submit"
+                  class="btn btn-sm btn-warning"
+                  value="change"
+                />
+              </form>
+              <button
+                *ngIf="!changePhoto"
                 (click)="changeOption()"
                 style="width: 100px"
                 class="btn btn-sm btn-success"
                 type="button"
               >
                 change
-              </button> -->
+              </button>
 
               <h3>{{ Student.Name }}</h3>
             </div>
@@ -121,6 +138,34 @@
                       />
                     </td>
                   </tr>
+                  <!-- Gender -->
+                  <tr>
+                    <th width="30%">Gender</th>
+                    <td width="2%">:</td>
+                    <td [class.editModeOn]="!readonly">
+                      <input
+                        *ngIf="readonly"
+                        type="text"
+                        [value]="Student.Sex"
+                        [ngClass]="{
+                          noBorder: readonly
+                        }"
+                        readonly
+                      />
+                      <input
+                        *ngIf="!readonly"
+                        formControlName="Sex"
+                        type="text"
+                        class="form-control Border"
+                        [value]="Student.Sex"
+                        readonly
+                        [ngClass]="{
+                          Border: !readonly
+                        }"
+                      />
+                    </td>
+                  </tr>
+                  <!-- dob -->
                   <tr>
                     <th width="30%">Date Of Birth</th>
                     <td width="2%">:</td>
@@ -141,6 +186,8 @@
                       />
                     </td>
                   </tr>
+
+                  <!-- State -->
                   <tr>
                     <th width="30%">State</th>
                     <td width="2%">:</td>
@@ -166,7 +213,60 @@
                       />
                     </td>
                   </tr>
-
+                  <!-- District -->
+                  <tr>
+                    <th width="30%">District</th>
+                    <td width="2%">:</td>
+                    <td [class.editModeOn]="readonly == false">
+                      <input
+                        *ngIf="readonly"
+                        [value]="Student.District"
+                        [ngClass]="{
+                          Border: !readonly,
+                          noBorder: readonly
+                        }"
+                        readonly
+                      />
+                      <input
+                        *ngIf="!readonly"
+                        [value]="Student.District"
+                        class="form-control"
+                        [ngClass]="{
+                          Border: !readonly,
+                          noBorder: readonly
+                        }"
+                        readonly
+                      />
+                    </td>
+                  </tr>
+                  <!-- Course -->
+                  <tr>
+                    <th width="30%">Technology Training</th>
+                    <td width="2%">:</td>
+                    <td [class.editModeOn]="!readonly">
+                      <input
+                        *ngIf="readonly"
+                        type="text"
+                        [value]="Student.Course"
+                        [ngClass]="{
+                          noBorder: readonly
+                        }"
+                        readonly
+                      />
+                      <input
+                        *ngIf="!readonly"
+                        class="form-control Border"
+                        type="text"
+                        formControlName="Course"
+                        [value]="Student.Course"
+                        [ngClass]="{
+                          Border: !readonly
+                        }"
+                        
+                      />
+                    </td>
+                  </tr>
+                  <!-- HighestQualification -->
                   <tr>
                     <th width="30%">Highest Qualification</th>
                     <td width="2%">:</td>
@@ -204,6 +304,9 @@
                       </select>
                     </td>
                   </tr>
+
+                  
+                  <!-- PassOfYear -->
                   <tr>
                     <th width="30%">Pass Out Year</th>
                     <td width="2%">:</td>
@@ -238,6 +341,7 @@
                       />
                     </td>
                   </tr>
+                  <!-- SkillSet -->
                   <tr>
                     <th width="30%">Skill Set</th>
                     <td width="2%">:</td>
@@ -265,6 +369,7 @@
                       />
                     </td>
                   </tr>
+                  <!-- EmploymentStatus -->
                   <tr>
                     <th width="30%">Employment Status</th>
                     <td width="2%">:</td>
@@ -294,31 +399,8 @@
                       </select>
                     </td>
                   </tr>
-                  <tr>
-                    <th width="30%">Technology Training</th>
-                    <td width="2%">:</td>
-                    <td [class.editModeOn]="!readonly">
-                      <input
-                        *ngIf="readonly"
-                        type="text"
-                        [value]="Student.Course"
-                        [ngClass]="{
-                          noBorder: readonly
-                        }"
-                        readonly
-                      />
-                      <input
-                        *ngIf="!readonly"
-                        class="form-control Border"
-                        type="text"
-                        [value]="Student.Course"
-                        [ngClass]="{
-                          Border: !readonly
-                        }"
-                        readonly
-                      />
-                    </td>
-                  </tr>
+
+                  <!-- Password -->
                   <tr>
                     <th width="30%">Password</th>
                     <td width="2%">:</td>

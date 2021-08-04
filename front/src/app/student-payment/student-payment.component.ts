@@ -21,6 +21,7 @@ export class StudentPaymentComponent implements OnInit {
     CyberSecurity: 24000,
     DataScience: 30000,
     Robotics: 25000,
+    DigitalMarketing:20000
   };
   Student = {
     _id: '',

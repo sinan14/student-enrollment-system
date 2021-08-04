@@ -14,19 +14,24 @@ import Swal from 'sweetalert2';
   styleUrls: ['./student-profile.component.css'],
 })
 export class StudentProfileComponent implements OnInit {
+  phoneReg = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+  passwordReg =
+  /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,}$/;
+emailReg = /^[a-z0-9.%+]+@[a-z09.-]+.[a-z]{2,4}/;
+
   id: string;
-  image: any;
-  changephoto: boolean;
+  image: '';
+  changePhoto: boolean;
   showEditButton: boolean;
   showDeleteButton: boolean;
-  changeOption() {
-    this.changephoto = !this.changephoto;
+  changeOption(): void {
+    this.changePhoto = !this.changePhoto;
   }
   readonly: boolean = true;
-  update() {
+  update(): void {
     this.readonly = !this.readonly;
   }
-  discard() {
+  discard(): void {
     this.readonly = !this.readonly;
     this.ngOnInit();
   }
@@ -42,6 +47,8 @@ export class StudentProfileComponent implements OnInit {
     Phone: '',
     Sex: '',
     State: '',
+    District:'',
+    PinCode:null,
     HighestQualification: '',
     PassOfYear: '',
     SkillSet: '',
@@ -65,35 +72,30 @@ export class StudentProfileComponent implements OnInit {
     private _studentService: StudentServiceService
   ) {}
 
-  isAllowedToEdit() {
+  isAllowedToEdit(): void {
     if (
       this._auth.loggedIn() &&
       (this._auth.getUser() == 'admin' || this._auth.getUser() == 'user')
     ) {
       console.log('true');
       this.showEditButton = true;
-      return true;
     } else {
-      // this._router.navigate(['/'])
       this.showDeleteButton = false;
-      return false;
     }
   }
 
-  isAdmin() {
+  isAdmin(): void {
     if (this._auth.loggedIn() && this._auth.getUser() == 'admin') {
       this.showDeleteButton = true;
-      return true;
     } else {
       this.showDeleteButton = false;
-      return false;
     }
   }
 
   ngOnInit(): void {
     this.isAllowedToEdit();
     this.isAdmin();
-    this.changephoto = false;
+    this.changePhoto = false;
     this.readonly = true;
     this.id = this._ActivatedRoute.snapshot.params['_id'];
 
@@ -103,22 +105,21 @@ export class StudentProfileComponent implements OnInit {
           this._router.navigate(['/error'], { state: studentData });
         }
         this.Student = JSON.parse(JSON.stringify(studentData));
-        // console.log(this.Student);
         this.Student.imageUrl = this.arrayBufferToBase64(
           this.Student.image.data.data
         );
         this.studentUpdateForm = new FormGroup({
           Sex: new FormControl(this.Student.Sex, [Validators.required]),
           Name: new FormControl(this.Student.Name, [Validators.required]),
-          Email: new FormControl(this.Student.Email, [Validators.required]),
-          Phone: new FormControl(this.Student.Phone, [Validators.required]),
+          Email: new FormControl(this.Student.Email, [Validators.required,Validators.pattern(this.emailReg)]),
+          Phone: new FormControl(this.Student.Phone, [Validators.required,Validators.pattern(this.phoneReg)]),
           State: new FormControl(this.Student.State, [Validators.required]),
           HighestQualification: new FormControl(
             this.Student.HighestQualification,
             [Validators.required]
           ),
           PassOfYear: new FormControl(this.Student.PassOfYear, [
-            Validators.required,
+            Validators.required,Validators.min(2010),Validators.max(2023)
           ]),
           SkillSet: new FormControl(this.Student.SkillSet, [
             Validators.required,
@@ -129,15 +130,17 @@ export class StudentProfileComponent implements OnInit {
           Course: new FormControl(this.Student.Course, [Validators.required]),
           DOB: new FormControl(this.Student.DOB, [Validators.required]),
           Password: new FormControl(this.Student.Password, [
-            Validators.required,
+            Validators.required,Validators.pattern(this.passwordReg)
           ]),
         });
       },
       (errorMessage) => {
-        Swal.fire('danger!!', 'some internal error', 'error');
+        Swal.fire('danger!!', 'server refused to connect', 'error');
       }
     );
   }
+
+  //*************************************************** */
   editProfile(item: any) {
     return this._http.put(
       `http://localhost:3000/students/${this.Student._id}`,
@@ -178,6 +181,7 @@ export class StudentProfileComponent implements OnInit {
               timer: 500,
               showConfirmButton: false,
             }).then((refresh) => {
+              this.Student = JSON.parse(JSON.stringify(studentData));
               this.readonly = !this.readonly;
               this.ngOnInit();
             });
@@ -186,7 +190,7 @@ export class StudentProfileComponent implements OnInit {
         (errorMessage) => {
           Swal.fire({
             title: 'danger!!',
-            text: 'some internal error',
+            text: 'server error',
             icon: 'error',
             timer: 1000,
             showConfirmButton: false,
@@ -196,8 +200,8 @@ export class StudentProfileComponent implements OnInit {
         }
       );
   }
+  //**************************pic upload               */
 
-  //*******************************profile change **************************/
   photoUpdateForm: FormGroup = new FormGroup({
     img: new FormControl(''),
   });
@@ -213,10 +217,13 @@ export class StudentProfileComponent implements OnInit {
   async addPic() {
     const formData = new FormData();
     formData.append('img', this.photoUpdateForm.get('img')!.value);
-    await this.uploadPic(formData).subscribe((res) => {});
+
+    await this.uploadPic(formData).subscribe((res) => {
+      // console.log(res)
+    });
     setTimeout(() => {
       this.ngOnInit();
-    }, 1000);
+    }, 2000);
   }
 
   //************************** don't touch **************************************/
@@ -227,7 +234,6 @@ export class StudentProfileComponent implements OnInit {
       this.photoUpdateForm.get('img')!.setValue(this.image);
     }
   }
-
   arrayBufferToBase64(buffer: any) {
     var binary = '';
     var bytes = [].slice.call(new Uint8Array(buffer));

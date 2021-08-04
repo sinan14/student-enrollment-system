@@ -2,25 +2,25 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const EmployeeSchema = new Schema({
-  name: {
+  Name: {
     type: String,
     required: true,
   },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  phone: {
+  Email: {
     type: String,
     required: true,
     unique: true,
   },
-  gender: {
+  Phone: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  Gender: {
     type: String,
     required: true,
   },
-  dob:{
+  DOB:{
     type:Date,
     required:true
   },
@@ -33,15 +33,15 @@ const EmployeeSchema = new Schema({
     type: String,
   },
 
-  state: {
+  State: {
     type: String,
     required: true,
   },
-  district: {
+  District: {
     type: String,
     required: true,
   },
-  post: {
+  Post: {
     type: String,
     required: true,
   },
@@ -50,11 +50,11 @@ const EmployeeSchema = new Schema({
     type: Number,
     required: true,
   },
-  password: {
+  Password: {
     type: String,
     required: true,
   },
-  creationDate:{
+  CreationDate:{
     type:Date,
     
   }

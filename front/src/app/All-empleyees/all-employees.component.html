@@ -1,0 +1,44 @@
+<div class="card">
+  <div class="card-header">All Students</div>
+  <div class="card-body">
+    <div class="">
+      <h4>Employee List</h4>
+      <table
+        class="
+          table
+          table-responsive-sm
+          table-responsive-md
+          table-responsive-lg
+          table-bordered
+        "
+      >
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>DOB</th>
+            <th>Sex</th>
+            <th>Qualification</th>
+            <th>Go To Details</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let Employee of Students">
+            <td>{{ Employee.Name }}</td>
+            <td>{{ Employee.DOB | date }}</td>
+            <td>{{ Employee.Sex }}</td>
+            <td>{{ Employee.HighestQualification }}</td>
+            <td>
+              <button
+                class="btn btn-sm btn-warning"
+                style="cursor: pointer; margin-left: 20px"
+                *ngIf="Employee.Name"
+              >
+                <a [routerLink]="['/students', Employee._id]">View</a>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

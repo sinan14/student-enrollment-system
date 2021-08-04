@@ -56,12 +56,12 @@
                       type="text"
                       class="form-control"
                       placeholder="Name *"
-                      formControlName="name"
+                      formControlName="Name"
                     />
                     <span
                       *ngIf="
-                        !employeeForm.get('dob').valid &&
-                        employeeForm.get('dob').touched
+                        !employeeForm.get('DOB').valid &&
+                        employeeForm.get('DOB').touched
                       "
                       class="help-block"
                       >Name cannot be blank!</span
@@ -75,12 +75,12 @@
                       onfocus="(this.type='date')"
                       onblur="(this.type='text')"
                       placeholder="Birth Date"
-                      formControlName="dob"
+                      formControlName="DOB"
                     />
                     <span
                       *ngIf="
-                        !employeeForm.get('dob').valid &&
-                        employeeForm.get('dob').touched
+                        !employeeForm.get('DOB').valid &&
+                        employeeForm.get('DOB').touched
                       "
                       class="help-block"
                       >Enter Correct D.O.B!</span
@@ -89,7 +89,7 @@
                   <div class="form-group">
                     <select
                       class="form-control"
-                      formControlName="highestQualification"
+                      formControlName="HighestQualification"
                     >
                       <option class="hidden" value="" disabled selected>
                         Highest Qualification *
@@ -103,55 +103,55 @@
                     </select>
                     <span
                       *ngIf="
-                        !employeeForm.get('highestQualification').valid &&
-                        employeeForm.get('highestQualification').touched
+                        !employeeForm.get('HighestQualification').valid &&
+                        employeeForm.get('HighestQualification').touched
                       "
                       class="help-block"
                       >Qualification cannot be blank</span
                     >
                   </div>
-                  <!-- state -->
+                  <!-- State -->
                   <div class="form-group">
-                    <select class="form-control" formControlName="state">
+                    <select class="form-control" formControlName="State">
                       <option class="hidden" value="" disabled selected>
-                        state *
+                        State *
                       </option>
 
-                        <option *ngFor="let state of states" [value]="state">{{state}}</option>
+                        <option *ngFor="let State of states" [value]="State">{{State}}</option>
                     </select>
                     <span
                       *ngIf="
-                        !employeeForm.get('state').valid &&
-                        employeeForm.get('state').touched
+                        !employeeForm.get('State').valid &&
+                        employeeForm.get('State').touched
                       "
                       class="help-block"
-                      >state cannot be empty!</span
+                      >State cannot be empty!</span
                     >
                   </div>
                   <div class="form-group">
                     <input
                       class="form-control"
                       type="text"
-                      placeholder="post *"
-                      formControlName="post"
+                      placeholder="Post *"
+                      formControlName="Post"
                     />
                     <span
                       *ngIf="
-                        !employeeForm.get('post').valid &&
-                        employeeForm.get('post').touched
+                        !employeeForm.get('Post').valid &&
+                        employeeForm.get('Post').touched
                       "
                       class="help-block"
-                      >post name Cannot be blank!</span
+                      >Post Name Cannot be blank!</span
                     >
                   </div>
-                  <!-- gender -->
+                  <!-- Gender -->
                   <div class="form-group">
                     <div class="maxl">
                       <label class="radio inline">
                         <input
                           type="radio"
-                          formControlName="gender"
-                          name="gender"
+                          formControlName="Gender"
+                          Name="Gender"
                           value="male"
                           checked
                         />
@@ -160,8 +160,8 @@
                       <label class="radio inline">
                         <input
                           type="radio"
-                          name="gender"
-                          formControlName="gender"
+                          Name="Gender"
+                          formControlName="Gender"
                           value="female"
                         />
                         <span>Female </span>
@@ -172,48 +172,48 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <input
-                      type="email"
+                      type="Email"
                       class="form-control"
                       placeholder="Email *"
-                      formControlName="email"
+                      formControlName="Email"
                     />
                     <span
                       *ngIf="
-                        !employeeForm.get('email').valid &&
-                        employeeForm.get('email').touched
+                        !employeeForm.get('Email').valid &&
+                        employeeForm.get('Email').touched
                       "
                       class="help-block"
-                      >Enter Valid email!</span
+                      >Enter Valid Email!</span
                     >
                   </div>
                   <div class="form-group">
                     <input
                       type="text"
-                      name="txtEmpPhone"
+                      Name="txtEmpPhone"
                       class="form-control"
                       placeholder="Your Phone *"
-                      formControlName="phone"
+                      formControlName="Phone"
                     />
                     <span
                       *ngIf="
-                        !employeeForm.get('phone').valid &&
-                        employeeForm.get('phone').touched
+                        !employeeForm.get('Phone').valid &&
+                        employeeForm.get('Phone').touched
                       "
                       class="help-block"
-                      >Enter valid phone number!</span
+                      >Enter valid Phone number!</span
                     >
                   </div>
                   <div class="form-group">
                     <input
-                      type="password"
+                      type="Password"
                       class="form-control"
                       placeholder="Password *"
-                      formControlName="password"
+                      formControlName="Password"
                     />
                     <span
                       *ngIf="
-                        !employeeForm.get('password').valid &&
-                        employeeForm.get('password').touched
+                        !employeeForm.get('Password').valid &&
+                        employeeForm.get('Password').touched
                       "
                       class="help-block"
                       >Enter Valid Password!</span

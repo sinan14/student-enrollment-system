@@ -73,16 +73,16 @@
               <input
                 class="mb-4"
                 type="text"
-                formControlName="email"
-                placeholder="Enter a valid email address"
+                formControlName="Email"
+                placeholder="Enter a valid Email address"
               />
               <span
                 *ngIf="
-                  !emploginForm.get('email').valid &&
-                  emploginForm.get('email').touched
+                  !emploginForm.get('Email').valid &&
+                  emploginForm.get('Email').touched
                 "
                 class="help-block"
-                >enter valid email!</span
+                >enter valid Email!</span
               >
             </div>
             <div class="row px-3">
@@ -110,17 +110,17 @@
               </label>
               <input
                 class="mb-4"
-                type="password"
-                formControlName="password"
-                placeholder="Enter password"
+                type="Password"
+                formControlName="Password"
+                placeholder="Enter Password"
               />
               <span
                 *ngIf="
-                  !emploginForm.get('password').valid &&
-                  emploginForm.get('password').touched
+                  !emploginForm.get('Password').valid &&
+                  emploginForm.get('Password').touched
                 "
                 class="help-block"
-                >Please enter valid password!</span
+                >Please enter valid Password!</span
               >
             </div>
             <div class="row px-3 mb-4">

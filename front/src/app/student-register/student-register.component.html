@@ -124,9 +124,10 @@
                       Interested Course *
                     </option>
                     <option value="MeanStack">MeanStack</option>
-                    <option value="Cybersecurity">CyberSecurity</option>
-                    <option value="Data Science">DataScience</option>
-                    <option value="MachineLearining">Robotics</option>
+                    <option value="CyberSecurity">CyberSecurity</option>
+                    <option value="DataScience">DataScience</option>
+                    <option value="Robotics">Robotics</option>
+                    <option value="DigitalMarketing">DigitalMarketing</option>
                   </select>
                   <span
                     *ngIf="
@@ -159,13 +160,18 @@
                 </div>
                 <!-- state -->
                 <div class="form-group">
-                  <select class="form-control" formControlName="State">
+                  <select
+                    class="form-control"
+                    change="selectDistrict(this.value)"
+                    formControlName="State"
+                  >
                     <option class="hidden" value="" disabled selected>
                       state *
                     </option>
-                    <option *ngFor="let state of states" [value]="state">{{state}}</option>
+                    <option *ngFor="let state of states" [value]="state">
+                      {{ state }}
+                    </option>
                   </select>
-
 
                   <span
                     *ngIf="
@@ -236,18 +242,31 @@
                     >enter a valid email!</span
                   >
                 </div>
-                <!-- gender -->
-                <div class="form-group">
-                  <input type="file"(change)="selectImage($event)" accept="image/png, image/gif, image/jpeg">
-                  <!-- <span
+                <!-- image -->
+
+                <div class="form-group form-file">
+                  <input
+                    type="file"
+                    class="form-file-input form-control"
+                    (change)="selectImage($event)"
+                    accept="image/png, image/gif, image/jpeg"
+                  />
+                  <!-- <label class="form-file-label" for="image">
+                    <span class="form-file-text custom-file-label"
+                      >Upload photo...</span
+                    >
+                  </label> -->
+
+                  <span
                     *ngIf="
-                      !registerForm.get('Sex').valid &&
-                      registerForm.get('Sex').touched
+                      !registerForm.get('img').valid &&
+                      registerForm.get('img').touched
                     "
                     class="help-block"
-                    >gender cannot be empty!</span
-                  > -->
+                    >image cannot be empty!</span
+                  >
                 </div>
+
                 <!-- PassOfYear -->
                 <div class="form-group">
                   <input
@@ -326,7 +345,7 @@
                       registerForm.get('District').touched
                     "
                     class="help-block"
-                    >District cannot be empty!</span
+                    >Invalid District Name!</span
                   >
                 </div>
                 <!-- PinCode -->

@@ -16,15 +16,11 @@ export class AuthService {
     });
   }
 
-  registerUser(item: any) {
-    return this._http.post('http://localhost:3000/students/register', {
-      user: item,
-    });
+  registerUser(StudentDetails: any) {
+    return this._http.post('http://localhost:3000/students/register', StudentDetails);
   }
-  registerEmployee(item: any) {
-    return this._http.post('http://localhost:3000/employee/register', {
-      user: item,
-    });
+  registerEmployee(EmployeeDetails: any) {
+    return this._http.post('http://localhost:3000/employee/register', EmployeeDetails);
   }
 
   //************************** login employee and student *******************/

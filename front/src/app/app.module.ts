@@ -30,6 +30,7 @@ import { ResetEmpPasswordComponent } from './reset-emp-password/reset-emp-passwo
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { SafePipe } from './safe.pipe';
 import { NewdatatableComponent } from './newdatatable/newdatatable.component';
+import { EmpProfileComponent } from './emp-profile/emp-profile.component';
 // import { AdminDataTableComponent } from './admin-data-table/admin-data-table.component';
 
 @NgModule({
@@ -53,6 +54,7 @@ import { NewdatatableComponent } from './newdatatable/newdatatable.component';
     LoginEmployeeComponent,
     ResetEmpPasswordComponent,
     PageNotFoundComponent,
+    EmpProfileComponent,
     // DatatableComponent
   ],
   imports: [

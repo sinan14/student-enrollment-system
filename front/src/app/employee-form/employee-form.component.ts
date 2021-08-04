@@ -50,18 +50,18 @@ export class EmployeeFormComponent {
 
   constructor(private _auth: AuthService, private _fb: FormBuilder) {}
   employeeForm = this._fb.group({
-    name: ['', Validators.required],
-    email: ['', Validators.required],
-    phone: ['', Validators.required],
-    gender: ['male', Validators.required],
-    dob: ['', Validators.required],
-    highestQualification: ['', Validators.required],
-    skillSet: ['HTML,CSS,JS,PYTHON,C#,JAVA', Validators.required],
-    state: ['', Validators.required],
-    district: ['', Validators.required],
-    post: ['', Validators.required],
-    pinCode: ['', Validators.required],
-    password: ['', Validators.required],
+    Name: ['', Validators.required],
+    Email: ['', Validators.required],
+    Phone: ['', Validators.required],
+    Gender: ['Male', Validators.required],
+    DOB: ['', Validators.required],
+    HighestQualification: ['', Validators.required],
+    SkillSet: ['HTML,CSS,JS,PYTHON,C#,JAVA', Validators.required],
+    State: ['', Validators.required],
+    District: ['', Validators.required],
+    Post: ['', Validators.required],
+    PinCode: ['', Validators.required],
+    Password: ['', Validators.required],
   });
 
   registerEmployee() {
