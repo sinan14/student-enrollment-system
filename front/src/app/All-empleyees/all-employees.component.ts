@@ -16,7 +16,7 @@ export class AllEmployeesComponent implements OnInit {
       Name: "",
       Email: "",
       Phone: "",
-      Sex: "",
+      Gender: "",
       DOB: "",
       HighestQualification: "",
       PassOutYear: "",
@@ -31,7 +31,7 @@ export class AllEmployeesComponent implements OnInit {
 
   constructor(private _http: HttpClient, private router: Router) {}
   getEmployees() {
-    return this._http.get("http://localhost:3000/employees");
+    return this._http.get("http://localhost:3000/employee");
   }
   ngOnInit() {
     this.getEmployees().subscribe((data) => {

@@ -1,3 +1,4 @@
+import { AuthService } from './../auth.service';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -16,14 +17,9 @@ export class EmpProfileComponent implements OnInit {
   passwordReg =
     /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,}$/;
   emailReg = /^[a-z0-9.%+]+@[a-z09.-]+.[a-z]{2,4}/;
-  image: '';
-  changePhoto: boolean;
   showEditButton: boolean;
   showDeleteButton: boolean;
-  changeOption(): void {
-    this.changePhoto = !this.changePhoto;
-  }
-  readonly: boolean = true;
+  readonly: boolean;
   update(): void {
     this.readonly = !this.readonly;
   }
@@ -31,9 +27,27 @@ export class EmpProfileComponent implements OnInit {
     this.readonly = !this.readonly;
     this.ngOnInit();
   }
+  isAllowedToEdit(): void {
+    if (
+      this._auth.loggedIn() &&
+      (this._auth.getUser() == 'admin' || this._auth.getUser() == 'employee')
+    ) {
+      console.log('true');
+      this.showEditButton = true;
+    } else {
+      this.showDeleteButton = false;
+    }
+  }
+
+  isAdmin(): void {
+    if (this._auth.loggedIn() && this._auth.getUser() == 'admin') {
+      this.showDeleteButton = true;
+    } else {
+      this.showDeleteButton = false;
+    }
+  }
 
   employeeUpdateForm: FormGroup;
-
   employee = {
     _id: '',
     Name: '',
@@ -55,10 +69,14 @@ export class EmpProfileComponent implements OnInit {
     private _http: HttpClient,
     private _ActivatedRoute: ActivatedRoute,
     private _router: Router,
-    private _employeeService: EmployeeService
+    private _employeeService: EmployeeService,
+    private _auth: AuthService
   ) {}
 
   ngOnInit(): void {
+    this.isAllowedToEdit();
+    this.isAdmin();
+    this.readonly = true;
     this.id = this._ActivatedRoute.snapshot.params['_id'];
 
     this.getStudentById().subscribe(
@@ -111,16 +129,15 @@ export class EmpProfileComponent implements OnInit {
       }
     );
   }
-  editProfile(item: any) {
+  editProfile(changedDetails) {
     return this._http.put(
       `http://localhost:3000/employee/${this.employee._id}`,
-      {
-        employee: item,
-      }
+
+      changedDetails
     );
   }
   updateProfile() {
-    this.editProfile(this.employee).subscribe(
+    this.editProfile(this.employeeUpdateForm.value).subscribe(
       (employeesData: any) => {
         if (employeesData.error) {
           Swal.fire({
@@ -141,9 +158,8 @@ export class EmpProfileComponent implements OnInit {
           timer: 500,
           showConfirmButton: false,
         }).then((refresh) => {
-          this.employee = JSON.parse(JSON.stringify(employeesData));
           this.readonly = !this.readonly;
-          // window.location.reload();
+          this.ngOnInit();
         });
       },
       (errorMessage) => {
@@ -159,8 +175,6 @@ export class EmpProfileComponent implements OnInit {
       }
     );
   }
-
-
 
   //***************************************don't touch */
 

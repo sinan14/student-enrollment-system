@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { StudentModel } from './student.model';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { forkJoin } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -38,7 +40,7 @@ emailReg = /^[a-z0-9.%+]+@[a-z09.-]+.[a-z]{2,4}/;
   deleteProfile() {
     this._studentService.destroyStudent(this.Student._id);
   }
-
+  
   studentUpdateForm: FormGroup;
   Student: StudentModel = {
     _id: '',
@@ -62,6 +64,7 @@ emailReg = /^[a-z0-9.%+]+@[a-z09.-]+.[a-z]{2,4}/;
       contentType: '',
     },
     imageUrl: '',
+    ApprovalDate:''
   };
 
   constructor(
@@ -71,6 +74,9 @@ emailReg = /^[a-z0-9.%+]+@[a-z09.-]+.[a-z]{2,4}/;
     private _auth: AuthService,
     private _studentService: StudentServiceService
   ) {}
+
+  
+
 
   isAllowedToEdit(): void {
     if (
@@ -240,4 +246,36 @@ emailReg = /^[a-z0-9.%+]+@[a-z09.-]+.[a-z]{2,4}/;
     bytes.forEach((b) => (binary += String.fromCharCode(b)));
     return window.btoa(binary);
   }
+
+  //************************************************************ */
+  edit(id) {
+    return this._http
+      .put(`http://localhost:3000/students/${id}`, {
+        Student: { ApprovalDate: new Date() },
+      })
+      .subscribe(() => {});
+  }
+  onApprove(id,Email) {
+    forkJoin([
+      this._http.post(`http://localhost:3000/students/${id}/sendmail/`,{Student:{Email:`${Email}`}}),
+      this._http.put(`http://localhost:3000/students/${id}`, {
+        Student: { ApprovalDate: new Date() },
+      }),
+    ])
+      .pipe(tap(console.log))
+      .subscribe();
+  }
+  //************************************************************ */
+  onReject(id,Email){
+    forkJoin([
+      this._http.post(`http://localhost:3000/students/${id}/sendmail/`,{Student:{Email:`${Email}`}}),
+      this._http.put(`http://localhost:3000/students/${id}`, {
+        Student: { ApprovalDate: new Date() },
+      }),
+    ])
+      .pipe(tap(console.log))
+      .subscribe();
+
+  }
+  //************************************************* */
 }

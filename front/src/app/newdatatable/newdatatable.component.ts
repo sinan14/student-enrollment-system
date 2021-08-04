@@ -1,8 +1,8 @@
+import { ExportToCsv } from 'export-to-csv';
 import { Component, AfterViewInit, ViewChild } from '@angular/core';
 import { StudentServiceService } from '../student.service';
-import { ExportToCsv } from 'export-to-csv';
-import { data } from 'jquery';
-
+import { Router } from '@angular/router';
+import { Injector } from '@angular/core'; 
 @Component({
   selector: 'app-newdatatable',
   templateUrl: './newdatatable.component.html',
@@ -11,7 +11,7 @@ import { data } from 'jquery';
 
 export class NewdatatableComponent implements AfterViewInit {
 
-  constructor(private studentService:StudentServiceService) { }
+  constructor(private studentService:StudentServiceService, private router:Router,private injector:Injector) { }
   @ViewChild('dataTable')
   table!: { nativeElement: any; };
   dataTable: any;
@@ -28,11 +28,11 @@ ngAfterViewInit(): void {
   .subscribe((data:any)=>{
     console.log(data)
     data.forEach((value:any)=>{
-      if(value['Status']=="Active"){
+     if(value['Status']=="Active"){
       var propValue:string[]=Object.values(value)
         this.dataSet.push(propValue)
       }
-      })
+    })
      // this.dataSet.push([ "Test", "Test", "San Francisco", "5384", "2009/12/09", "$85,675" ])
       this.dtOption = {
         "info":     true,
@@ -44,21 +44,22 @@ ngAfterViewInit(): void {
         columnDefs: [
          { orderable: false, targets: 0 },
           {
-          "targets": [0,2,3,4,5,8,11,13,14,15],
+          "targets": [0,1,3,4,5,6,12,14,15,16,17],
             "visible": false,
-        }
+          } 
        ],
-      /* colReorder: {
+     /*  colReorder: {
         order: [4, 3, 2, 1, 0, 5, 6 ]
     },*/
        data: this.dataSet,
        columns: [
+            { title: "Image"},
             { title: "Id"},
             { title: "Name" },
             { title: "Email" },
+            { title: "Phone"},
             { title: "Gender" },
             { title: "DOB"},
-            { title: "Phone"},
             { title: "Course"},
             { title: "Highest Qualification"},
             { title: "Skill Set"},
@@ -69,13 +70,14 @@ ngAfterViewInit(): void {
             { title: "Post"},
             { title: "PinCode"},
             { title: "Status"},
+            { title: "Created Date"},
             { title: "Exit Exam Mark"},
             {
               title:" ",
               "className":"details",
               "orderable":      false,
               "data":           null,
-              "defaultContent": "<button class='btn btn-primary'>More ></button>"
+              "defaultContent": "<button class='btn btn-primary'>More</button>"
           }
         ],
         
@@ -84,7 +86,7 @@ ngAfterViewInit(): void {
       this.dataTable = $(this.table.nativeElement);
       this.table1=this.dataTable.DataTable(this.dtOption);
       //$( '#display tbody tr' ).addClass('list-group')
-      $( '#display tbody' ).on('click', 'button', function () {
+      $( '#display tbody' ).on('click', '.details', function () {
         var tr = $(this).closest('tr');
         var row = that.table1.row( tr );
       
@@ -98,8 +100,7 @@ ngAfterViewInit(): void {
             row.child( that.format(row.data()) ).show();
             tr.addClass('shown');
         }
-      } );
-      
+      } );     
     })
     $('#display thead tr:eq(1) th').each( function () {
       var title = $(this).text();
@@ -142,15 +143,15 @@ that.filteredRows = that.table1.rows({"search" : "applied"}).data()
         '<tr>'+
            '<td rowspan="3"><img style="width: 50px;height: 50px;" class="avatar" src="assets/avatar.png"></td>'+
             '<td>Email:</td>'+
-            '<td>'+d[2]+'</td>'+
-        '</tr>'+
-        '<tr>'+
-            '<td>Phone:</td>'+
             '<td>'+d[3]+'</td>'+
         '</tr>'+
         '<tr>'+
+            '<td>Phone:</td>'+
+            '<td>'+d[4]+'</td>'+
+        '</tr>'+
+        '<tr>'+
             '<td>Skill Set:</td>'+
-            '<td>'+d[8]+'</td>'+
+            '<td>'+d[9]+'</td>'+
         '</tr>'+
     '</table>';
 }
@@ -161,8 +162,10 @@ that.filteredRows = that.table1.rows({"search" : "applied"}).data()
     if(this.filteredRows){
       this.filteredRows.each(function ( value:any, index:any ) {
         delete value['0']
-        delete value['15']
+        delete value['1']
         delete value['16']
+        delete value['17']
+        delete value['18']
         console.log( 'Data in index: '+index+' is: '+value );
       } );
       this.csvExporter.generateCsv(this.filteredRows);
@@ -171,8 +174,10 @@ that.filteredRows = that.table1.rows({"search" : "applied"}).data()
       var data=this.table1.rows().data()
       data.each(function ( value:any, index:any ) {
         delete value['0']
-        delete value['15']
+        delete value['1']
         delete value['16']
+        delete value['17']
+        delete value['18']
         console.log( 'Data in index: '+index+' is: '+value );
       } );
       this.csvExporter.generateCsv(data);

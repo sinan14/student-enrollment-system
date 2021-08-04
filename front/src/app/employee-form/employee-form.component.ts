@@ -10,43 +10,10 @@ import { AbstractControl, FormBuilder, Validators } from '@angular/forms';
   styleUrls: ['./employee-form.component.css'],
 })
 export class EmployeeFormComponent {
+  
   emailReg = /^[a-z0-9.%+]+@[a-z09.-]+.[a-z]{2,4}/;
   phoneReg = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
-  states = [
-    'Andhra Pradesh',
-    'Arunachal Pradesh',
-    'Assam',
-    'Bihar',
-    'Chhattisgarh',
-    'Dadra and Nagar Haveli',
-    'Daman and Diu',
-    'Delhi',
-    'Goa',
-    'Gujarat',
-    'Haryana',
-    'Himachal Pradesh',
-    'Jammu and Kashmir',
-    'Jharkhand',
-    'Karnataka',
-    'Kerala',
-    'Madhya Pradesh',
-    'Maharashtra',
-    'Manipur',
-    'Meghalaya',
-    'Mizoram',
-    'Nagaland',
-    'Orissa',
-    'Puducherry',
-    'Punjab',
-    'Rajasthan',
-    'Sikkim',
-    'Tamil Nadu',
-    'Telangana',
-    'Tripura',
-    'Uttar Pradesh',
-    'Uttarakhand',
-    'West Bengal',
-  ];
+
 
   constructor(private _auth: AuthService, private _fb: FormBuilder) {}
   employeeForm = this._fb.group({
@@ -56,12 +23,13 @@ export class EmployeeFormComponent {
     Gender: ['Male', Validators.required],
     DOB: ['', Validators.required],
     HighestQualification: ['', Validators.required],
-    SkillSet: ['HTML,CSS,JS,PYTHON,C#,JAVA', Validators.required],
+    SkillSet: ['HTML,CSS,JS,PYTHON,C#,JAVA'],
     State: ['', Validators.required],
     District: ['', Validators.required],
     Post: ['', Validators.required],
     PinCode: ['', Validators.required],
-    Password: ['', Validators.required],
+    Password: ['sinan@66A', Validators.required],
+    PassOfYear:['',[Validators.required,Validators.min(2000),Validators.max(2020)]]
   });
 
   registerEmployee() {

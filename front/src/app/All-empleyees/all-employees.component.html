@@ -22,10 +22,10 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let Employee of Students">
+          <tr *ngFor="let Employee of Employees">
             <td>{{ Employee.Name }}</td>
             <td>{{ Employee.DOB | date }}</td>
-            <td>{{ Employee.Sex }}</td>
+            <td>{{ Employee.Gender }}</td>
             <td>{{ Employee.HighestQualification }}</td>
             <td>
               <button
@@ -33,7 +33,7 @@
                 style="cursor: pointer; margin-left: 20px"
                 *ngIf="Employee.Name"
               >
-                <a [routerLink]="['/students', Employee._id]">View</a>
+                <a [routerLink]="['/employees', Employee._id]">View</a>
               </button>
             </td>
           </tr>

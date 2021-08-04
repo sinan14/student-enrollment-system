@@ -279,58 +279,65 @@ router.put(
       length: 6,
     });
     const { id } = req.params;
-    const { Course, Email, PaymentDate } = req.body.Student;
+    const { Course,Status, Email, PaymentDate } = req.body.Student;
+    console.log(Status);
     const studentPass = `1@${password}`;
 
     const first = Course.slice(0, 4).toUpperCase();
     const suid = `${first}${uuid}`;
-    // console.log(suid)
-    // console.log(`your password is        ${studentPass}`)
-    const student = StudentData.findByIdAndUpdate(
+    console.log(suid);
+    console.log(Email);
+    console.log(`your password is        ${studentPass}`);
+    const student = await StudentData.findByIdAndUpdate(
       { _id: id },
       {
         $set: {
           Password: studentPass,
           Suid: suid,
+          Status:Status,
           PaymentDate: PaymentDate,
         },
       }
     );
-    student.then(function (Student) {
-      // console.log(Student)
-    });
-    const transporter = nodemailer.createTransport({
-      host: "smtp.gmail.com",
-      service: "gmail",
-      port: 587,
-      secure: false,
-      auth: {
-        user: process.env.USER,
-        pass: process.env.PASS,
-      },
-    });
-    const mailOptions = {
-      from: process.env.USER,
-      to: `${Email}`,
-      subject: `payment received`,
 
-      html: `<p>you are receiving this email because ictak received\n\n
+    if (!student) {
+      console.log('falseupdated123456')
+      return res.send(false);
+    } else {
+      const transporter = nodemailer.createTransport({
+        host: "smtp.gmail.com",
+        service: "gmail",
+        port: 587,
+        secure: false,
+        auth: {
+          user: process.env.USER,
+          pass: process.env.PASS,
+        },
+      });
+      const mailOptions = {
+        from: process.env.USER,
+        to: `${Email}`,
+        subject: `payment received`,
+
+        html: `<p>you are receiving this email because ictak received\n\n
        the payment done by you for the course\n\n
       ${Course}, now you can login to our course for details and to see your profile
       by using password : <strong><b><em>${studentPass}</em></b></strong>\n\n
       your student id is : <b><em>${suid}</em></b>
       you can also reset your password in your profile too
       </p>`,
-    };
-    transporter.sendMail(mailOptions, (err, response) => {
-      if (err) {
-        console.log("there is an error", err);
-        return res.send(false);
-      } else {
-        // console.log("here is the res", response);
-        return res.send(true);
-      }
-    });
+      };
+      transporter.sendMail(mailOptions, (err, response) => {
+        if (err) {
+          console.log("there is an error", err);
+          return res.send(false);
+        } else {
+          // console.log("here is the res", response);
+          console.log(student)
+          return res.send(true);
+        }
+      });
+    }
   })
 );
 

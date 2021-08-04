@@ -25,11 +25,11 @@ const EmployeeSchema = new Schema({
     required:true
   },
 
-  highestQualification: {
+  HighestQualification: {
     type: String,
     required: true,
   },
-  skilSet: {
+  SkillSet: {
     type: String,
   },
 
@@ -46,7 +46,7 @@ const EmployeeSchema = new Schema({
     required: true,
   },
 
-  pinCode: {
+  PinCode: {
     type: Number,
     required: true,
   },
@@ -54,19 +54,20 @@ const EmployeeSchema = new Schema({
     type: String,
     required: true,
   },
+  PassOfYear:{},
   CreationDate:{
     type:Date,
     
   }
 });
-EmployeeSchema.statics.findAndValidate = async function (email, password) {
-  const foundUser = await this.findOne({ email,password });
-  if(foundUser){
-    return foundUser
-  } else {
-    return false
-  }
-}
+// EmployeeSchema.statics.findAndValidate = async function (email, password) {
+//   const foundUser = await this.findOne({ email,password });
+//   if(foundUser){
+//     return foundUser
+//   } else {
+//     return false
+//   }
+// }
 
 
 module.exports = mongoose.model("Employee", EmployeeSchema);

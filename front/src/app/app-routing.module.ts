@@ -1,3 +1,4 @@
+import { AllEmployeesComponent } from './All-empleyees/all-employees.component';
 // import { DatatableComponent } from './datatable/datatable.component';
 import { AuthGuard } from './auth.guard';
 import { StudentsGuard } from './students.guard';
@@ -10,7 +11,7 @@ import { AllStudentsComponent } from './all-students/all-students.component';
 import { StudentProfileComponent } from './student-profile/student-profile.component';
 import { HomeComponent } from './home/home.component';
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes,ExtraOptions } from '@angular/router';
+import { RouterModule, Routes, ExtraOptions } from '@angular/router';
 import { StudentRegisterComponent } from './student-register/student-register.component';
 import { LoginComponent } from './login/login.component';
 import { NavHeaderComponent } from './nav-header/nav-header.component';
@@ -19,6 +20,7 @@ import { CoursesComponent } from './courses/courses.component';
 import { EmployeeFormComponent } from './employee-form/employee-form.component';
 import { LoginEmployeeComponent } from './login-employee/login-employee.component';
 import { NewdatatableComponent } from './newdatatable/newdatatable.component';
+import { EmpProfileComponent } from './emp-profile/emp-profile.component';
 // import { }
 const routerOptions: ExtraOptions = {
   scrollPositionRestoration: 'enabled',
@@ -35,7 +37,11 @@ const routes: Routes = [
   { path: 'employeelogin', component: LoginEmployeeComponent },
   { path: 'resetPassword', component: ResetPasswordComponent },
   { path: 'resetEmployeePassword', component: ResetEmpPasswordComponent },
-  { path: 'students',canActivate:[AuthGuard], component: AllStudentsComponent },
+  {
+    path: 'students',
+    canActivate: [AuthGuard],
+    component: AllStudentsComponent,
+  },
   {
     path: 'students/:_id',
     component: StudentProfileComponent,
@@ -45,13 +51,15 @@ const routes: Routes = [
   // { path: 'admintable', component: AdminDataTableComponent },
   { path: 'error', component: ErrorsComponent },
   // {path:'ss',component:DatatableComponent},
-  {path:'aa',component:NewdatatableComponent},
+  { path: 'aa', component: NewdatatableComponent },
+  { path: 'employees', component: AllEmployeesComponent },
+  { path: 'employees/:_id', component: EmpProfileComponent },
 
   { path: '**', component: PageNotFoundComponent },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes,routerOptions)],
+  imports: [RouterModule.forRoot(routes, routerOptions)],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

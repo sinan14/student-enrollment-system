@@ -13,6 +13,7 @@ import { CommonModule } from '@angular/common';
 
 import { AppComponent } from './app.component';
 // import {  DatatableComponent } from './datatable/datatable.component';
+import { AllEmployeesComponent} from './All-empleyees/all-employees.component'
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { StudentRegisterComponent } from './student-register/student-register.component';
@@ -47,6 +48,7 @@ import { EmpProfileComponent } from './emp-profile/emp-profile.component';
 
     // AdminDataTableComponent,
     AllStudentsComponent,
+    AllEmployeesComponent,
     StudentPaymentComponent,
     ResetPasswordComponent,
     CoursesComponent,

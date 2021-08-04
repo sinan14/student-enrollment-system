@@ -21,6 +21,7 @@ export class StudentModel {
     public PinCode:number,
     public Course: string,
     public DOB: string,
-    public Password: string
+    public Password: string,
+    public ApprovalDate:string,
   ) {}
 }

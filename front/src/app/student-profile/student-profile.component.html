@@ -427,7 +427,13 @@
                     </td>
                   </tr>
                 </table>
-                <div *ngIf="readonly">
+                <div *ngIf="(Student.ApprovalDate == '')">
+                  <button (click)="onApprove(Student._id,Student.Email)" class="btn btn-sm btn-success">Approve</button>
+                  <button (click)="onReject(Student._id,Student.Email)" class="btn btn-sm btn-danger">reject</button>
+
+
+                </div>
+                <div *ngIf="readonly && (Student.ApprovalDate !='')">
                   <button
                     *ngIf="showEditButton"
                     (click)="update()"
