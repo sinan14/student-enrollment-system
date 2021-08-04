@@ -17,12 +17,16 @@
                 "
                 alt="student dp"
               />
-              <form [formGroup]="photoUpdateForm" (ngSubmit)="addPic()" >
+              <!-- <form [formGroup]="photoUpdateForm" (ngSubmit)="addPic()"> -->
                 <div>
-                    <input type="file"(change)="selectImage($event)" accept="image/png, image/gif, image/jpeg">
-                  </div>
-                <input type="submit" class="btn btn-primary" value="change">
-              </form>
+                  <input
+                    type="file"
+                    (change)="selectImage($event)"
+                    accept="image/png, image/gif, image/jpeg"
+                  />
+                </div>
+                <button (click)="addPic()"  class="btn btn-primary">change</button>
+              <!-- </form> -->
               <!-- <button
                 *ngIf="changephoto"
                 (click)="changeOption()"
@@ -334,32 +338,6 @@
                         type="text"
                         class="form-control Border"
                         [value]="Student.Password"
-                        [ngClass]="{
-                          Border: !readonly
-                        }"
-                      />
-                    </td>
-                  </tr>
-
-                  <tr>
-                    <th width="30%">Sex</th>
-                    <td width="2%">:</td>
-                    <td [class.editModeOn]="!readonly">
-                      <input
-                        *ngIf="readonly"
-                        type="text"
-                        [value]="Student.Sex"
-                        [ngClass]="{
-                          noBorder: readonly
-                        }"
-                        readonly
-                      />
-                      <input
-                        *ngIf="!readonly"
-                        formControlName="Sex"
-                        type="text"
-                        class="form-control Border"
-                        [value]="Student.Sex"
                         [ngClass]="{
                           Border: !readonly
                         }"

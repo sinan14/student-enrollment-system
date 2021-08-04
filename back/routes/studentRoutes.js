@@ -92,8 +92,9 @@ router.get(
     // console.log(Student)
     if (Student) {
       return res.send(Student);
+    } else {
+      return res.send(false);
     }
-    return res.send(false);
   })
 );
 
@@ -108,7 +109,11 @@ router.put(
       ...req.body.Student,
     });
     // console.log(Student);
-    return res.send(Student);
+    if (Student) {
+      return res.send(true);
+    } else {
+      return res.send(false);
+    }
   })
 );
 
@@ -118,8 +123,8 @@ router.put(
   upload.single("img"),
   wrapAsync(async (req, res) => {
     const { id } = req.params;
-    console.log(req.file)
-    await StudentData.updateOne(
+    // console.log(req.file);
+    const updatedimage = await StudentData.updateOne(
       { _id: id },
       {
         $set: {
@@ -130,6 +135,11 @@ router.put(
         },
       }
     );
+    if (updatedimage) {
+      return res.send(true);
+    } else {
+      return res.send(false);
+    }
   })
 );
 
@@ -139,7 +149,11 @@ router.delete(
   "/:id",
   wrapAsync(async (req, res) => {
     const deletedStudent = await StudentData.findByIdAndDelete(req.params.id);
-    return res.status(200).send(true);
+    if (deletedStudent) {
+      return res.status(200).send(true);
+    } else {
+      return res.send(false);
+    }
   })
 );
 
@@ -180,10 +194,10 @@ router.get(
     };
     transporter.sendMail(mailOptions, (err, response) => {
       if (err) {
-        console.log("there is an error", err);
+        // console.log("there is an error", err);
         return res.send({ statud: false });
       } else {
-        console.log("here is the res", response);
+        // console.log("here is the res", response);
         return res.send({ status: true });
       }
     });
@@ -198,16 +212,16 @@ router.put(
       length: 8,
       numbers: true,
       symbols: true,
-    }); 
+    });
     const uuid = generator.generate({
-      length:6
+      length: 6,
     });
     const { id } = req.params;
-    const {Course,Email,PaymentDate} = req.body.Student;
-    const studentPass = `1@${password}`
-    
-    const first = Course.slice(0,4).toUpperCase();
-    const suid = `${first}${uuid}`
+    const { Course, Email, PaymentDate } = req.body.Student;
+    const studentPass = `1@${password}`;
+
+    const first = Course.slice(0, 4).toUpperCase();
+    const suid = `${first}${uuid}`;
     // console.log(suid)
     // console.log(`your password is        ${studentPass}`)
     const student = StudentData.findByIdAndUpdate(
@@ -215,10 +229,11 @@ router.put(
       {
         $set: {
           Password: studentPass,
-          Suid:suid,
-          PaymentDate:PaymentDate
-        }}
-    )
+          Suid: suid,
+          PaymentDate: PaymentDate,
+        },
+      }
+    );
     student.then(function (Student) {
       // console.log(Student)
     });
@@ -230,36 +245,28 @@ router.put(
       auth: {
         user: process.env.USER,
         pass: process.env.PASS,
-        // user: "sinuzar5@gmail.com",
-        // pass: "ningade mailinte password",
       },
     });
     const mailOptions = {
       from: process.env.USER,
       to: `${Email}`,
-      // from: "sinuzar5@gmail.com",
-      // to: "sinuzar5@gmail.com",
       subject: `payment received`,
-      // text:
-      //   `you are receiving this email because ictak approved your request for joining for\n\n` +
-      //   `Please click on the following link to pay the tution fee for the program\n\n` +
-      //   `${link}`,
 
-      html:`<p>you are receiving this email because ictak received\n\n
+      html: `<p>you are receiving this email because ictak received\n\n
        the payment done by you for the course\n\n
       ${Course}, now you can login to our course for details and to see your profile
       by using password : <strong><b><em>${studentPass}</em></b></strong>\n\n
       your student id is : <b><em>${suid}</em></b>
       you can also reset your password in your profile too
-      </p>`
+      </p>`,
     };
     transporter.sendMail(mailOptions, (err, response) => {
       if (err) {
         console.log("there is an error", err);
-        return res.send({ status: false });
+        return res.send(false);
       } else {
         // console.log("here is the res", response);
-        return res.send(false);
+        return res.send(true);
       }
     });
   })

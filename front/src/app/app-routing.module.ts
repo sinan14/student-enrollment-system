@@ -1,3 +1,4 @@
+// import { DatatableComponent } from './datatable/datatable.component';
 import { AuthGuard } from './auth.guard';
 import { StudentsGuard } from './students.guard';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
@@ -17,6 +18,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { CoursesComponent } from './courses/courses.component';
 import { EmployeeFormComponent } from './employee-form/employee-form.component';
 import { LoginEmployeeComponent } from './login-employee/login-employee.component';
+import { NewdatatableComponent } from './newdatatable/newdatatable.component';
 // import { }
 const routerOptions: ExtraOptions = {
   scrollPositionRestoration: 'enabled',
@@ -42,6 +44,9 @@ const routes: Routes = [
   { path: 'students/:_id/pay', component: StudentPaymentComponent },
   // { path: 'admintable', component: AdminDataTableComponent },
   { path: 'error', component: ErrorsComponent },
+  // {path:'ss',component:DatatableComponent},
+  {path:'aa',component:NewdatatableComponent},
+
   { path: '**', component: PageNotFoundComponent },
 ];
 

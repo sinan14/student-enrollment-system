@@ -43,38 +43,36 @@ export class StudentPaymentComponent implements OnInit {
   ) {}
 
   editProfile(studentPaymentInfo) {
-    return this._http
-      .put(`http://localhost:3000/students/${this.id}/pay`, {
-        Student: {
-          Course: `${this.Student.Course}`,
-          Email: `${this.Student.Email}`,
-          Status: 'Active',
-          PaymentDate: new Date(),
-        },
-      })
-      .subscribe(
-        (response) => {
-          if (response) {
-            Swal.fire({
-              title: 'Good Job',
-              icon: 'success',
-              text: 'payment accepted',
-            });
-          } else {
-            Swal.fire({
-              title: 'errpr',
-              icon: 'error',
-              text: 'something went wrong',
-            });
-          }
-        },
-        (errorMessage) => {
-          Swal.fire('danger!!', 'some internal error', 'error');
-        }
-      );
+    return this._http.put(`http://localhost:3000/students/${this.id}/pay`, {
+      Student: {
+        Course: `${this.Student.Course}`,
+        Email: `${this.Student.Email}`,
+        Status: 'Active',
+        PaymentDate: new Date(),
+      },
+    });
   }
   updateProfile() {
-    this.editProfile(this.Student);
+    this.editProfile(this.Student).subscribe(
+      (response) => {
+        if (response) {
+          Swal.fire({
+            title: 'Good Job',
+            icon: 'success',
+            text: 'payment accepted',
+          });
+        } else {
+          Swal.fire({
+            title: 'errpr',
+            icon: 'error',
+            text: 'something went wrong',
+          });
+        }
+      },
+      (errorMessage) => {
+        Swal.fire('danger!!', 'some internal error', 'error');
+      }
+    );
   }
 
   ngOnInit(): void {
@@ -87,8 +85,8 @@ export class StudentPaymentComponent implements OnInit {
         this.Student = JSON.parse(JSON.stringify(studentData));
         this.fee = this.courseFee[this.Student.Course];
         this.elevatedFee = this.fee * (10 / 100) + this.fee;
-        this.studentFee= (this.fee)/2;
-        this.womenFee = (this.fee)/2;
+        this.studentFee = this.fee / 2;
+        this.womenFee = this.fee / 2;
         // console.log(this.Student);
       },
       (errorMessage) => {

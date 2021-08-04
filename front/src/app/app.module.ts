@@ -12,6 +12,7 @@ import { AuthGuard } from './auth.guard';
 import { CommonModule } from '@angular/common';
 
 import { AppComponent } from './app.component';
+// import {  DatatableComponent } from './datatable/datatable.component';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { StudentRegisterComponent } from './student-register/student-register.component';
@@ -28,7 +29,7 @@ import { LoginEmployeeComponent } from './login-employee/login-employee.componen
 import { ResetEmpPasswordComponent } from './reset-emp-password/reset-emp-password.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { SafePipe } from './safe.pipe';
-// import { NewdatatableComponent } from './newdatatable/newdatatable.component';
+import { NewdatatableComponent } from './newdatatable/newdatatable.component';
 // import { AdminDataTableComponent } from './admin-data-table/admin-data-table.component';
 
 @NgModule({
@@ -41,7 +42,7 @@ import { SafePipe } from './safe.pipe';
     FooterComponent,
     StudentProfileComponent,
     SafePipe,
-    // NewdatatableComponent,
+    NewdatatableComponent,
 
     // AdminDataTableComponent,
     AllStudentsComponent,
@@ -52,6 +53,7 @@ import { SafePipe } from './safe.pipe';
     LoginEmployeeComponent,
     ResetEmpPasswordComponent,
     PageNotFoundComponent,
+    // DatatableComponent
   ],
   imports: [
     BrowserModule,

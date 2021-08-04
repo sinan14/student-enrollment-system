@@ -7,17 +7,52 @@ import { AbstractControl, FormBuilder, Validators } from '@angular/forms';
 @Component({
   selector: 'app-employee-form',
   templateUrl: './employee-form.component.html',
-  styleUrls: ['./employee-form.component.css']
+  styleUrls: ['./employee-form.component.css'],
 })
 export class EmployeeFormComponent {
   emailReg = /^[a-z0-9.%+]+@[a-z09.-]+.[a-z]{2,4}/;
   phoneReg = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+  states = [
+    'Andhra Pradesh',
+    'Arunachal Pradesh',
+    'Assam',
+    'Bihar',
+    'Chhattisgarh',
+    'Dadra and Nagar Haveli',
+    'Daman and Diu',
+    'Delhi',
+    'Goa',
+    'Gujarat',
+    'Haryana',
+    'Himachal Pradesh',
+    'Jammu and Kashmir',
+    'Jharkhand',
+    'Karnataka',
+    'Kerala',
+    'Madhya Pradesh',
+    'Maharashtra',
+    'Manipur',
+    'Meghalaya',
+    'Mizoram',
+    'Nagaland',
+    'Orissa',
+    'Puducherry',
+    'Punjab',
+    'Rajasthan',
+    'Sikkim',
+    'Tamil Nadu',
+    'Telangana',
+    'Tripura',
+    'Uttar Pradesh',
+    'Uttarakhand',
+    'West Bengal',
+  ];
 
-  constructor(private _auth:AuthService,private _fb:FormBuilder) { }
+  constructor(private _auth: AuthService, private _fb: FormBuilder) {}
   employeeForm = this._fb.group({
     name: ['', Validators.required],
-    email: ['', Validators.required,],
-    phone: ['', Validators.required,],
+    email: ['', Validators.required],
+    phone: ['', Validators.required],
     gender: ['male', Validators.required],
     dob: ['', Validators.required],
     highestQualification: ['', Validators.required],
@@ -33,7 +68,7 @@ export class EmployeeFormComponent {
     // if (this.employeeForm.invalid) {
     //   return;
     // }
- console.log(this.employeeForm)
+    console.log(this.employeeForm);
     this._auth.registerEmployee(this.employeeForm.value).subscribe(
       (response) => {
         if (response) {
@@ -71,6 +106,4 @@ export class EmployeeFormComponent {
   }
 
   //******************************************************************** */
-
-
 }

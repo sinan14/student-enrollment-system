@@ -15,7 +15,7 @@ import Swal from 'sweetalert2';
 })
 export class StudentProfileComponent implements OnInit {
   id: string;
-  image: '';
+  image: any;
   changephoto: boolean;
   showEditButton: boolean;
   showDeleteButton: boolean;
@@ -103,7 +103,7 @@ export class StudentProfileComponent implements OnInit {
           this._router.navigate(['/error'], { state: studentData });
         }
         this.Student = JSON.parse(JSON.stringify(studentData));
-        console.log(this.Student);
+        // console.log(this.Student);
         this.Student.imageUrl = this.arrayBufferToBase64(
           this.Student.image.data.data
         );
@@ -178,7 +178,6 @@ export class StudentProfileComponent implements OnInit {
               timer: 500,
               showConfirmButton: false,
             }).then((refresh) => {
-              this.Student = JSON.parse(JSON.stringify(studentData));
               this.readonly = !this.readonly;
               this.ngOnInit();
             });
@@ -198,6 +197,7 @@ export class StudentProfileComponent implements OnInit {
       );
   }
 
+  //*******************************profile change **************************/
   photoUpdateForm: FormGroup = new FormGroup({
     img: new FormControl(''),
   });
@@ -210,12 +210,13 @@ export class StudentProfileComponent implements OnInit {
     );
   }
 
-  addPic() {
+  async addPic() {
     const formData = new FormData();
     formData.append('img', this.photoUpdateForm.get('img')!.value);
-    this.uploadPic(formData).subscribe((res) => {
-      console.log(res)
-    });
+    await this.uploadPic(formData).subscribe((res) => {});
+    setTimeout(() => {
+      this.ngOnInit();
+    }, 1000);
   }
 
   //************************** don't touch **************************************/
@@ -226,6 +227,7 @@ export class StudentProfileComponent implements OnInit {
       this.photoUpdateForm.get('img')!.setValue(this.image);
     }
   }
+
   arrayBufferToBase64(buffer: any) {
     var binary = '';
     var bytes = [].slice.call(new Uint8Array(buffer));

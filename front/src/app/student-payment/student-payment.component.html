@@ -167,6 +167,7 @@
             <b></b>
           </span>
         </h4>
+
         <p>
           <a href="#">{{ Student.Course }} </a>
           <span class="price">{{ elevatedFee }}</span>
@@ -174,9 +175,11 @@
         <p>
           <a>After 10% off</a> <span class="price">{{ fee }}</span>
         </p>
+        <!-- student  -->
         <p *ngIf="Student.EmploymentStatus == 'Student'">
           <a>student Privilage</a> <span class="price">{{ studentFee }}</span>
         </p>
+        <!-- women -->
         <p
           *ngIf="
             Student.EmploymentStatus == 'Unemployed' && Student.Sex == 'Female'
@@ -185,13 +188,26 @@
           <a>Women privilage</a> <span class="price">{{ womenFee }}</span>
         </p>
         <hr />
+        <!-- employed and unemployed male -->
 
-        *ngIf="(Student.EmploymentStatus == 'Unemployed' && Student.Sex ==
-        'Male') || (Student.EmploymentStatus=='Employed')"
-        <p>
+        <p *ngIf="Student.EmploymentStatus == 'Employed' || (Student.Sex == 'Male' && Student.EmploymentStatus == 'Unemployed')">
           Total
           <span class="price" style="color: black"
             ><b>{{ fee }}</b></span
+          >
+        </p>
+        <!-- students special -->
+        <p *ngIf="Student.EmploymentStatus == 'Student'">
+          Total
+          <span class="price" style="color: black"
+            ><b>{{ studentFee }}</b></span
+          >
+        </p>
+        <!-- women special -->
+        <p *ngIf="Student.EmploymentStatus == 'Unemployed' && Student.Sex == 'Female'">
+          Total
+          <span class="price" style="color: black"
+            ><b>{{ womenFee }}</b></span
           >
         </p>
       </div>
