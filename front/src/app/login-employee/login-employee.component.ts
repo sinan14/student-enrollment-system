@@ -36,22 +36,45 @@ export class LoginEmployeeComponent implements OnInit {
     this._auth.loginEmployee(this.emploginForm.value).subscribe(
       (response) => {
         this.isLoading = false;
-
         if (response.status) {
+          this.isLoading = false;
+          const id = response.id;
+
           localStorage.setItem('token', response.token);
           localStorage.setItem('role', response.role);
-          // console.log(response.id)
-          this._router.navigate([`/`]);
-        } else {
-          Swal.fire().then((refresh) => {
-            this.emploginForm.reset({
-              title: '😢😢warning!!',
+          localStorage.setItem('navigator', response.id);
+          if (response.Name == 'Admin') {
+            const Name = 'Admin';
+            localStorage.setItem('Name', 'Admin');
+            Swal.fire({
+              title: `welcome ${Name}  🙏🏻🙏🏻🙏🏻`,
+              icon: 'success',
+              timer: 600,
               showConfirmButton: false,
-              timer: 1000,
-              text: 'user not found',
-              icon: 'error',
+            }).then(() => {
+              this._router.navigate(['/admin-panel']);
             });
-          });
+          }
+
+          if (response.Name != 'Admin') {
+            localStorage.setItem('Name', response.Name);
+            const Name = response.Name;
+            Swal.fire({
+              title: `welcome ${Name}  🥰`,
+              icon: 'success',
+              timer: 600,
+              showConfirmButton: false,
+            }).then(() => {
+              this._router.navigate([`/employees/${id}`]);
+            });
+          }
+        } else {
+          this.isLoading = false;
+          Swal.fire('Warning!!', 'User not found🤷‍♂️🤷‍♂️🤷‍♀️!', 'error').then(
+            (refresh) => {
+              this.emploginForm.reset();
+            }
+          );
         }
       },
       (errorMessage) => {

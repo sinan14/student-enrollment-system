@@ -1,3 +1,4 @@
+import { AdmindashboardComponent } from './admindashboard/admindashboard.component';
 import { AllEmployeesComponent } from './All-empleyees/all-employees.component';
 // import { DatatableComponent } from './datatable/datatable.component';
 import { AuthGuard } from './auth.guard';
@@ -28,6 +29,7 @@ const routerOptions: ExtraOptions = {
 };
 const routes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
+  {path:'admin-panel',component:AdmindashboardComponent},
   { path: 'home', component: HomeComponent },
   { path: 'register', component: StudentRegisterComponent },
   { path: 'employeeregister', component: EmployeeFormComponent },
@@ -35,11 +37,11 @@ const routes: Routes = [
   { path: 'employeelogin', component: LoginEmployeeComponent },
   { path: 'resetPassword', component: ResetPasswordComponent },
   { path: 'resetEmployeePassword', component: ResetEmpPasswordComponent },
-  {path:'students',component:NewdatatableComponent},
+  { path: 'students', component: NewdatatableComponent },
 
   {
     path: 's',
-    canActivate: [AuthGuard],
+
     component: AllStudentsComponent,
   },
   {
@@ -49,9 +51,9 @@ const routes: Routes = [
   },
   { path: 'students/:_id/pay', component: StudentPaymentComponent },
   // { path: 'admintable', component: AdminDataTableComponent },
-  { path: 'error', component: ErrorsComponent },
   { path: 'employees', component: AllEmployeesComponent },
   { path: 'employees/:_id', component: EmpProfileComponent },
+  { path: 'error', component: ErrorsComponent },
 
   { path: '**', component: PageNotFoundComponent },
 ];

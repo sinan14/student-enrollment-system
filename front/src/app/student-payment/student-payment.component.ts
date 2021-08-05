@@ -93,7 +93,7 @@ export class StudentPaymentComponent implements OnInit {
         // console.log(this.Student);
       },
       (errorMessage) => {
-      Swal.fire({title:'🤦‍♂️🤦‍♂️🤦‍♂️danger!!', text:'some internal error',timer:1000,showConfirmButton:false icon:'error'});
+      Swal.fire({title:'🤦‍♂️🤦‍♂️🤦‍♂️danger!!', text:'some internal error',timer:1000,showConfirmButton:false ,icon:'error'});
         
       }
     );

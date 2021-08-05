@@ -32,6 +32,7 @@ import { SafePipe } from './safe.pipe';
 import { NewdatatableComponent } from './newdatatable/newdatatable.component';
 import { EmpProfileComponent } from './emp-profile/emp-profile.component';
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
+import {AdmindashboardComponent} from './admindashboard/admindashboard.component'
 @NgModule({
   declarations: [
   LoadingSpinnerComponent,
@@ -54,6 +55,7 @@ import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinne
     ResetEmpPasswordComponent,
     PageNotFoundComponent,
     EmpProfileComponent,
+    AdmindashboardComponent
   ],
   imports: [
     BrowserModule,

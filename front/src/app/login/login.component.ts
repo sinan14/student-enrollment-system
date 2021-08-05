@@ -33,8 +33,12 @@ export class LoginComponent {
         if (response.status) {
           this.isLoading = false;
           const id = response.id;
+          const Name = response.Name;
           localStorage.setItem('token', response.token);
           localStorage.setItem('role', response.role);
+          localStorage.setItem('Name',response.id);
+          localStorage.setItem('navigator',response.id);
+          Swal.fire({title:`welcome ${Name}  🥰` ,icon:'success',timer:600,showConfirmButton:false })
           this._router.navigate([`/students/${id}`]);
         } else {
           this.isLoading = false;

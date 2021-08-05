@@ -24,7 +24,9 @@
             >
           </li>
 
-          <li><a class="nav-link" routerLink="students">Students</a></li>
+          <li *ngIf="_auth.loggedIn && _auth.getUser()=='admin'"><a class="nav-link" routerLink="employees">Employees</a></li>
+          <li *ngIf="_auth.loggedIn && (_auth.getUser()=='admin' || _auth.getUser()=='employee')"><a class="nav-link" routerLink="students">Students</a></li>
+
           <li (click)="courses()">
             <a class="nav-link scrollto" routerLink="home" fragment="courses"
               >Courses</a
@@ -49,6 +51,9 @@
             <a class="nav-link" routerLink="register">Register</a>
           </li>
           <li  *ngIf="!_auth.loggedIn()"><a class="nav-link" routerLink="login">Login</a></li>
+          <li  *ngIf="(_auth.getUser() == 'user')"><a class="nav-link" (click)="viewStudentProfile()">My Profile</a></li>
+          <li  *ngIf="(_auth.getUser() == 'employee')"><a class="nav-link" (click)="viewEmployeeProfile()">My Profile</a></li>
+
           <li *ngIf="_auth.loggedIn()">
             <a
               class="nav-link"

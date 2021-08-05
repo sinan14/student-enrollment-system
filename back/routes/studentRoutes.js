@@ -11,26 +11,6 @@ var upload = multer({ dest: imagedest });
 const fs = require("fs");
 const generator = require("generate-password");
 //************************************************ */
-router.post("/book", upload.single("img"), verifyToken, (req, res) => {
-  console.log(req.body);
-  var book_item = {
-    id: req.body._id,
-    title: req.body.title,
-    author: req.body.author,
-    description: req.body.description,
-    genre: req.body.genre,
-    image: {
-      data: fs.readFileSync(req.file.path),
-      contentType: "image",
-    },
-  };
-  var book = BookData(book_item);
-  book.save((err, result) => {
-    if (err) {
-    }
-    res.send(result);
-  });
-});
 
 router.post("/register", upload.single("img"), (req, res) => {
   // console.log(req.body);
@@ -54,7 +34,7 @@ router.post("/register", upload.single("img"), (req, res) => {
     CreationDate: req.body.CreationDate,
     PaymentDate: req.body.PaymentDate,
     ApprovalDate: req.body.ApprovalDate,
-    Password: "NEWREGISTER",
+    Password: "NewRegister@ict",
     Suid: "New Register",
     image: {
       data: fs.readFileSync(req.file.path),
@@ -83,11 +63,12 @@ router.post(
           res.send({ status: false, data: "you havenot registered" });
         } else if (foundUser) {
           const id = foundUser._id;
+          const Name = foundUser.Name;
           console.log("an user loginned");
           req.session.role = "user";
           const payload = { subject: Email, admin: false };
           const token = jwt.sign(payload, "secretKey", { expiresIn: "1h" });
-          res.send({ status: true, token, id, role: req.session.role });
+          res.send({ status: true, token,Name, id, role: req.session.role });
         } else {
           res.send(false);
         }
@@ -198,7 +179,7 @@ router.delete(
     } else {
       return res.send(false);
     }
-    return res.send(true);
+    
   })
 );
 
@@ -209,7 +190,9 @@ router.post(
     const { id } = req.params;
     const { Email, Course } = req.body.Student;
     // console.log(id);
-    const link = `http://localhost:4200/students/${id}/pay`;
+    const awsLink=12;
+
+    const link = `${awsLink}/students/${id}/pay`;
     const transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
       service: "gmail",
@@ -238,7 +221,7 @@ router.post(
         // console.log("there is an error", err);
         return res.send({ statud: false });
       } else {
-        console.log("here is the res", response);
+        // console.log("here is the res", response);
         return res.send({ status: true });
       }
     });
@@ -265,7 +248,8 @@ router.post(
       from: "projectjads@gmail.com",
       to: `${Email}`,
       subject: `Application Rejected`,
-      text: `you are receiving this email because ictak rejected\n\nyour request for joining the 
+      text: `you are receiving this email because ictak rejected\n\nyour 
+        request for joining the 
         Course ${Course} due to lack of clarification of details on application`,
     };
     transporter.sendMail(mailOptions, (err, response) => {
@@ -318,7 +302,7 @@ router.put(
     );
 
     if (!student) {
-      console.log("falseupdated123456");
+      // console.log("falseupdated123456");
       return res.send(false);
     } else {
       const transporter = nodemailer.createTransport({

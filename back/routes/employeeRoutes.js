@@ -48,18 +48,19 @@ router.post(
       // console.log("admin login success");
       const payload = { subject: Email, admin: true };
       const token = jwt.sign(payload, "secretKey", { expiresIn: "1h" });
-      res.send({ status: 200, token, role: req.session.role });
+      const Name ="Admin"
+      res.send({ status: 200, token,Name, role: req.session.role });
     } else if(Email !="admin@ictak.com") {
       const foundUser = await empData.findOne({ Email, Password });
-      const id = foundUser._id;
-      // console.log(id);
 
       if (foundUser) {
+        const id = foundUser._id;
+        const Name = foundUser.Name;
         console.log("an employee loginned");
         req.session.role = "employee";
         const payload = { subject: Email, admin: false };
         const token = jwt.sign(payload, "secretKey", { expiresIn: "1h" });
-        res.send({ status: true, token, id, role: req.session.role });
+        res.send({ status: true, token,Name, id, role: req.session.role });
       } else {
         res.send(false);
       }

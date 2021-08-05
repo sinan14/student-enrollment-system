@@ -5,22 +5,55 @@ import Swal from 'sweetalert2';
 
 @Injectable()
 export class AuthService {
-  constructor(private _http: HttpClient,private _router:Router) {}
+  constructor(private _http: HttpClient, private _router: Router) {}
   //*************** register employee and student ***************/
-  logOut(){
-    localStorage.removeItem('token');
-    localStorage.removeItem('role')
-    // localStorage.clear()
-    Swal.fire('we will miss you').then(() => {
+  toStudentProfile() {
+    const id = this.getId();
+    this._router.navigate([`/students/${id}`])
+    
+  }
+  toEmployeeProfile(){
+    const id = this.getId();
+    this._router.navigate(['/employees/'+id])
+
+  }
+  getId() {
+    return localStorage.getItem('navigator');
+  }
+  getName() {
+    return localStorage.getItem('Name');
+  }
+  logOut() {
+    
+    const name = this.getName();
+    if(name==null){
+      const name = 'Admin'
+    }
+    Swal.fire({
+      title: '😪',
+      text: `bye ${name} we will miss you`,
+      timer: 1000,
+      showConfirmButton: false,
+    }).then(() => {
+      localStorage.removeItem('token');
+      localStorage.removeItem('role');
+      localStorage.removeItem('navigator');
+      localStorage.removeItem('Name');
       this._router.navigate(['/login']);
     });
   }
 
   registerUser(StudentDetails: any) {
-    return this._http.post('http://localhost:3000/students/register', StudentDetails);
+    return this._http.post(
+      'http://localhost:3000/students/register',
+      StudentDetails
+    );
   }
   registerEmployee(EmployeeDetails: any) {
-    return this._http.post('http://localhost:3000/employee/register', EmployeeDetails);
+    return this._http.post(
+      'http://localhost:3000/employee/register',
+      EmployeeDetails
+    );
   }
 
   //************************** login employee and student *******************/

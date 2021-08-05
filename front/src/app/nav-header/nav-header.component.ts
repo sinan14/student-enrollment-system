@@ -17,6 +17,14 @@ export class NavHeaderComponent {
     private _router: Router,
     private router: RouterModule
   ) {}
+  viewStudentProfile(){
+    this._auth.toStudentProfile();
+
+  }
+  viewEmployeeProfile(){
+    this._auth.toEmployeeProfile();
+
+  }
   logoutUser() {
     this._auth.logOut();
  
