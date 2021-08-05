@@ -73,7 +73,7 @@ export class StudentPaymentComponent implements OnInit {
         }
       },
       (errorMessage) => {
-        Swal.fire('🤦‍♂️🤦‍♂️🤦‍♂️danger!!', 'some internal error', 'error');
+      Swal.fire({title:'🤦‍♂️🤦‍♂️🤦‍♂️danger!!',timer:1000,showConfirmButton:false, text:'some internal error', icon:'error'});
       }
     );
   }
@@ -93,7 +93,8 @@ export class StudentPaymentComponent implements OnInit {
         // console.log(this.Student);
       },
       (errorMessage) => {
-        // Swal.fire('danger!!', 'some internal error', 'error');
+      Swal.fire({title:'🤦‍♂️🤦‍♂️🤦‍♂️danger!!', text:'some internal error',timer:1000,showConfirmButton:false icon:'error'});
+        
       }
     );
   }

@@ -70,7 +70,6 @@ router.post("/register", upload.single("img"), (req, res) => {
   });
 });
 
-
 //************************      checks login            ************************ */
 router.post(
   "/login",
@@ -193,12 +192,12 @@ router.put(
 router.delete(
   "/:id",
   wrapAsync(async (req, res) => {
-    // const deletedStudent = await StudentData.findByIdAndDelete(req.params.id);
-    // if (deletedStudent) {
-    //   return res.status(200).send(true);
-    // } else {
-    //   return res.send(false);
-    // }
+    const deletedStudent = await StudentData.findByIdAndDelete(req.params.id);
+    if (deletedStudent) {
+      return res.status(200).send(true);
+    } else {
+      return res.send(false);
+    }
     return res.send(true);
   })
 );
@@ -217,17 +216,14 @@ router.post(
       port: 587,
       secure: false,
       auth: {
-        user: process.env.USER,
-        pass: process.env.PASS,
-        // user: "sinuzar5@gmail.com",
-        // pass: "ningade mailinte password",
+        user: "projectjads@gmail.com",
+        pass: "sinan@66A",
       },
     });
     const mailOptions = {
-      from: process.env.USER,
-      // to: `${Email}`,
-      // from: "sinuzar5@gmail.com",
-      to: "sinuzar5@gmail.com",
+      from: "projectjads@gmail.com",
+      to: `${Email}`,
+
       subject: `You Selected`,
 
       html: `<p>you are receiving this email because ictak approved your request</p>
@@ -261,17 +257,13 @@ router.post(
       port: 587,
       secure: false,
       auth: {
-        user: process.env.USER,
-        pass: process.env.PASS,
-        // user: "sinuzar5@gmail.com",
-        // pass: "ningade mailinte password",
+        user: "projectjads@gmail.com",
+        pass: "sinan@66A",
       },
     });
     const mailOptions = {
-      from: process.env.USER,
-      // to: `${Email}`,
-      // from: "sinuzar5@gmail.com",
-      to: "sinuzar5@gmail.com",
+      from: "projectjads@gmail.com",
+      to: `${Email}`,
       subject: `Application Rejected`,
       text: `you are receiving this email because ictak rejected\n\nyour request for joining the 
         Course ${Course} due to lack of clarification of details on application`,
@@ -335,12 +327,12 @@ router.put(
         port: 587,
         secure: false,
         auth: {
-          user: process.env.USER,
-          pass: process.env.PASS,
+          user: "projectjads@gmail.com",
+          pass: "sinan@66A",
         },
       });
       const mailOptions = {
-        from: process.env.USER,
+        from: "projectjads@gmail.com",
         to: `${Email}`,
         subject: `payment received`,
 
