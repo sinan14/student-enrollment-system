@@ -1,3 +1,4 @@
+import { EmpdashboardComponent } from './empdashboard/empdashboard.component';
 import { AllEmployeesComponent } from './All-empleyees/all-employees.component';
 // import { DatatableComponent } from './datatable/datatable.component';
 import { AuthGuard } from './auth.guard';
@@ -48,7 +49,7 @@ const routes: Routes = [
   {
     path: 'employee-panel',
     canActivate: [AuthGuard],
-    component: AdmindashboardComponent,
+    component: EmpdashboardComponent,
   },
   {
     path: 'approve',

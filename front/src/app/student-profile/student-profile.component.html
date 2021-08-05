@@ -446,8 +446,8 @@
                     </td>
                   </tr>
                 </table>
-                <div *ngIf="Student.ApprovalDate == ''">
-                  <button
+                <div *ngIf="_auth.getUser()=='admin'" >
+                  <button *ngIf="Student.ApprovalDate ==''"
                     (click)="
                       onApprove(Student._id, Student.Course, Student.Email)
                     "
@@ -455,7 +455,7 @@
                   >
                     Approve
                   </button>
-                  <button
+                  <button  *ngIf="Student.ApprovalDate == ''"
                     (click)="
                       onReject(Student._id, Student.Course, Student.Email)
                     "

@@ -37,7 +37,7 @@ export class EmployeeFormComponent implements OnInit {
       '',
       [Validators.required, Validators.min(100000), Validators.max(999999)],
     ],
-    Password: ['sinan@66A'],
+    Password: ['Employee@ict21'],
     PassOfYear: [
       '',
       [Validators.required, Validators.min(2000), Validators.max(2020)],
@@ -55,8 +55,8 @@ export class EmployeeFormComponent implements OnInit {
         if (response) {
           Swal.fire({
             title: 'Good Job💖💖💖',
-            timer: 1000,
-            text: 'successfully registered',
+            timer: 5000,
+            text: 'successfully registered your password \n your password is ',
             icon: 'success',
           }).then(() => {
             this.employeeForm.reset();
