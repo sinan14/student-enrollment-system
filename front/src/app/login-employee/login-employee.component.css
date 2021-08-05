@@ -6,6 +6,7 @@ a {
 
 input.ng-invalid.ng-touched {
   border: 2px solid red;
+  border-radius: 2%;
 }
 select.ng-invalid.ng-touched {
   border: 2px solid red;

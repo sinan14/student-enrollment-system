@@ -7,9 +7,11 @@ a {
 
 input.ng-invalid.ng-touched {
   border: 2px solid red;
+  border-radius: 5%;
 }
 select.ng-invalid.ng-touched {
   border: 2px solid red;
+
 }
 .help-block {
   color: red;

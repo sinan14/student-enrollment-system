@@ -9,18 +9,26 @@ import { AbstractControl, FormBuilder, Validators } from '@angular/forms';
   templateUrl: './employee-form.component.html',
   styleUrls: ['./employee-form.component.css'],
 })
-export class EmployeeFormComponent {
+export class EmployeeFormComponent implements OnInit {
   isLoading:boolean = false;
+  ngOnInit(){
+    this.employeeForm.patchValue({
+     Password:'sinan@66A',
+     SkillSet:'Java,Js,C++'
+    });
+  }
   
-  emailReg = /^[a-z0-9.%+]+@[a-z09.-]+.[a-z]{2,4}/;
+  
   phoneReg = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+  emailReg = /^[a-z0-9.%+]+@[a-z09.-]+.[a-z]{2,4}/;
+
 
 
   constructor(private _auth: AuthService, private _fb: FormBuilder) {}
   employeeForm = this._fb.group({
     Name: ['', Validators.required],
-    Email: ['', Validators.required],
-    Phone: ['', Validators.required],
+    Email: ['', Validators.required,Validators.pattern(this.emailReg)],
+    Phone: ['', Validators.required,Validators.pattern(this.phoneReg)],
     Gender: ['Male', Validators.required],
     DOB: ['', Validators.required],
     HighestQualification: ['', Validators.required],
@@ -28,8 +36,8 @@ export class EmployeeFormComponent {
     State: ['', Validators.required],
     District: ['', Validators.required],
     Post: ['', Validators.required],
-    PinCode: ['', Validators.required],
-    Password: ['sinan@66A', Validators.required],
+    PinCode: ['', [Validators.required,Validators.min(100000),Validators.max(999999)]],
+    Password: ['sinan@66A'],
     PassOfYear:['',[Validators.required,Validators.min(2000),Validators.max(2020)]]
   });
 
@@ -71,7 +79,7 @@ export class EmployeeFormComponent {
           text: 'some internal error',
           icon: 'error',
         }).then(() => {
-          this.employeeForm.reset();
+          this.ngOnInit()
         });
       }
     );

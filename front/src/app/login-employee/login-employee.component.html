@@ -1,7 +1,6 @@
-  <div class="limiter">
+<div class="limiter">
   <div class="container-login100">
     <div class="wrap-login100">
-
       <div>
         <div class="register" id="ul1">
           <ul
@@ -38,14 +37,13 @@
           [formGroup]="emploginForm"
           (ngSubmit)="loginUser()"
         >
-
           <span class="login100-form-title p-b-43">
             <b> Employee Login</b>
           </span>
           <br />
-           <!-- loading spinner -->
+          <!-- loading spinner -->
 
-           <div *ngIf="isLoading" style="text-align: center;">
+          <div *ngIf="isLoading" style="text-align: center">
             <app-loading-spinner></app-loading-spinner>
           </div>
 
@@ -57,38 +55,51 @@
             <span class="focus-input100"></span>
             <span class="label-input100">Email</span>
             <span
-            *ngIf="!emploginForm.get('Email').valid &&
-                    !emploginForm.get('Email').touched"
-                    class="help-block"
-                   >Enter valid email</span>
+              *ngIf="
+                !emploginForm.get('Email').valid &&
+                emploginForm.get('Email').touched
+              "
+              class="help-block"
+              >Enter valid email</span
+            >
           </div>
 
           <div
-          class="wrap-input100 validate-input"
-          data-validate="Valid Email is required: ex@abc.xyz"
-        >
-          <input formControlName="emp" class="input100" type="text" />
-          <span class="focus-input100"></span>
-          <span class="label-input100">Employee ID</span>
-          <span
-          *ngIf="!emploginForm.get('emp').valid &&
-                  emploginForm.get('emp').touched"
-                  class="help-block"
-                 >Enter Valid ID!</span>
-        </div>
+            class="wrap-input100 validate-input"
+            data-validate="Valid Email is required: ex@abc.xyz"
+          >
+            <input formControlName="emp" class="input100" type="text" />
+            <span class="focus-input100"></span>
+            <span class="label-input100">Employee ID</span>
+            <span
+              *ngIf="
+                !emploginForm.get('emp').valid &&
+                emploginForm.get('emp').touched
+              "
+              class="help-block"
+              >Enter Valid ID!</span
+            >
+          </div>
 
           <div
             class="wrap-input100 validate-input"
             data-validate="Password is required"
           >
-            <input class="input100" formControlName="Password" type="password"/>
+            <input
+              class="input100"
+              formControlName="Password"
+              type="password"
+            />
             <span class="focus-input100"></span>
             <span class="label-input100">Password</span>
             <span
-              *ngIf="!emploginForm.get('Password').valid &&
-                      !emploginForm.get('Password').touched"
-                      class="help-block"
-                      >Please Enter Valid Password!</span>
+              *ngIf="
+                !emploginForm.get('Password').valid &&
+                emploginForm.get('Password').touched
+              "
+              class="help-block"
+              >Please Enter Valid Password!</span
+            >
           </div>
 
           <div class="flex-sb-m w-full p-t-3 p-b-32">
@@ -103,7 +114,7 @@
             </div>
             <br />
             <div>
-              <a routerLink='/resetEmployeePassword' class="txt1">
+              <a routerLink="/resetEmployeePassword" class="txt1">
                 Forgot Password?
               </a>
             </div>
@@ -123,7 +134,7 @@
           <div class="text-center p-t-46 p-b-20">
             <span class="txt2">
               Don't have an Account?
-              <a routerLink='/employeeregister' class="text-danger">Register</a>
+              <a routerLink="/employeeregister" class="text-danger">Register</a>
             </span>
           </div>
           <div class="boy">
@@ -162,10 +173,12 @@
 
       <div
         class="login100-more"
-        style="background-image: url('https://thesweetsetup.com/wp-content/uploads/2015/06/Ulysses-Pro-Writing-Hero-4.jpg');height: 19.38cm;margin-top: 1.6cm;">
-    </div>
+        style="
+          background-image: url('https://thesweetsetup.com/wp-content/uploads/2015/06/Ulysses-Pro-Writing-Hero-4.jpg');
+          height: 19.38cm;
+          margin-top: 1.6cm;
+        "
+      ></div>
     </div>
   </div>
 </div>
-
-
