@@ -54,7 +54,7 @@ export class StudentRegisterComponent implements OnInit {
     private _fb: FormBuilder,
     private _auth: AuthService
   ) {}
-  isLoading:boolean = false;
+  isLoading: boolean = false;
   emailReg = /^[a-z0-9.%+]+@[a-z09.-]+.[a-z]{2,4}/;
   phoneReg = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
 
@@ -129,18 +129,17 @@ export class StudentRegisterComponent implements OnInit {
       this.registerForm.get('ApprovalDate')!.value
     );
     await this._auth.registerUser(formData).subscribe(
-      
-      (response) => {
-        this.isLoading=false;
-        if (response) {
+      (response:any) => {
+        this.isLoading = false;
+        if (response.status) {
           Swal.fire({
             title: 'Good Job💖💖💖',
             timer: 1000,
-            text: 'successfully registered',
+            text: 'successfully registered please wait for approval',
             icon: 'success',
           }).then(() => {
-            // this.registerForm.reset();
-            // this.ngOnInit();
+            this.registerForm.reset();
+            this._router.navigate(['/']);
           });
         } else {
           Swal.fire({
@@ -149,8 +148,7 @@ export class StudentRegisterComponent implements OnInit {
             text: 'Something went wrong!',
             icon: 'error',
           }).then(() => {
-            // this.registerForm.reset();
-            // this.ngOnInit();
+            this.ngOnInit();
           });
         }
       },
@@ -164,6 +162,7 @@ export class StudentRegisterComponent implements OnInit {
           icon: 'error',
         }).then(() => {
           // this.ngOnInit();
+          this._router.navigate(['/']);
         });
       }
     );
@@ -176,6 +175,7 @@ export class StudentRegisterComponent implements OnInit {
       this.registerForm.get('img')!.setValue(this.image);
     }
   }
+
   //***********************************jquery **********************************/
   ngOnInit() {}
 }

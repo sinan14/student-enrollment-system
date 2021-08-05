@@ -5,14 +5,7 @@ a {
 
 
 
-input.ng-invalid.ng-touched {
-  border: 2px solid red;
-  border-radius: 5%;
-}
-select.ng-invalid.ng-touched {
-  border: 2px solid red;
 
-}
 .help-block {
   color: red;
 }
@@ -56,22 +49,6 @@ a:hover {
 }
 
 
-
-/* p {
-	font-family: Poppins-Regular;
-	font-size: 14px;
-	line-height: 1.7;
-	color: #666666;
-	margin: 0px;
-} */
-
-/* ul, li {
-	margin: 0px;
-	list-style-type: none;
-} */
-
-
-/*---------------------------------------------*/
 input {
 	outline: none;
 	border: none;
@@ -268,6 +245,7 @@ iframe {
   border: 1px solid #e6e6e6;
   border-radius: 10px;
   margin-bottom: 10px;
+  
 }
 
 .label-input100 {
@@ -296,7 +274,8 @@ iframe {
   background: transparent;
   font-family: Montserrat-Regular;
   font-size: 18px;
-  color: #555555;
+  /* color: #555555; */
+  /* color:white; */
   line-height: 1.2;
   padding: 0 26px;
 }
@@ -314,6 +293,8 @@ input.input100 {
 .focus-input100 {
   position: absolute;
   display: block;
+  /* background-color: white; */
+  /* color:black; */
   width: calc(100% + 2px);
   height: calc(100% + 2px);
   top: -1px;

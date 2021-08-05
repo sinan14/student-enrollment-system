@@ -1,3 +1,4 @@
+import { AdminDataTableComponent } from './admin-data-table/admin-data-table.component';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
@@ -12,6 +13,7 @@ import { AuthGuard } from './auth.guard';
 import { CommonModule } from '@angular/common';
 
 import { AppComponent } from './app.component';
+
 // import {  DatatableComponent } from './datatable/datatable.component';
 import { AllEmployeesComponent} from './All-empleyees/all-employees.component'
 import { LoginComponent } from './login/login.component';
@@ -32,7 +34,8 @@ import { SafePipe } from './safe.pipe';
 import { NewdatatableComponent } from './newdatatable/newdatatable.component';
 import { EmpProfileComponent } from './emp-profile/emp-profile.component';
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
-import {AdmindashboardComponent} from './admindashboard/admindashboard.component'
+import {AdmindashboardComponent} from './admindashboard/admindashboard.component';
+import {EmpdashboardComponent} from './empdashboard/empdashboard.component'
 @NgModule({
   declarations: [
   LoadingSpinnerComponent,
@@ -45,6 +48,7 @@ import {AdmindashboardComponent} from './admindashboard/admindashboard.component
     StudentProfileComponent,
     SafePipe,
     NewdatatableComponent,
+    EmpdashboardComponent,
 
     AllStudentsComponent,
     AllEmployeesComponent,
@@ -55,7 +59,8 @@ import {AdmindashboardComponent} from './admindashboard/admindashboard.component
     ResetEmpPasswordComponent,
     PageNotFoundComponent,
     EmpProfileComponent,
-    AdmindashboardComponent
+    AdmindashboardComponent,
+    AdminDataTableComponent
   ],
   imports: [
     BrowserModule,

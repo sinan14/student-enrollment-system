@@ -52,14 +52,6 @@
             class="wrap-input100 validate-input"
             data-validate="Valid email is required: ex@abc.xyz"
           >
-            <input
-              class="input100"
-              type="text"
-              formControlName="Email"
-              name="email"
-            />
-            <span class="focus-input100"></span>
-            <span class="label-input100">Email</span>
             <span
               *ngIf="
                 loginForm.get('Email').invalid && loginForm.get('Email').touched
@@ -67,17 +59,18 @@
               class="help-block"
               >Enter valid Email</span
             >
+            <input
+              class="input100"
+              type="text"
+              formControlName="Email"
+              name="email"
+              placeholder="Email"
+            />
+            <span class="focus-input100"></span>
+            <!-- <span class="label-input100">Email</span> -->
           </div>
 
           <div class="wrap-input100 validate-input">
-            <input
-              formControlName="Password"
-              class="input100"
-              type="password"
-              name="pass"
-            />
-            <span class="focus-input100"></span>
-            <span class="label-input100">Password</span>
             <span
               *ngIf="
                 loginForm.get('Password').invalid &&
@@ -86,6 +79,14 @@
               class="help-block"
               >Enter valid Password</span
             >
+            <input
+              formControlName="Password"
+              class="input100"
+              type="password"
+              name="pass"
+              placeholder="password"
+            />
+            <span class="focus-input100"></span>
           </div>
 
           <div class="flex-sb-m w-full p-t-3 p-b-32">

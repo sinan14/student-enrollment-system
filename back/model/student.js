@@ -79,7 +79,7 @@ const StudentSchema = new Schema({
     type: String,
     required: true,
   },
-  ExitExamMark: {},
+  ExitExamMark: {type:Number},
 });
 
 module.exports = mongoose.model("Student", StudentSchema);

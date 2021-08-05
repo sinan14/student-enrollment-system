@@ -9,13 +9,42 @@ import Swal from 'sweetalert2';
 export class AuthGuard implements CanActivate {
   constructor(private _auth: AuthService, private _router: Router) {}
   canActivate(): boolean {
-    if (this._auth.loggedIn() && (this._auth.getUser() == 'admin' || this._auth.getUser()== 'employee')) {
-      console.log('true');
+    if (
+      this._auth.loggedIn() &&
+      (this._auth.getUser() == 'admin' || this._auth.getUser() == 'employee')
+    ) {
       // Swal.fire('Are You Sure').then(() => {});
       return true;
     } else {
-      localStorage.removeItem('token');
-      Swal.fire({icon:'info',text:'you are not allowed to do that',timer:1500,}).then(() => {
+      Swal.fire({
+        icon: 'warning',
+        text: 'you are not allowed to do that',
+        timer: 1500,
+        showConfirmButton: false,
+      }).then(() => {
+        this._router.navigate(['/']);
+      });
+      return false;
+    }
+  }
+}
+
+export class EmployeeGuard implements CanActivate {
+  constructor(private _auth: AuthService, private _router: Router) {}
+  canActivate(): boolean {
+    if (
+      this._auth.loggedIn() &&
+      (this._auth.getUser() == 'admin' || this._auth.getUser() == 'employee')
+    ) {
+      // Swal.fire('Are You Sure').then(() => {});
+      return true;
+    } else {
+      Swal.fire({
+        icon: 'warning',
+        text: 'you are not allowed to do that',
+        timer: 1500,
+        showConfirmButton: false,
+      }).then(() => {
         this._router.navigate(['/']);
       });
       return false;

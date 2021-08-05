@@ -47,13 +47,7 @@
             <app-loading-spinner></app-loading-spinner>
           </div>
 
-          <div
-            class="wrap-input100 validate-input"
-            data-validate="Valid email is required: ex@abc.xyz"
-          >
-            <input class="input100" formControlName="Email" type="text" />
-            <span class="focus-input100"></span>
-            <span class="label-input100">Email</span>
+          <div class="wrap-input100 validate-input">
             <span
               *ngIf="
                 !emploginForm.get('Email').valid &&
@@ -62,15 +56,13 @@
               class="help-block"
               >Enter valid email</span
             >
+
+            <input class="input100" placeholder="Email" formControlName="Email" type="text" />
+            <span class="focus-input100"></span>
+            
           </div>
 
-          <div
-            class="wrap-input100 validate-input"
-            data-validate="Valid Email is required: ex@abc.xyz"
-          >
-            <input formControlName="emp" class="input100" type="text" />
-            <span class="focus-input100"></span>
-            <span class="label-input100">Employee ID</span>
+          <div class="wrap-input100 validate-input">
             <span
               *ngIf="
                 !emploginForm.get('emp').valid &&
@@ -79,19 +71,14 @@
               class="help-block"
               >Enter Valid ID!</span
             >
+            <input placeholder="Employee id" formControlName="emp" class="input100" type="text" />
+            <span class="focus-input100"></span>
           </div>
 
           <div
             class="wrap-input100 validate-input"
             data-validate="Password is required"
           >
-            <input
-              class="input100"
-              formControlName="Password"
-              type="password"
-            />
-            <span class="focus-input100"></span>
-            <span class="label-input100">Password</span>
             <span
               *ngIf="
                 !emploginForm.get('Password').valid &&
@@ -100,6 +87,13 @@
               class="help-block"
               >Please Enter Valid Password!</span
             >
+            <input
+              class="input100"
+              formControlName="Password"
+              type="password"
+              placeholder="password"
+            />
+            <span class="focus-input100"></span>
           </div>
 
           <div class="flex-sb-m w-full p-t-3 p-b-32">

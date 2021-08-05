@@ -68,13 +68,14 @@ export class StudentProfileComponent implements OnInit {
     imageUrl: '',
     ApprovalDate: '',
     PaymentDate: '',
+    ExitExamMark:''
   };
 
   constructor(
     private _http: HttpClient,
     private _ActivatedRoute: ActivatedRoute,
     private _router: Router,
-    private _auth: AuthService,
+    public _auth: AuthService,
     private _studentService: StudentServiceService
   ) {}
 
@@ -83,7 +84,7 @@ export class StudentProfileComponent implements OnInit {
       this._auth.loggedIn() &&
       (this._auth.getUser() == 'admin' || this._auth.getUser() == 'user')
     ) {
-      console.log('true');
+      // console.log('true');
       this.showEditButton = true;
     } else {
       this.showDeleteButton = false;
@@ -145,6 +146,8 @@ export class StudentProfileComponent implements OnInit {
           ]),
           Course: new FormControl(this.Student.Course, [Validators.required]),
           DOB: new FormControl(this.Student.DOB, [Validators.required]),
+          ExitExamMark: new FormControl(this.Student.ExitExamMark,),
+
           Password: new FormControl(this.Student.Password, [
             Validators.required,
             Validators.pattern(this.passwordReg),
@@ -179,7 +182,6 @@ export class StudentProfileComponent implements OnInit {
     this._studentService
       .editStudent(this.studentUpdateForm.value, this.Student._id)
       .subscribe(
-        
         (studentData: any) => {
           this.isLoading = false;
           if (studentData.error) {
@@ -222,7 +224,7 @@ export class StudentProfileComponent implements OnInit {
         }
       );
   }
-  //**************************pic upload               */
+  //**************************    pic upload    ********************************/
 
   photoUpdateForm: FormGroup = new FormGroup({
     img: new FormControl(''),
@@ -241,10 +243,20 @@ export class StudentProfileComponent implements OnInit {
     const formData = new FormData();
     formData.append('img', this.photoUpdateForm.get('img')!.value);
     await this.uploadPic(formData).subscribe(
-      (res) => {
+      (res: any) => {
         this.isLoading = false;
+        if (res.status) {
+        } else {
+          Swal.fire({
+            title: '🤦‍♂️🤦‍♂️error',
+            text: 'server error',
+            timer: 1000,
+            showConfirmButton: false,
+          });
+        }
       },
       (error) => {
+        this.isLoading = false;
         Swal.fire({
           title: '🤦‍♂️🤦‍♂️error',
           text: 'server error',
@@ -282,7 +294,7 @@ export class StudentProfileComponent implements OnInit {
         Student: { Email: `${Email}`, Course: `${Course}` },
       }),
       this._http.put(`http://localhost:3000/students/${id}`, {
-        Student: { ApprovalDate: new Date() },
+        Student: { ApprovalDate: new Date(), Status: 'payment remaining' },
       }),
     ])
       .pipe(tap(console.log))
@@ -315,7 +327,7 @@ export class StudentProfileComponent implements OnInit {
       .subscribe(
         (res) => {
           this.isLoading = false;
-          Swal.fire({ title: 'rejected', text: 'done', icon: 'info' });
+          Swal.fire({ title: 'rejected', text: 'done', icon: 'info',timer:500,showConfirmButton:false });
         },
         (error) => {
           this.isLoading = false;

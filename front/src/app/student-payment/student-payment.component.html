@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-75">
       <div class="container">
-        <form>
+        <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()">
           <div class="row">
             <div class="col-50">
               <h3>Billing Address</h3>
@@ -65,6 +65,7 @@
             </div>
 
             <div class="col-50">
+              
               <h3>Payment</h3>
               <label for="fname">Accepted Cards</label>
               <div class="icon-container">
@@ -78,21 +79,26 @@
                 type="text"
                 id="cname"
                 name="cardname"
+                formControlName='name'
                 
                 placeholder="name"
               />
               <label for="ccnum">Credit card number</label>
               <input
                 type="text"
+                formControlName="cardnumber"
                 id="ccnum"
                 name="cardnumber"
                 placeholder="1111-2222-3333-4444"
               />
               <label for="expmonth">Exp Month</label>
               <input
-                type="text"
+                type="number"
                 id="expmonth"
+                min="1"
+                max="12"
                 name="expmonth"
+                formControlName="month"
                 placeholder="September"
               />
               <div class="row">
@@ -102,7 +108,9 @@
                     min="2022"
                     type="number"
                     id="expyear"
+                    min="2021"
                     name="expyear"
+                    formControlName="year"
                     placeholder="2025"
                   />
                 </div>
@@ -110,6 +118,7 @@
                   <label for="cvv">CVV</label>
                   <input
                     type="number"
+                    formControlName="cvv"
                     min="100"
                     max="999"
                     id="cvv"

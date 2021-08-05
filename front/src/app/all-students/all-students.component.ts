@@ -1,6 +1,4 @@
-
-
-import  Swal from 'sweetalert2';
+import Swal from 'sweetalert2';
 import { StudentServiceService } from './../student.service';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
@@ -14,7 +12,7 @@ import { tap } from 'rxjs/operators';
   styleUrls: ['./all-students.component.css'],
 })
 export class AllStudentsComponent implements OnInit {
-  isLoading:boolean = false;
+  isLoading: boolean = false;
   Students = [
     {
       _id: '',
@@ -46,14 +44,22 @@ export class AllStudentsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.isLoading=true;
-    this._studentService.fetchStudents().subscribe((data) => {
-      this.isLoading = false;
-      this.Students = JSON.parse(JSON.stringify(data));
-    },(error) => {
-      this.isLoading = false;
-      Swal.fire({title:'error!!!🤦‍♂️🤦‍♂️🤦‍♂️',text:'server refused to connect',timer:800, icon:'error',showConfirmButton:false})
-    }
+    this.isLoading = true;
+    this._studentService.fetchStudents().subscribe(
+      (data) => {
+        this.isLoading = false;
+        this.Students = JSON.parse(JSON.stringify(data));
+      },
+      (error) => {
+        this.isLoading = false;
+        Swal.fire({
+          title: 'error!!!🤦‍♂️🤦‍♂️🤦‍♂️',
+          text: 'server refused to connect',
+          timer: 800,
+          icon: 'error',
+          showConfirmButton: false,
+        });
+      }
     );
   }
 
@@ -64,17 +70,30 @@ export class AllStudentsComponent implements OnInit {
         Student: { Email: `${Email}`, Course: `${Course}` },
       }),
       this._http.put(`http://localhost:3000/students/${id}`, {
-        Student: { ApprovalDate: new Date() },
+        Student: { ApprovalDate: new Date(),Status:`payment remaining` },
       }),
     ])
       .pipe(tap(console.log))
-      .subscribe((response)=>{
-        this.isLoading = false;
-        Swal.fire({title:'Good',text:'😀😀',icon:'success',timer:500,showConfirmButton:false})
-
-      },(errorMessage)=>{
-        this.isLoading = false;
-        Swal.fire({title:'🤦‍♂️🤦‍♂️🤦‍♂️🤦‍♂️',text:'server refused to respond',timer:500})
-      });
+      .subscribe(
+        (response: any) => {
+          this.isLoading = false;
+          this.ngOnInit()
+          Swal.fire({
+            title: 'Good',
+            text: '😀😀',
+            icon: 'success',
+            timer: 500,
+            showConfirmButton:false
+          });
+        },
+        (errorMessage) => {
+          this.isLoading = false;
+          Swal.fire({
+            title: '🤦‍♂️🤦‍♂️🤦‍♂️🤦‍♂️',
+            text: 'server refused to respond',
+            timer: 500,
+          });
+        }
+      );
   }
 }

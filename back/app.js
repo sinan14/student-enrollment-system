@@ -1,21 +1,17 @@
-if (process.env.NODE_ENV !== "production") {
-  require("dotenv").config();
-}
-
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const session = require("express-session");
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
-
 const path = require("path");
 const wrapAsync = require("./util/wrapAsync");
 const ExpressError = require("./util/ExpressError");
 
 //*************************** connecting our database ****************************
 // const dbUrl = process.env.DB_URL || "mongodb://localhost:27017/project-mean";
-const dbUrl = "mongodb+srv://userone:sinu1@ictakfiles.g1s0x.mongodb.net/project-mean?retryWrites=true&w=majority";
+const dbUrl =
+  "mongodb+srv://userone:sinu1@ictakfiles.g1s0x.mongodb.net/project-mean?retryWrites=true&w=majority";
 
 mongoose.connect(dbUrl, {
   useNewUrlParser: true,

@@ -36,6 +36,7 @@ router.post("/register", upload.single("img"), (req, res) => {
     ApprovalDate: req.body.ApprovalDate,
     Password: "NewRegister@ict",
     Suid: "New Register",
+    ExitExamMark:0,
     image: {
       data: fs.readFileSync(req.file.path),
       contentType: "image",
@@ -44,9 +45,9 @@ router.post("/register", upload.single("img"), (req, res) => {
   var student = StudentData(Student);
   student.save((err, result) => {
     if (err) {
-      res.send(false);
+      res.send({ status: false });
     }
-    res.send(result);
+    res.send({ status: true });
   });
 });
 
@@ -68,7 +69,7 @@ router.post(
           req.session.role = "user";
           const payload = { subject: Email, admin: false };
           const token = jwt.sign(payload, "secretKey", { expiresIn: "1h" });
-          res.send({ status: true, token,Name, id, role: req.session.role });
+          res.send({ status: true, token, Name, id, role: req.session.role });
         } else {
           res.send(false);
         }
@@ -135,9 +136,9 @@ router.put(
     });
     // console.log(Student);
     if (Student) {
-      return res.send(true);
+      return res.send({status:true});
     } else {
-      return res.send(false);
+      return res.send({status:false});
     }
   })
 );
@@ -161,9 +162,9 @@ router.put(
       }
     );
     if (updatedimage) {
-      return res.send(true);
+      return res.send({status:true});
     } else {
-      return res.send(false);
+      return res.send({status:false});
     }
   })
 );
@@ -179,7 +180,6 @@ router.delete(
     } else {
       return res.send(false);
     }
-    
   })
 );
 
@@ -190,7 +190,7 @@ router.post(
     const { id } = req.params;
     const { Email, Course } = req.body.Student;
     // console.log(id);
-    const awsLink=12;
+    const awsLink = 12;
 
     const link = `${awsLink}/students/${id}/pay`;
     const transporter = nodemailer.createTransport({
@@ -218,10 +218,10 @@ router.post(
     };
     transporter.sendMail(mailOptions, (err, response) => {
       if (err) {
-        // console.log("there is an error", err);
-        return res.send({ statud: false });
+        console.log("there is an error", err);
+        return res.send({ status: false });
       } else {
-        // console.log("here is the res", response);
+        console.log("here is the res", response);
         return res.send({ status: true });
       }
     });

@@ -2,6 +2,7 @@ export class StudentModel {
   constructor(
     public _id: String,
     public Suid: String,
+    public ExitExamMark:String,
 
     public image: {
       data: any;

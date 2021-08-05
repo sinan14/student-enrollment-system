@@ -372,7 +372,6 @@
                     <td width="2%">:</td>
                     <td *ngIf="readonly">
                       <input
-                        formControlName="EmploymentStatus"
                         type="text"
                         [value]="Student.EmploymentStatus"
                         [ngClass]="{
@@ -394,6 +393,29 @@
                         <option value="Unemployed">Unemployed</option>
                         <option value="Employed">Employed</option>
                       </select>
+                    </td>
+                  </tr>
+                  <!-- exitExamMark -->
+                  <tr *ngIf="_auth.getUser()=='admin'">
+                    <th width="30%">Exit Exam Mark</th>
+                    <td width="2%">:</td>
+                    <td *ngIf="readonly">
+                      <input
+                        type="text"
+                        [value]="Student.ExitExamMark"
+                        class="noBorder"
+                        readonly
+                      />
+                    </td>
+                    <td *ngIf="!readonly">
+                      <input
+                        formControlName="ExitExamMark"
+                        type="number"
+                        min="0"
+                        max="100"
+                        [value]="Student.ExitExamMark"
+                        class="Border form-control"
+                      />
                     </td>
                   </tr>
 

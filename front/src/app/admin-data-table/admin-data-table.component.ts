@@ -3,14 +3,13 @@ import { Component, AfterViewInit, ViewChild } from '@angular/core';
 import { StudentServiceService } from '../student.service';
 import { Router } from '@angular/router';
 import { Injector } from '@angular/core'; 
+
 @Component({
-  selector: 'app-newdatatable',
-  templateUrl: './newdatatable.component.html',
-  styleUrls: ['./newdatatable.component.css']
+  selector: 'app-admin-data-table',
+  templateUrl: './admin-data-table.component.html',
+  styleUrls: ['./admin-data-table.component.css'],
 })
-
-export class NewdatatableComponent implements AfterViewInit {
-
+export class AdminDataTableComponent implements AfterViewInit {
   constructor(private studentService:StudentServiceService, private router:Router,private injector:Injector) { }
   @ViewChild('dataTable')
   table!: { nativeElement: any; };
@@ -28,10 +27,7 @@ ngAfterViewInit(): void {
   .subscribe((data:any)=>{
     console.log(data)
     data.forEach((value:any)=>{
-      delete value['Password']
-      delete value['Suid']
-      delete value['__v']
-     if(value['Status']=="Active"){
+      if(value['Status']=="inactive"){
       var propValue:string[]=Object.values(value)
         this.dataSet.push(propValue)
       }
@@ -47,7 +43,7 @@ ngAfterViewInit(): void {
         columnDefs: [
          { orderable: false, targets: 0 },
           {
-          "targets": [0,1,3,4,5,6,12,14,15,16,17,18,19],
+          "targets": [0,1,3,4,5,6,12,14,15,16,17],
             "visible": false,
           } 
        ],
@@ -74,16 +70,14 @@ ngAfterViewInit(): void {
             { title: "PinCode"},
             { title: "Status"},
             { title: "Created Date"},
-            { title: "Payment Date"},
-            { title: "Approval Date"},
             { title: "Exit Exam Mark"},
-            {
-              title:" ",
-              "className":"details",
-              "orderable":      false,
-              "data":           null,
-              "defaultContent": "<button class='btn btn-primary'>More</button>"
-          }
+          {
+            title:" ",
+            "className":"details-more",
+            "orderable":      false,
+            "data":           null,
+            "defaultContent": "<button class='btn btn-primary'>More></button>"
+        }
         ],
         
           "lengthChange": false
@@ -105,7 +99,14 @@ ngAfterViewInit(): void {
             row.child( that.format(row.data()) ).show();
             tr.addClass('shown');
         }
-      } );     
+      } );
+      $( '#display tbody' ).on('click', '.details-more', function () {
+        var id= that.table1.row(this).data()
+        console.log(id[1])
+        const router = that.injector.get(Router);
+        router.navigate(['/students',id[1]]);
+      } );
+        
     })
     $('#display thead tr:eq(1) th').each( function () {
       var title = $(this).text();
@@ -171,7 +172,6 @@ that.filteredRows = that.table1.rows({"search" : "applied"}).data()
         delete value['16']
         delete value['17']
         delete value['18']
-        delete value['19']
         console.log( 'Data in index: '+index+' is: '+value );
       } );
       this.csvExporter.generateCsv(this.filteredRows);
@@ -184,12 +184,10 @@ that.filteredRows = that.table1.rows({"search" : "applied"}).data()
         delete value['16']
         delete value['17']
         delete value['18']
-        delete value['19']
         console.log( 'Data in index: '+index+' is: '+value );
       } );
       this.csvExporter.generateCsv(data);
     }
   
   }
-
 }
