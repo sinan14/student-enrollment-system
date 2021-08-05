@@ -3,6 +3,7 @@ const wrapAsync = require("../util/wrapAsync");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
 const empData = require("../model/employee");
+
 router.post(
   "/register",
   wrapAsync(async function (req, res) {
@@ -34,11 +35,12 @@ router.put(
     }
   })
 );
+//************************************************************************* */
 
 router.post(
   "/login",
   wrapAsync(async function (req, res) {
-    // console.log(req.body);
+    console.log(req.body);
     // console.log(Email);
     const { Email, Password } = req.body;
     if (Email == "admin@ictak.com" && Password == "Admin@11") {

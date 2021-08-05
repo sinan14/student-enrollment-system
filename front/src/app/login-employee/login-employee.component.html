@@ -50,26 +50,26 @@
             class="wrap-input100 validate-input"
             data-validate="Valid email is required: ex@abc.xyz"
           >
-            <input class="input100" type="text" name="email" />
+            <input class="input100" formControlName="Email" type="text" />
             <span class="focus-input100"></span>
             <span class="label-input100">Email</span>
             <span
-            *ngIf="!emploginForm.get('email').valid &&
-                    !emploginForm.get('email').touched"
+            *ngIf="!emploginForm.get('Email').valid &&
+                    !emploginForm.get('Email').touched"
                     class="help-block"
-                   ></span>
+                   >Enter valid email</span>
           </div>
 
           <div
           class="wrap-input100 validate-input"
-          data-validate="Valid email is required: ex@abc.xyz"
+          data-validate="Valid Email is required: ex@abc.xyz"
         >
-          <input class="input100" type="text" name="empid" />
+          <input formControlName="emp" class="input100" type="text" />
           <span class="focus-input100"></span>
           <span class="label-input100">Employee ID</span>
           <span
-          *ngIf="!emploginForm.get('employeeID').valid &&
-                  !emploginForm.get('employeeID').touched"
+          *ngIf="!emploginForm.get('emp').valid &&
+                  emploginForm.get('emp').touched"
                   class="help-block"
                  >Enter Valid ID!</span>
         </div>
@@ -78,12 +78,12 @@
             class="wrap-input100 validate-input"
             data-validate="Password is required"
           >
-            <input class="input100" type="password" name="pass" />
+            <input class="input100" formControlName="Password" type="password"/>
             <span class="focus-input100"></span>
             <span class="label-input100">Password</span>
             <span
-              *ngIf="!emploginForm.get('password').valid &&
-                      !emploginForm.get('password').touched"
+              *ngIf="!emploginForm.get('Password').valid &&
+                      !emploginForm.get('Password').touched"
                       class="help-block"
                       >Please Enter Valid Password!</span>
           </div>

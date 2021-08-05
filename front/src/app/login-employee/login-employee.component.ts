@@ -10,10 +10,11 @@ import Swal from 'sweetalert2';
   styleUrls: ['./login-employee.component.css'],
 })
 export class LoginEmployeeComponent implements OnInit {
+  isLoading: boolean = false;
   error: string = null;
-  passwordReg =/^(?=.{8,})(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).*$/;
+  passwordReg = /^(?=.{8,})(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).*$/;
   emailReg = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.([a-z]{3})+(\.([a-z]{2,}))?$/;
-  empReg = /emp/ig;
+  empReg = /emp/gi;
   constructor(
     private _auth: AuthService,
     private _router: Router,
@@ -22,18 +23,21 @@ export class LoginEmployeeComponent implements OnInit {
 
   ngOnInit() {}
   emploginForm = this._fb.group({
-    email: ['', [Validators.pattern(this.emailReg), Validators.required]],
-    password: ['', [Validators.pattern(this.passwordReg), Validators.required]],
-    employeeId: ['', [Validators.required, Validators.pattern(this.empReg)]],
+    Email: ['', [Validators.pattern(this.emailReg), Validators.required]],
+    Password: ['', [Validators.pattern(this.passwordReg), Validators.required]],
+    emp: ['', [Validators.required, Validators.pattern(this.empReg)]],
   });
 
   loginUser() {
     if (!this.emploginForm.valid) {
       return;
     }
-    console.log(this.emploginForm);
+    // console.log(this.emploginForm);
+    this.isLoading = true;
     this._auth.loginEmployee(this.emploginForm.value).subscribe(
       (response) => {
+        this.isLoading = false;
+
         if (response.status) {
           localStorage.setItem('token', response.token);
           localStorage.setItem('role', response.role);
@@ -52,6 +56,8 @@ export class LoginEmployeeComponent implements OnInit {
         }
       },
       (errorMessage) => {
+        this.isLoading = false;
+
         Swal.fire({
           title: 'warning!!',
           showConfirmButton: false,

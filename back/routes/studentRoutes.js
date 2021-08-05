@@ -93,7 +93,6 @@ router.post(
   wrapAsync(async function (req, res) {
     console.log(req.body);
     const { Email, Password } = req.body;
-    // const foundUser = await StudentData.findAndValidate(Email, Password);
     StudentData.findOne(
       { Email: Email, Password: Password },
       function (err, foundUser) {
@@ -107,7 +106,7 @@ router.post(
           const token = jwt.sign(payload, "secretKey", { expiresIn: "1h" });
           res.send({ status: true, token, id, role: req.session.role });
         } else {
-          res.send({ status: false, data: "NOT FOUND" });
+          res.send(false);
         }
       }
     );
@@ -210,23 +209,24 @@ router.put(
 router.delete(
   "/:id",
   wrapAsync(async (req, res) => {
-    const deletedStudent = await StudentData.findByIdAndDelete(req.params.id);
-    if (deletedStudent) {
-      return res.status(200).send(true);
-    } else {
-      return res.send(false);
-    }
+    // const deletedStudent = await StudentData.findByIdAndDelete(req.params.id);
+    // if (deletedStudent) {
+    //   return res.status(200).send(true);
+    // } else {
+    //   return res.send(false);
+    // }
+    return res.send(true)
   })
 );
 
 // ********************       Mail sends on approving               ***************
-router.get(
-  "/:id/sendmail",
+router.post(
+  "/:id/approve",
   wrapAsync(async (req, res) => {
     const { id } = req.params;
-    const { Email } = req.body.Student;
+    const { Email, Course } = req.body.Student;
     console.log(id);
-    const link = `localhost:4200/students/${id}/pay`;
+    const link = `http://localhost:4200/students/${id}/pay`;
     const transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
       service: "gmail",
@@ -241,26 +241,63 @@ router.get(
     });
     const mailOptions = {
       from: process.env.USER,
-      to: `${Email}`,
+      // to: `${Email}`,
       // from: "sinuzar5@gmail.com",
-      // to: "sinuzar5@gmail.com",
-      subject: `pay your turion fee for ictak`,
-      text:
-        `you are receiving this email because ictak approved your request for joining for\n\n` +
-        `Please click on the following link to pay the tution fee for the program\n\n` +
-        `${link}`,
+      to: "sinuzar5@gmail.com",
+      subject: `You Selected`,
 
-      // html:'<p>you are receiving this email because ictak approved your request for joining for\n\n
-      // Please click on the following link to pay the tution fee for the program
-      // <a href="localhost:4200/students/${id}/pay"></a></p>',
+      html: `<p>you are receiving this email because ictak approved your request</p>
+      <p></p>
+      <p>for completing the registration process Please click on the following link to pay the tution fee for the program</p>
+      <p></p>
+      <p><b><a href="${link}">${link}</a></b></p>`
     };
     transporter.sendMail(mailOptions, (err, response) => {
       if (err) {
         // console.log("there is an error", err);
         return res.send({ statud: false });
       } else {
-        // console.log("here is the res", response);
+        console.log("here is the res", response);
         return res.send({ status: true });
+      }
+    });
+  })
+);
+
+// ********************       Mail sends on rejecting               ***************
+router.post(
+  "/:id/reject",
+  wrapAsync(async (req, res) => {
+    const { id } = req.params;
+    const { Email, Course } = req.body.Student;
+    const transporter = nodemailer.createTransport({
+      host: "smtp.gmail.com",
+      service: "gmail",
+      port: 587,
+      secure: false,
+      auth: {
+        user: process.env.USER,
+        pass: process.env.PASS,
+        // user: "sinuzar5@gmail.com",
+        // pass: "ningade mailinte password",
+      },
+    });
+    const mailOptions = {
+      from: process.env.USER,
+      // to: `${Email}`,
+      // from: "sinuzar5@gmail.com",
+      to: "sinuzar5@gmail.com",
+      subject: `Application Rejected`,
+      text: `you are receiving this email because ictak rejected\n\nyour request for joining the 
+        Course ${Course} due to lack of clarification of details on application`,
+    };
+    transporter.sendMail(mailOptions, (err, response) => {
+      if (err) {
+        // console.log("there is an error", err);
+        return res.send(false);
+      } else {
+        console.log("here is the res", response);
+        return res.send(true);
       }
     });
   })
@@ -277,13 +314,16 @@ router.put(
     });
     const uuid = generator.generate({
       length: 6,
+      numbers:true,
+      uppercase:false
     });
     const { id } = req.params;
-    const { Course,Status, Email, PaymentDate } = req.body.Student;
+    const { Course, Status, Email, PaymentDate } = req.body.Student;
     console.log(Status);
     const studentPass = `1@${password}`;
 
-    const first = Course.slice(0, 4).toUpperCase();
+    const firstrow = Course.slice(0, 4).toLowerCase();
+    const first = firstrow.charAt(0).toUpperCase() + firstrow.slice(1);
     const suid = `${first}${uuid}`;
     console.log(suid);
     console.log(Email);
@@ -294,14 +334,14 @@ router.put(
         $set: {
           Password: studentPass,
           Suid: suid,
-          Status:Status,
+          Status: Status,
           PaymentDate: PaymentDate,
         },
       }
     );
 
     if (!student) {
-      console.log('falseupdated123456')
+      console.log("falseupdated123456");
       return res.send(false);
     } else {
       const transporter = nodemailer.createTransport({
@@ -319,13 +359,15 @@ router.put(
         to: `${Email}`,
         subject: `payment received`,
 
-        html: `<p>you are receiving this email because ictak received\n\n
-       the payment done by you for the course\n\n
-      ${Course}, now you can login to our course for details and to see your profile
-      by using password : <strong><b><em>${studentPass}</em></b></strong>\n\n
-      your student id is : <b><em>${suid}</em></b>
-      you can also reset your password in your profile too
-      </p>`,
+        html: `<p>you are receiving this email because ictak received the payment done by you for the course${Course}</p>
+              <p></p>
+              <p>now you can login to our site for details and to see your profile by using </p>
+              <p></p>
+              <p>password : <strong><b><em>${studentPass}</em></b></strong></p>
+              <p></p>
+              <p>your student id is : <b><em>${suid}</em></b></p>
+              <p></p>
+              <p>you can also reset your password in your profile too</p>`,
       };
       transporter.sendMail(mailOptions, (err, response) => {
         if (err) {
@@ -333,7 +375,7 @@ router.put(
           return res.send(false);
         } else {
           // console.log("here is the res", response);
-          console.log(student)
+          console.log(student);
           return res.send(true);
         }
       });

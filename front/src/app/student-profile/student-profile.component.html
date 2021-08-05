@@ -56,7 +56,7 @@
 
               <h3>{{ Student.Name }}</h3>
             </div>
-            <div class="card-body">
+            <div *ngIf="Student.PaymentDate" class="card-body">
               <p class="mb-0">
                 <strong class="pr-1">Student ID:</strong>{{ Student.Suid }}
               </p>
@@ -262,7 +262,6 @@
                         [ngClass]="{
                           Border: !readonly
                         }"
-                        
                       />
                     </td>
                   </tr>
@@ -305,7 +304,6 @@
                     </td>
                   </tr>
 
-                  
                   <!-- PassOfYear -->
                   <tr>
                     <th width="30%">Pass Out Year</th>
@@ -427,13 +425,23 @@
                     </td>
                   </tr>
                 </table>
-                <div *ngIf="(Student.ApprovalDate == '')">
-                  <button (click)="onApprove(Student._id,Student.Email)" class="btn btn-sm btn-success">Approve</button>
-                  <button (click)="onReject(Student._id,Student.Email)" class="btn btn-sm btn-danger">reject</button>
-
-
+                <div *ngIf="Student.ApprovalDate == ''">
+                  <button
+                    (click)="onApprove(Student._id,Student.Course,Student.Email)"
+                    class="btn btn-sm btn-success"
+                  >
+                    Approve
+                  </button>
+                  <button
+                    (click)="
+                      onReject(Student._id,Student.Course,Student.Email)
+                    "
+                    class="btn btn-sm btn-danger"
+                  >
+                    reject
+                  </button>
                 </div>
-                <div *ngIf="readonly && (Student.ApprovalDate !='')">
+                <div *ngIf="readonly && Student.ApprovalDate != ''">
                   <button
                     *ngIf="showEditButton"
                     (click)="update()"

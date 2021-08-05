@@ -23,5 +23,6 @@ export class StudentModel {
     public DOB: string,
     public Password: string,
     public ApprovalDate:string,
+    public PaymentDate:string
   ) {}
 }

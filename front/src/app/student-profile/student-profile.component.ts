@@ -18,8 +18,8 @@ import Swal from 'sweetalert2';
 export class StudentProfileComponent implements OnInit {
   phoneReg = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
   passwordReg =
-  /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,}$/;
-emailReg = /^[a-z0-9.%+]+@[a-z09.-]+.[a-z]{2,4}/;
+    /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,}$/;
+  emailReg = /^[a-z0-9.%+]+@[a-z09.-]+.[a-z]{2,4}/;
 
   id: string;
   image: '';
@@ -40,7 +40,7 @@ emailReg = /^[a-z0-9.%+]+@[a-z09.-]+.[a-z]{2,4}/;
   deleteProfile() {
     this._studentService.destroyStudent(this.Student._id);
   }
-  
+
   studentUpdateForm: FormGroup;
   Student: StudentModel = {
     _id: '',
@@ -49,8 +49,8 @@ emailReg = /^[a-z0-9.%+]+@[a-z09.-]+.[a-z]{2,4}/;
     Phone: '',
     Sex: '',
     State: '',
-    District:'',
-    PinCode:null,
+    District: '',
+    PinCode: null,
     HighestQualification: '',
     PassOfYear: '',
     SkillSet: '',
@@ -64,7 +64,8 @@ emailReg = /^[a-z0-9.%+]+@[a-z09.-]+.[a-z]{2,4}/;
       contentType: '',
     },
     imageUrl: '',
-    ApprovalDate:''
+    ApprovalDate: '',
+    PaymentDate: '',
   };
 
   constructor(
@@ -74,9 +75,6 @@ emailReg = /^[a-z0-9.%+]+@[a-z09.-]+.[a-z]{2,4}/;
     private _auth: AuthService,
     private _studentService: StudentServiceService
   ) {}
-
-  
-
 
   isAllowedToEdit(): void {
     if (
@@ -117,15 +115,23 @@ emailReg = /^[a-z0-9.%+]+@[a-z09.-]+.[a-z]{2,4}/;
         this.studentUpdateForm = new FormGroup({
           Sex: new FormControl(this.Student.Sex, [Validators.required]),
           Name: new FormControl(this.Student.Name, [Validators.required]),
-          Email: new FormControl(this.Student.Email, [Validators.required,Validators.pattern(this.emailReg)]),
-          Phone: new FormControl(this.Student.Phone, [Validators.required,Validators.pattern(this.phoneReg)]),
+          Email: new FormControl(this.Student.Email, [
+            Validators.required,
+            Validators.pattern(this.emailReg),
+          ]),
+          Phone: new FormControl(this.Student.Phone, [
+            Validators.required,
+            Validators.pattern(this.phoneReg),
+          ]),
           State: new FormControl(this.Student.State, [Validators.required]),
           HighestQualification: new FormControl(
             this.Student.HighestQualification,
             [Validators.required]
           ),
           PassOfYear: new FormControl(this.Student.PassOfYear, [
-            Validators.required,Validators.min(2010),Validators.max(2023)
+            Validators.required,
+            Validators.min(2010),
+            Validators.max(2023),
           ]),
           SkillSet: new FormControl(this.Student.SkillSet, [
             Validators.required,
@@ -136,7 +142,8 @@ emailReg = /^[a-z0-9.%+]+@[a-z09.-]+.[a-z]{2,4}/;
           Course: new FormControl(this.Student.Course, [Validators.required]),
           DOB: new FormControl(this.Student.DOB, [Validators.required]),
           Password: new FormControl(this.Student.Password, [
-            Validators.required,Validators.pattern(this.passwordReg)
+            Validators.required,
+            Validators.pattern(this.passwordReg),
           ]),
         });
       },
@@ -248,16 +255,12 @@ emailReg = /^[a-z0-9.%+]+@[a-z09.-]+.[a-z]{2,4}/;
   }
 
   //************************************************************ */
-  edit(id) {
-    return this._http
-      .put(`http://localhost:3000/students/${id}`, {
-        Student: { ApprovalDate: new Date() },
-      })
-      .subscribe(() => {});
-  }
-  onApprove(id,Email) {
+
+  onApprove(id, Course, Email) {
     forkJoin([
-      this._http.post(`http://localhost:3000/students/${id}/sendmail/`,{Student:{Email:`${Email}`}}),
+      this._http.post(`http://localhost:3000/students/${id}/approve`, {
+        Student: { Email: `${Email}`, Course: `${Course}` },
+      }),
       this._http.put(`http://localhost:3000/students/${id}`, {
         Student: { ApprovalDate: new Date() },
       }),
@@ -266,16 +269,15 @@ emailReg = /^[a-z0-9.%+]+@[a-z09.-]+.[a-z]{2,4}/;
       .subscribe();
   }
   //************************************************************ */
-  onReject(id,Email){
+  onReject(id, Email, Course) {
     forkJoin([
-      this._http.post(`http://localhost:3000/students/${id}/sendmail/`,{Student:{Email:`${Email}`}}),
-      this._http.put(`http://localhost:3000/students/${id}`, {
-        Student: { ApprovalDate: new Date() },
+      this._http.post(`http://localhost:3000/students/${id}/reject/`, {
+        Student: { Email: `${Email}`, Course: `${Course}` },
       }),
+      this._http.delete(`http://localhost:3000/students/${id}`),
     ])
       .pipe(tap(console.log))
       .subscribe();
-
   }
   //************************************************* */
 }

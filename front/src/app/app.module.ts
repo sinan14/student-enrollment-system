@@ -32,10 +32,10 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { SafePipe } from './safe.pipe';
 import { NewdatatableComponent } from './newdatatable/newdatatable.component';
 import { EmpProfileComponent } from './emp-profile/emp-profile.component';
-// import { AdminDataTableComponent } from './admin-data-table/admin-data-table.component';
-
+import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 @NgModule({
   declarations: [
+  LoadingSpinnerComponent,
     AppComponent,
     LoginComponent,
     StudentRegisterComponent,
@@ -46,7 +46,6 @@ import { EmpProfileComponent } from './emp-profile/emp-profile.component';
     SafePipe,
     NewdatatableComponent,
 
-    // AdminDataTableComponent,
     AllStudentsComponent,
     AllEmployeesComponent,
     StudentPaymentComponent,
@@ -57,7 +56,6 @@ import { EmpProfileComponent } from './emp-profile/emp-profile.component';
     ResetEmpPasswordComponent,
     PageNotFoundComponent,
     EmpProfileComponent,
-    // DatatableComponent
   ],
   imports: [
     BrowserModule,

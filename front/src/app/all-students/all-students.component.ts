@@ -35,7 +35,11 @@ export class AllStudentsComponent implements OnInit {
     },
   ];
 
-  constructor(private _http: HttpClient, private router: Router,private _studentService:StudentServiceService) {}
+  constructor(
+    private _http: HttpClient,
+    private router: Router,
+    private _studentService: StudentServiceService
+  ) {}
 
   ngOnInit() {
     this._studentService.fetchStudents().subscribe((data) => {
@@ -43,29 +47,16 @@ export class AllStudentsComponent implements OnInit {
     });
   }
 
-  edit(id) {
-    return this._http
-      .put(`http://localhost:3000/students/${id}`, {
-        Student: { ApprovalDate: new Date() },
-      })
-      .subscribe(() => {});
-  }
-  onSendEmail(id,Email) {
+  onApprove(id, Course, Email) {
     forkJoin([
-      this._http.post(`http://localhost:3000/students/${id}/sendmail/`,{Student:{Email:`${Email}`}}),
+      this._http.post(`http://localhost:3000/students/${id}/approve`, {
+        Student: { Email: `${Email}`, Course: `${Course}` },
+      }),
       this._http.put(`http://localhost:3000/students/${id}`, {
         Student: { ApprovalDate: new Date() },
       }),
     ])
       .pipe(tap(console.log))
       .subscribe();
-
-    // return this._http.get(`http://localhost:3000/students/${id}/sendmail/`)
-    //   .subscribe((data) => {
-    //     return this._http.put(`http://localhost:3000/students/${id}`, {
-    //       Student: { ApprovalDate: new Date()}}).subscribe(()=>{})
-
-    //   });
-    // ;
   }
 }
