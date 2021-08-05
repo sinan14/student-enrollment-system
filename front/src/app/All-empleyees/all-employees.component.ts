@@ -1,3 +1,5 @@
+
+import  Swal  from 'sweetalert2';
 import { HttpClient } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
@@ -10,6 +12,7 @@ import { tap } from "rxjs/operators";
   styleUrls: ["./all-employees.component.css"],
 })
 export class AllEmployeesComponent implements OnInit {
+  isLoading:boolean=false;
   Employees = [
     {
       _id: "",
@@ -29,13 +32,23 @@ export class AllEmployeesComponent implements OnInit {
     },
   ];
 
-  constructor(private _http: HttpClient, private router: Router) {}
+  constructor(private _http: HttpClient, private _router: Router) {}
   getEmployees() {
     return this._http.get("http://localhost:3000/employee");
   }
   ngOnInit() {
+    this.isLoading = true;
     this.getEmployees().subscribe((data) => {
+      this.isLoading = false;
       this.Employees = JSON.parse(JSON.stringify(data));
-    });
+    
+    }, (error)=>{
+      this.isLoading = false;
+      Swal.fire({title:'🤦‍♂️🤦‍♂️🤦‍♂️',text:'server error',icon:'error',timer:500,showConfirmButton:false}).then(()=>{
+        this._router.navigate(['/'])
+      }
+      )
+    }
+    );
   }
 }

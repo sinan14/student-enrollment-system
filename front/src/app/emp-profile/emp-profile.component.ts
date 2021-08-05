@@ -13,6 +13,7 @@ import { EmployeeService } from '../employee.service';
 })
 export class EmpProfileComponent implements OnInit {
   id: string;
+  isLoading: boolean = false;
   phoneReg = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
   passwordReg =
     /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,}$/;
@@ -78,11 +79,13 @@ export class EmpProfileComponent implements OnInit {
     this.isAdmin();
     this.readonly = true;
     this.id = this._ActivatedRoute.snapshot.params['_id'];
-
+    this.isLoading = true;
     this.getStudentById().subscribe(
       (employeesData: any) => {
-        console.log(employeesData);
+        this.isLoading = false;
+        // console.log(employeesData);
         if (employeesData.error) {
+          this.isLoading = false;
           this._router.navigate(['/error'], { state: employeesData });
         }
 
@@ -120,8 +123,9 @@ export class EmpProfileComponent implements OnInit {
         });
       },
       (errorMessage) => {
+        this.isLoading = false;
         this._router.navigate([`/employee`]);
-        Swal.fire('danger!!', 'some internal error', 'error').then(
+        Swal.fire('🤦‍♂️🤦‍♂️🤦‍♂️danger!!', 'some internal error', 'error').then(
           (refresh) => {
             this._router.navigate([`/`]);
           }
@@ -137,8 +141,10 @@ export class EmpProfileComponent implements OnInit {
     );
   }
   updateProfile() {
+    this.isLoading = true;
     this.editProfile(this.employeeUpdateForm.value).subscribe(
       (employeesData: any) => {
+        this.isLoading = false;
         if (employeesData.error) {
           Swal.fire({
             title: 'warning!!',
@@ -152,7 +158,7 @@ export class EmpProfileComponent implements OnInit {
           });
         }
         Swal.fire({
-          title: 'Good Job!!',
+          title: 'Good Job 😉😉!!',
           text: 'profile updated successfully',
           icon: 'success',
           timer: 500,
@@ -163,8 +169,9 @@ export class EmpProfileComponent implements OnInit {
         });
       },
       (errorMessage) => {
+        this.isLoading = false;
         Swal.fire({
-          title: 'danger!!',
+          title: 'danger!!🤦‍♂️🤦‍♂️🤦‍♂️',
           text: 'some internal error',
           icon: 'error',
           timer: 1000,
@@ -183,15 +190,20 @@ export class EmpProfileComponent implements OnInit {
   }
 
   deleteProfile() {
+    this.isLoading = true;
     return this._http
       .delete(`http://localhost:3000/employee/${this.employee._id}`)
       .subscribe(
         (employeesData) => {
-          this._router.navigate([`/employee`]);
+          this.isLoading = false;
+          this._router.navigate([`/employees`]);
         },
         (errorMessage) => {
+          this.isLoading = false;
           Swal.fire('danger!!', 'some internal error', 'error').then(
-            (refresh) => {}
+            (refresh) => {
+              this._router.navigate(['/'])
+            }
           );
         }
       );

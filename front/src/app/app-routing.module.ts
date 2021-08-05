@@ -16,7 +16,6 @@ import { StudentRegisterComponent } from './student-register/student-register.co
 import { LoginComponent } from './login/login.component';
 import { NavHeaderComponent } from './nav-header/nav-header.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
-import { CoursesComponent } from './courses/courses.component';
 import { EmployeeFormComponent } from './employee-form/employee-form.component';
 import { LoginEmployeeComponent } from './login-employee/login-employee.component';
 import { NewdatatableComponent } from './newdatatable/newdatatable.component';
@@ -30,15 +29,16 @@ const routerOptions: ExtraOptions = {
 const routes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
-  { path: 'courses', component: CoursesComponent },
   { path: 'register', component: StudentRegisterComponent },
   { path: 'employeeregister', component: EmployeeFormComponent },
   { path: 'login', component: LoginComponent },
   { path: 'employeelogin', component: LoginEmployeeComponent },
   { path: 'resetPassword', component: ResetPasswordComponent },
   { path: 'resetEmployeePassword', component: ResetEmpPasswordComponent },
+  {path:'students',component:NewdatatableComponent},
+
   {
-    path: 'students',
+    path: 's',
     canActivate: [AuthGuard],
     component: AllStudentsComponent,
   },
@@ -50,8 +50,6 @@ const routes: Routes = [
   { path: 'students/:_id/pay', component: StudentPaymentComponent },
   // { path: 'admintable', component: AdminDataTableComponent },
   { path: 'error', component: ErrorsComponent },
-  // {path:'ss',component:DatatableComponent},
-  { path: 'aa', component: NewdatatableComponent },
   { path: 'employees', component: AllEmployeesComponent },
   { path: 'employees/:_id', component: EmpProfileComponent },
 

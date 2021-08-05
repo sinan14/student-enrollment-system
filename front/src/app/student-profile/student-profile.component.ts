@@ -9,6 +9,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { forkJoin } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import Swal from 'sweetalert2';
+import { ɵangular_packages_platform_browser_platform_browser_m } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-student-profile',
@@ -16,6 +17,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./student-profile.component.css'],
 })
 export class StudentProfileComponent implements OnInit {
+  isLoading: boolean;
   phoneReg = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
   passwordReg =
     /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,}$/;
@@ -97,6 +99,7 @@ export class StudentProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.isAllowedToEdit();
     this.isAdmin();
     this.changePhoto = false;
@@ -105,6 +108,7 @@ export class StudentProfileComponent implements OnInit {
 
     this._studentService.fetchStudent(this.id).subscribe(
       (studentData: any) => {
+        this.isLoading = false;
         if (studentData.error) {
           this._router.navigate(['/error'], { state: studentData });
         }
@@ -148,6 +152,7 @@ export class StudentProfileComponent implements OnInit {
         });
       },
       (errorMessage) => {
+        this.isLoading = false;
         Swal.fire('danger!!', 'server refused to connect', 'error');
       }
     );
@@ -168,16 +173,18 @@ export class StudentProfileComponent implements OnInit {
       this._auth.loggedIn &&
       (this._auth.getUser() == 'admin' || this._auth.getUser() == 'user')
     ) {
-      // console.log(this.studentUpdateForm.value);
       return;
     }
+    this.isLoading = true;
     this._studentService
       .editStudent(this.studentUpdateForm.value, this.Student._id)
       .subscribe(
+        
         (studentData: any) => {
+          this.isLoading = false;
           if (studentData.error) {
             Swal.fire({
-              title: 'warning!!',
+              title: '🙄🙄🙄warning!!',
               text: 'something went wrong',
               icon: 'error',
               timer: 500,
@@ -188,7 +195,7 @@ export class StudentProfileComponent implements OnInit {
             });
           } else {
             Swal.fire({
-              title: 'Good Job!!',
+              title: 'Good Job😉😉!!',
               text: 'profile updated successfully',
               icon: 'success',
               timer: 500,
@@ -201,14 +208,16 @@ export class StudentProfileComponent implements OnInit {
           }
         },
         (errorMessage) => {
+          this.isLoading = false;
           Swal.fire({
-            title: 'danger!!',
+            title: '🤦‍♂️🤦‍♂️🤦‍♂️danger!!',
             text: 'server error',
             icon: 'error',
             timer: 1000,
             showConfirmButton: false,
           }).then((refresh) => {
             this.readonly = !this.readonly;
+            this._router.navigate(['/']);
           });
         }
       );
@@ -228,12 +237,22 @@ export class StudentProfileComponent implements OnInit {
   }
 
   async addPic() {
+    this.isLoading = true;
     const formData = new FormData();
     formData.append('img', this.photoUpdateForm.get('img')!.value);
-
-    await this.uploadPic(formData).subscribe((res) => {
-      // console.log(res)
-    });
+    await this.uploadPic(formData).subscribe(
+      (res) => {
+        this.isLoading = false;
+      },
+      (error) => {
+        Swal.fire({
+          title: '🤦‍♂️🤦‍♂️error',
+          text: 'server error',
+          timer: 1000,
+          showConfirmButton: false,
+        });
+      }
+    );
     setTimeout(() => {
       this.ngOnInit();
     }, 2000);
@@ -257,6 +276,7 @@ export class StudentProfileComponent implements OnInit {
   //************************************************************ */
 
   onApprove(id, Course, Email) {
+    this.isLoading = true;
     forkJoin([
       this._http.post(`http://localhost:3000/students/${id}/approve`, {
         Student: { Email: `${Email}`, Course: `${Course}` },
@@ -266,10 +286,25 @@ export class StudentProfileComponent implements OnInit {
       }),
     ])
       .pipe(tap(console.log))
-      .subscribe();
+      .subscribe(
+        (res) => {
+          this.isLoading = false;
+          Swal.fire({
+            title: '😍❤❤',
+            text: 'approved',
+            timer: 500,
+            showConfirmButton: false,
+          });
+        },
+        (error) => {
+          this.isLoading = false;
+          Swal.fire({ title: '🤦‍♂️🤦‍♂️🤦‍♂️', text: 'server failed', timer: 1000 });
+        }
+      );
   }
   //************************************************************ */
-  onReject(id, Email, Course) {
+  onReject(id, Course, Email) {
+    this.isLoading = true;
     forkJoin([
       this._http.post(`http://localhost:3000/students/${id}/reject/`, {
         Student: { Email: `${Email}`, Course: `${Course}` },
@@ -277,7 +312,22 @@ export class StudentProfileComponent implements OnInit {
       this._http.delete(`http://localhost:3000/students/${id}`),
     ])
       .pipe(tap(console.log))
-      .subscribe();
+      .subscribe(
+        (res) => {
+          this.isLoading = false;
+          Swal.fire({ title: 'rejected', text: 'done', icon: 'info' });
+        },
+        (error) => {
+          this.isLoading = false;
+          Swal.fire({
+            title: 'Error🤦‍♂️🤦‍♂️',
+            text: 'server error occured',
+            icon: 'error',
+            timer: 1000,
+            showConfirmButton: false,
+          });
+        }
+      );
   }
   //************************************************* */
 }

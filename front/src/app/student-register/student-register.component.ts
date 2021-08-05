@@ -54,6 +54,7 @@ export class StudentRegisterComponent implements OnInit {
     private _fb: FormBuilder,
     private _auth: AuthService
   ) {}
+  isLoading:boolean = false;
   emailReg = /^[a-z0-9.%+]+@[a-z09.-]+.[a-z]{2,4}/;
   phoneReg = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
 
@@ -94,6 +95,7 @@ export class StudentRegisterComponent implements OnInit {
     if (this.registerForm.invalid) {
       return;
     }
+    this.isLoading = true;
     const formData = new FormData();
     formData.append('img', this.registerForm.get('img')!.value);
     formData.append('Name', this.registerForm.get('Name')!.value);
@@ -127,10 +129,12 @@ export class StudentRegisterComponent implements OnInit {
       this.registerForm.get('ApprovalDate')!.value
     );
     await this._auth.registerUser(formData).subscribe(
+      
       (response) => {
+        this.isLoading=false;
         if (response) {
           Swal.fire({
-            title: 'Good Job',
+            title: 'Good Job💖💖💖',
             timer: 1000,
             text: 'successfully registered',
             icon: 'success',
@@ -140,7 +144,7 @@ export class StudentRegisterComponent implements OnInit {
           });
         } else {
           Swal.fire({
-            title: 'Oops...',
+            title: '😒😒😒Oops...',
             timer: 1500,
             text: 'Something went wrong!',
             icon: 'error',
@@ -151,8 +155,9 @@ export class StudentRegisterComponent implements OnInit {
         }
       },
       (errorMessage) => {
+        this.isLoading = false;
         Swal.fire({
-          title: 'warning!!',
+          title: '🤦‍♂️🤦‍♂️🤦‍♂️warning!!',
           showConfirmButton: false,
           timer: 1000,
           text: 'some internal error',

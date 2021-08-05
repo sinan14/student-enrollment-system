@@ -49,6 +49,9 @@
           aria-labelledby="home-tab"
         >
           <h3 class="register-heading">Apply As Employee</h3>
+          <div *ngIf="isLoading" style="text-align: center;">
+            <app-loading-spinner></app-loading-spinner>
+          </div>
           <div class="row register-form">
             <form [formGroup]="employeeForm" (ngSubmit)="registerEmployee()">
               <div class="row register-form">

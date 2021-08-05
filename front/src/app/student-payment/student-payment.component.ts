@@ -58,20 +58,22 @@ export class StudentPaymentComponent implements OnInit {
       (response) => {
         if (response) {
           Swal.fire({
-            title: 'Good Job',
+            title: 'Good Job✌✌✌',
             icon: 'success',
             text: 'payment accepted',
-          });
+            timer:1500,
+            showConfirmButton:false
+          }).then();
         } else {
           Swal.fire({
-            title: 'errpr',
+            title: '🤦‍♂️🤦‍♂️error',
             icon: 'error',
             text: 'something went wrong',
           });
         }
       },
       (errorMessage) => {
-        Swal.fire('danger!!', 'some internal error', 'error');
+        Swal.fire('🤦‍♂️🤦‍♂️🤦‍♂️danger!!', 'some internal error', 'error');
       }
     );
   }

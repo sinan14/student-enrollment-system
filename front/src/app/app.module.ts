@@ -23,7 +23,6 @@ import { AllStudentsComponent } from './all-students/all-students.component';
 import { StudentPaymentComponent } from './student-payment/student-payment.component';
 import { FooterComponent } from './footer/footer.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
-import { CoursesComponent } from './courses/courses.component';
 import { ErrorsComponent } from './Errors/errors.component';
 import { EmployeeFormComponent } from './employee-form/employee-form.component';
 import { LoginEmployeeComponent } from './login-employee/login-employee.component';
@@ -50,7 +49,6 @@ import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinne
     AllEmployeesComponent,
     StudentPaymentComponent,
     ResetPasswordComponent,
-    CoursesComponent,
     EmployeeFormComponent,
     LoginEmployeeComponent,
     ResetEmpPasswordComponent,

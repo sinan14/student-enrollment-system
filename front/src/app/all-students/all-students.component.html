@@ -4,6 +4,10 @@
   <!-- <div class="card-body"> -->
   <div class="container-fluid">
     <h4 style="text-align: center">STUDENTS LIST</h4>
+    <!-- loading-spinner -->
+    <div *ngIf="isLoading" style="text-align: center;">
+      <app-loading-spinner></app-loading-spinner>
+    </div>
     <table
       class="
         table

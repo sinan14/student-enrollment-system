@@ -45,6 +45,11 @@
             <b> Employee Login</b>
           </span>
           <br />
+           <!-- loading spinner -->
+
+           <div *ngIf="isLoading" style="text-align: center;">
+            <app-loading-spinner></app-loading-spinner>
+          </div>
 
           <div
             class="wrap-input100 validate-input"

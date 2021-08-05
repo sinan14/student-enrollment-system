@@ -32,7 +32,6 @@ export class LoginEmployeeComponent implements OnInit {
     if (!this.emploginForm.valid) {
       return;
     }
-    // console.log(this.emploginForm);
     this.isLoading = true;
     this._auth.loginEmployee(this.emploginForm.value).subscribe(
       (response) => {
@@ -46,7 +45,7 @@ export class LoginEmployeeComponent implements OnInit {
         } else {
           Swal.fire().then((refresh) => {
             this.emploginForm.reset({
-              title: 'warning!!',
+              title: '😢😢warning!!',
               showConfirmButton: false,
               timer: 1000,
               text: 'user not found',
@@ -59,7 +58,7 @@ export class LoginEmployeeComponent implements OnInit {
         this.isLoading = false;
 
         Swal.fire({
-          title: 'warning!!',
+          title: '🤦‍♂️🤦‍♂️🤦‍♂️warning!!',
           showConfirmButton: false,
           timer: 1000,
           text: 'some internal error',

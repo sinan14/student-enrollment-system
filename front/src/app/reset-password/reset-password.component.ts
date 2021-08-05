@@ -15,6 +15,7 @@ import {
   styleUrls: ['./reset-password.component.css'],
 })
 export class ResetPasswordComponent implements OnInit {
+  isLoading: boolean = false;
   emailReg = /^[a-z0-9.%+]+@[a-z09.-]+.[a-z]{2,4}/;
   passwordReg =
     /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,}$/;
@@ -66,9 +67,11 @@ export class ResetPasswordComponent implements OnInit {
     if (!this.resetForm.valid) {
       return;
     }
-    
+    this.isLoading = true;
+
     this._auth.resetStudentPassword(this.resetForm.value).subscribe(
       (response) => {
+        this.isLoading = false;
         if (response.status) {
           Swal.fire({
             title: 'Eureka! ',
@@ -93,6 +96,7 @@ export class ResetPasswordComponent implements OnInit {
         }
       },
       (catchError) => {
+        this.isLoading = false;
         Swal.fire({
           title: 'warning!!',
           showConfirmButton: false,

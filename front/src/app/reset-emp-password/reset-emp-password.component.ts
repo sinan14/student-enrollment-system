@@ -15,6 +15,7 @@ import {
   styleUrls: ['./reset-emp-password.component.css'],
 })
 export class ResetEmpPasswordComponent implements OnInit {
+  isLoading: boolean = false;
   emailReg = /^[a-z0-9.%+]+@[a-z09.-]+.[a-z]{2,4}/;
   passwordReg =
     /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,}$/;
@@ -64,12 +65,14 @@ export class ResetEmpPasswordComponent implements OnInit {
     return null;
   }
   onSubmit() {
-    if(!this.resetForm.valid){
-      this.resetForm.reset()
+    if (!this.resetForm.valid) {
+      this.resetForm.reset();
       return;
     }
+    this.isLoading = true;
     this._auth.resetEmployeePassword(this.resetForm.value).subscribe(
       (response) => {
+        this.isLoading = false;
         if (response.status) {
           Swal.fire({
             title: 'Eureka! ',
@@ -94,6 +97,7 @@ export class ResetEmpPasswordComponent implements OnInit {
         }
       },
       (catchError) => {
+        this.isLoading = false;
         Swal.fire({
           title: 'warning!!',
           showConfirmButton: false,

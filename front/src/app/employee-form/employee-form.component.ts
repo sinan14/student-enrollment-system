@@ -10,6 +10,7 @@ import { AbstractControl, FormBuilder, Validators } from '@angular/forms';
   styleUrls: ['./employee-form.component.css'],
 })
 export class EmployeeFormComponent {
+  isLoading:boolean = false;
   
   emailReg = /^[a-z0-9.%+]+@[a-z09.-]+.[a-z]{2,4}/;
   phoneReg = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
@@ -36,12 +37,14 @@ export class EmployeeFormComponent {
     // if (this.employeeForm.invalid) {
     //   return;
     // }
-    console.log(this.employeeForm);
+    // console.log(this.employeeForm);
+    this.isLoading = true;
     this._auth.registerEmployee(this.employeeForm.value).subscribe(
       (response) => {
+        this.isLoading = false;
         if (response) {
           Swal.fire({
-            title: 'Good Job',
+            title: 'Good Job💖💖💖',
             timer: 1000,
             text: 'successfully registered',
             icon: 'success',
@@ -50,7 +53,7 @@ export class EmployeeFormComponent {
           });
         } else {
           Swal.fire({
-            title: 'Oops...',
+            title: 'Oops...🤷‍♂️🤷‍♂️',
             timer: 1500,
             text: 'Something went wrong!',
             icon: 'error',
@@ -60,8 +63,9 @@ export class EmployeeFormComponent {
         }
       },
       (errorMessage) => {
+        this.isLoading = false;
         Swal.fire({
-          title: 'warning!!',
+          title: 'warning🤦‍♂️🤦‍♂️🤦‍♂️!!',
           showConfirmButton: false,
           timer: 1000,
           text: 'some internal error',

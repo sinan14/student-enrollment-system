@@ -31,11 +31,6 @@
                       (change)="selectImage($event)"
                       accept="image/png, image/gif, image/jpeg"
                     />
-                    <!-- <label class="form-file-label" for="image">
-                      <span class="form-file-text custom-file-label"
-                        >Choose image</span
-                      >
-                    </label> -->
                   </div>
                 </div>
                 <input
@@ -73,6 +68,10 @@
               <h3 class="mb-0">
                 <i class="fa fa-address-card mr-1"></i>General Information
               </h3>
+            </div>
+            <!-- loading spinner -->
+            <div *ngIf="isLoading" style="text-align: center">
+              <app-loading-spinner></app-loading-spinner>
             </div>
             <!-- <form (ngSubmit)="updateProfile()"> -->
             <form [formGroup]="studentUpdateForm" (ngSubmit)="updateStudent()">
@@ -427,14 +426,16 @@
                 </table>
                 <div *ngIf="Student.ApprovalDate == ''">
                   <button
-                    (click)="onApprove(Student._id,Student.Course,Student.Email)"
+                    (click)="
+                      onApprove(Student._id, Student.Course, Student.Email)
+                    "
                     class="btn btn-sm btn-success"
                   >
                     Approve
                   </button>
                   <button
                     (click)="
-                      onReject(Student._id,Student.Course,Student.Email)
+                      onReject(Student._id, Student.Course, Student.Email)
                     "
                     class="btn btn-sm btn-danger"
                   >

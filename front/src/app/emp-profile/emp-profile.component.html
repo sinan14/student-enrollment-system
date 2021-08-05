@@ -1,4 +1,4 @@
-<section>
+<section id="section">
   <!-- employee Profile -->
   <div class="student-profile py-4">
     <div class="container">
@@ -33,6 +33,10 @@
               <h3 class="mb-0">
                 <i class="fa fa-address-card mr-1"></i>General Information
               </h3>
+            </div>
+            <!-- loading-spinner -->
+            <div *ngIf="isLoading" style="text-align: center;">
+              <app-loading-spinner></app-loading-spinner>
             </div>
             <!-- <form (ngSubmit)="updateProfile()"> -->
             <form [formGroup]="employeeUpdateForm" (ngSubmit)="updateProfile()">

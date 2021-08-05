@@ -48,6 +48,13 @@
           aria-labelledby="home-tab"
         >
           <h3 class="register-heading">Enrollment Form</h3>
+          <!-- loading spinner -->
+          <div *ngIf="isLoading" style="text-align: center;">
+            <app-loading-spinner></app-loading-spinner>
+          </div>
+          <div *ngIf="isLoading" style="text-align: center">
+            <app-loading-spinner></app-loading-spinner>
+          </div>
           <!-- form open -->
           <form [formGroup]="registerForm" (ngSubmit)="registerStudent()">
             <div class="row register-form">

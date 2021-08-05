@@ -33,7 +33,7 @@ router.post("/book", upload.single("img"), verifyToken, (req, res) => {
 });
 
 router.post("/register", upload.single("img"), (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
   var Student = {
     Name: req.body.Name,
     Email: req.body.Email,
@@ -70,22 +70,6 @@ router.post("/register", upload.single("img"), (req, res) => {
   });
 });
 
-//************************        register route      *******************************/
-// router.post(
-//   "/register",
-//   wrapAsync(async function (req, res) {
-//     const user = new StudentData({ ...req.body.user });
-//     console.log(user);
-//     user
-//       .save()
-//       .then(function (data) {
-//         res.send({ status: true });
-//       })
-//       .catch(function (error) {
-//         res.send({ status: false });
-//       });
-//   })
-// );
 
 //************************      checks login            ************************ */
 router.post(
@@ -215,7 +199,7 @@ router.delete(
     // } else {
     //   return res.send(false);
     // }
-    return res.send(true)
+    return res.send(true);
   })
 );
 
@@ -225,7 +209,7 @@ router.post(
   wrapAsync(async (req, res) => {
     const { id } = req.params;
     const { Email, Course } = req.body.Student;
-    console.log(id);
+    // console.log(id);
     const link = `http://localhost:4200/students/${id}/pay`;
     const transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
@@ -248,9 +232,10 @@ router.post(
 
       html: `<p>you are receiving this email because ictak approved your request</p>
       <p></p>
-      <p>for completing the registration process Please click on the following link to pay the tution fee for the program</p>
+      <p>for joining the course ${Course}</p><p></p>
+      <p>To complete the registration process Please click on the following link to pay the tution fee for the program</p>
       <p></p>
-      <p><b><a href="${link}">${link}</a></b></p>`
+      <p><b><a href="${link}">${link}</a></b></p>`,
     };
     transporter.sendMail(mailOptions, (err, response) => {
       if (err) {
@@ -269,7 +254,7 @@ router.post(
   "/:id/reject",
   wrapAsync(async (req, res) => {
     const { id } = req.params;
-    const { Email, Course } = req.body.Student;
+    const { Course, Email } = req.body.Student;
     const transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
       service: "gmail",
@@ -314,8 +299,8 @@ router.put(
     });
     const uuid = generator.generate({
       length: 6,
-      numbers:true,
-      uppercase:false
+      numbers: true,
+      uppercase: false,
     });
     const { id } = req.params;
     const { Course, Status, Email, PaymentDate } = req.body.Student;
