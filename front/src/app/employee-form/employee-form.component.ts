@@ -13,7 +13,7 @@ export class EmployeeFormComponent implements OnInit {
   isLoading: boolean = false;
   ngOnInit() {
     this.employeeForm.patchValue({
-      Password: 'sinan@66A',
+      Password: 'Ict@2021',
       SkillSet: 'Java,Js,C++',
     });
   }
@@ -37,7 +37,7 @@ export class EmployeeFormComponent implements OnInit {
       '',
       [Validators.required, Validators.min(100000), Validators.max(999999)],
     ],
-    Password: ['Employee@ict21'],
+    Password: ['Ict@2021'],
     PassOfYear: [
       '',
       [Validators.required, Validators.min(2000), Validators.max(2020)],
@@ -55,11 +55,11 @@ export class EmployeeFormComponent implements OnInit {
         if (response) {
           Swal.fire({
             title: 'Good Job💖💖💖',
-            timer: 5000,
-            text: 'successfully registered your password \n your password is ',
+           
+            text: 'successfully registered your password is \n  Ict@2021 ',
             icon: 'success',
           }).then(() => {
-            this.employeeForm.reset();
+
           });
         } else {
           Swal.fire({
@@ -68,7 +68,7 @@ export class EmployeeFormComponent implements OnInit {
             text: 'Something went wrong!',
             icon: 'error',
           }).then(() => {
-            this.employeeForm.reset();
+            window.location.reload();
           });
         }
       },

@@ -144,10 +144,9 @@ export class EmpProfileComponent implements OnInit {
   updateProfile() {
     this.isLoading = true;
     if (
-      this.employeeUpdateForm.invalid &&
-      !this._auth.loggedIn &&
-      !(this._auth.getUser() == 'admin' || this._auth.getUser() == 'employee')
-    ) {
+      this.employeeUpdateForm.invalid
+      )
+     {
       Swal.fire({
         title: 'inalid',
         text: 'form is invalid',

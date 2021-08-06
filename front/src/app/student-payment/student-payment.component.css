@@ -10,6 +10,9 @@
   font-size: larger;
 
 }
+.help-block {
+  color:red
+}
 #section {
   
   /* height: 100vh; */

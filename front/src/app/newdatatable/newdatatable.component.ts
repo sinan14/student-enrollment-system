@@ -83,7 +83,14 @@ ngAfterViewInit(): void {
               "orderable":      false,
               "data":           null,
               "defaultContent": "<button class='btn btn-primary'>More</button>"
-          }
+          },
+          {
+            title:" ",
+            "className":"details-more",
+            "orderable":      false,
+            "data":           null,
+            "defaultContent": "<button class='btn btn-primary'>See Profile</button>"
+        }
         ],
         
           "lengthChange": false
@@ -105,7 +112,13 @@ ngAfterViewInit(): void {
             row.child( that.format(row.data()) ).show();
             tr.addClass('shown');
         }
-      } );     
+      } ); 
+      $('#display tbody').on('click', '.details-more', function () {
+        var id = that.table1.row(this).data();
+        console.log(id[1]);
+        const router = that.injector.get(Router);
+        router.navigate(['/students', id[1]]);
+      });    
     })
     $('#display thead tr:eq(1) th').each( function () {
       var title = $(this).text();

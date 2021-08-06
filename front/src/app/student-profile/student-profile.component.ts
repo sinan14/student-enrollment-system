@@ -21,8 +21,7 @@ export class StudentProfileComponent implements OnInit {
   phoneReg = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
   passwordReg =
     /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,}$/;
-  emailReg = /[a-z0-9._%+-]+@[a-z0-9.-]+\.([a-z]{3})+(\.([a-z]{2,}))?$/
-
+  emailReg = /[a-z0-9._%+-]+@[a-z0-9.-]+\.([a-z]{3})+(\.([a-z]{2,}))?$/;
 
   id: string;
   image: '';
@@ -69,7 +68,7 @@ export class StudentProfileComponent implements OnInit {
     imageUrl: '',
     ApprovalDate: '',
     PaymentDate: '',
-    ExitExamMark:''
+    ExitExamMark: '',
   };
 
   constructor(
@@ -147,7 +146,7 @@ export class StudentProfileComponent implements OnInit {
           ]),
           Course: new FormControl(this.Student.Course, [Validators.required]),
           DOB: new FormControl(this.Student.DOB, [Validators.required]),
-          ExitExamMark: new FormControl(this.Student.ExitExamMark,),
+          ExitExamMark: new FormControl(this.Student.ExitExamMark),
 
           Password: new FormControl(this.Student.Password, [
             Validators.required,
@@ -172,11 +171,7 @@ export class StudentProfileComponent implements OnInit {
     );
   }
   updateStudent() {
-    if (
-      this.studentUpdateForm.invalid &&
-      !this._auth.loggedIn &&
-      !(this._auth.getUser() == 'admin' || this._auth.getUser() == 'user')
-    ) {
+    if (this.studentUpdateForm.invalid) {
       Swal.fire({
         title: 'inalid',
         text: 'form is invalid',
@@ -335,7 +330,15 @@ export class StudentProfileComponent implements OnInit {
       .subscribe(
         (res) => {
           this.isLoading = false;
-          Swal.fire({ title: 'rejected', text: 'done', icon: 'info',timer:500,showConfirmButton:false });
+          Swal.fire({
+            title: 'rejected',
+            text: 'done',
+            icon: 'info',
+            timer: 500,
+            showConfirmButton: false,
+          }).then(() => {
+            this._router.navigate(['/approve']);
+          });
         },
         (error) => {
           this.isLoading = false;

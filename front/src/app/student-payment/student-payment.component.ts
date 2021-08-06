@@ -32,7 +32,7 @@ export class StudentPaymentComponent implements OnInit {
 
   onSubmit() {
     if (!this.paymentForm.valid) {
-      console.log(this.paymentForm.value);
+      // console.log(this.paymentForm.value);
       return;
     }
   }

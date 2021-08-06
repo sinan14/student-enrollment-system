@@ -146,7 +146,7 @@ export class StudentRegisterComponent implements OnInit {
           Swal.fire({
             title: '😒😒😒Oops...',
             timer: 1500,
-            text: 'Something went wrong!',
+            text: 'Email Already exist!',
             icon: 'error',
           }).then(() => {
             this.ngOnInit();
