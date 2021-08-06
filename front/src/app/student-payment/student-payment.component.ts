@@ -10,6 +10,7 @@ import {
   FormGroup,
 } from '@angular/forms';
 import { invalid } from '@angular/compiler/src/render3/view/util';
+import { NgLocaleLocalization } from '@angular/common';
 
 @Component({
   selector: 'app-student-payment',
@@ -17,9 +18,10 @@ import { invalid } from '@angular/compiler/src/render3/view/util';
   styleUrls: ['./student-payment.component.css'],
 })
 export class StudentPaymentComponent implements OnInit {
-  months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-
   paymentForm: FormGroup;
+  cardReg = /\b(?:\d[ -]*?){13,16}\b/;
+
+  emailReg = /^[a-z0-9.%+]+@[a-z09.-]+.[a-z]{2,4}/;
 
   isValid(controlName) {
     return (
@@ -30,6 +32,7 @@ export class StudentPaymentComponent implements OnInit {
 
   onSubmit() {
     if (!this.paymentForm.valid) {
+      console.log(this.paymentForm.value)
       return;
     }
   }
@@ -55,6 +58,7 @@ export class StudentPaymentComponent implements OnInit {
     Course: '',
     State: '',
     Post: '',
+    PinCode: '',
     District: '',
     Sex: '',
     EmploymentStatus: '',
@@ -79,9 +83,17 @@ export class StudentPaymentComponent implements OnInit {
     });
   }
   updateProfile() {
-    // if (this.paymentForm.invalid) {
-    //   return;
-    // }
+    if (this.paymentForm.invalid) {
+      Swal.fire({
+        title: '🤦‍♂️🤦‍♂️🤦‍♂️danger!!',
+        timer: 1000,
+        showConfirmButton: false,
+        text: 'invalid credit card and details',
+        icon: 'error',
+      });
+      // window.location.reload();
+      return;
+    }
     this.editProfile(this.Student).subscribe(
       (response) => {
         if (response) {
@@ -115,22 +127,7 @@ export class StudentPaymentComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.paymentForm = new FormGroup({
-      name: new FormControl(null, [Validators.required]),
-      cardnumber: new FormControl(null, [Validators.required]),
-      month: new FormControl(null, [
-        Validators.required,
-        Validators.max(12),
-        Validators.min(1),
-      ]),
-      year: new FormControl(null, [Validators.required, Validators.min(2021)]),
-      cvv: new FormControl(null, [
-        Validators.required,
-        Validators.min(100),
-        Validators.max(999),
-      ]),
-    });
-    //**************************** */
+    //fetching student
     this.id = this._activatedRoute.snapshot.params['_id'];
     this._StudentService.fetchStudent(this.id).subscribe(
       (studentData: any) => {
@@ -154,5 +151,53 @@ export class StudentPaymentComponent implements OnInit {
         });
       }
     );
+    //****************************form */
+    this.paymentForm = new FormGroup({
+      billName: new FormControl(null, [Validators.required]),
+      email: new FormControl(null, [
+        Validators.required,
+        Validators.pattern(this.emailReg),
+      ]),
+      address: new FormControl(null, [Validators.required,Validators.minLength(4)]),
+      state: new FormControl(null, [Validators.required]),
+      district: new FormControl(null, [Validators.required]),
+      zip: new FormControl(null, [
+        Validators.required,
+        Validators.max(999999),
+        Validators.min(100000),
+      ]),
+
+      name: new FormControl(null, [Validators.required]),
+      cardnumber: new FormControl(null, [
+        Validators.required,
+        Validators.pattern(this.cardReg),
+      ]),
+      month: new FormControl(null, [
+        Validators.required,
+        Validators.max(12),
+        Validators.min(1),
+      ]),
+      year: new FormControl(null, [
+        Validators.required,
+        Validators.min(2021),
+        Validators.max(2050),
+      ]),
+      cvv: new FormControl(null, [
+        Validators.required,
+        Validators.min(100),
+        Validators.max(999),
+      ]),
+    });
+    //***********************                                 ************************* */
+    
+    this.paymentForm.patchValue({
+      billName: this.Student.Name,
+      email:this.Student.Email,
+      state:this.Student.State,
+      district:this.Student.District,
+      zip:this.Student.PinCode
+
+      
+    });
   }
 }

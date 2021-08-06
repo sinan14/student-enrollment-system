@@ -1,4 +1,6 @@
 <section id="section">
+  <div></div>
+  <div id="heading">welcome {{ Student.Name }} complete your registration</div>
   <div class="row">
     <div class="col-75">
       <div class="container">
@@ -10,17 +12,17 @@
               <input
                 type="text"
                 id="fname"
-                [value]="Student.Name"
                 name="fullname"
-                placeholder="sinan mohammed"
+                formControlName="billName"
+                placeholder="name"
               />
               <label for="email"><i class="fa fa-envelope"></i> Email</label>
               <input
                 type="text"
                 id="email"
                 name="email"
-                [value]="Student.Email"
-                placeholder="sinan@example.com"
+                formControlName="email"
+                placeholder="test@example.com"
               />
               <label for="adr"
                 ><i class="fa fa-address-card-o"></i> Address</label
@@ -29,15 +31,16 @@
                 type="text"
                 id="adr"
                 name="address"
-                placeholder="Jawahar Street 323 third floor"
+                formControlName="address"
+                placeholder="current address"
               />
               <label for="city"><i class="fa fa-institution"></i> City</label>
               <input
                 type="text"
-                [value]="Student.District"
+                formControlName="district"
                 id="city"
                 name="city"
-                placeholder="MLP"
+                placeholder="district"
               />
 
               <div class="row">
@@ -46,26 +49,26 @@
                   <input
                     type="text"
                     id="state"
+                    formControlName="state"
                     name="state"
-                    [value]="Student.State"
-                    placeholder="Kerala"
+                    placeholder="state"
                   />
                 </div>
                 <div class="col-50">
                   <label for="zip">Zip</label>
                   <input
-                    type="text"
-                    [value]="Student.Post"
+                    type="number"
+                    formControlName="zip"
                     id="zip"
                     name="zip"
-                    placeholder="10001"
+                    min="100000"
+                    max="999999"
                   />
                 </div>
               </div>
             </div>
 
             <div class="col-50">
-              
               <h3>Payment</h3>
               <label for="fname">Accepted Cards</label>
               <div class="icon-container">
@@ -79,8 +82,7 @@
                 type="text"
                 id="cname"
                 name="cardname"
-                formControlName='name'
-                
+                formControlName="name"
                 placeholder="name"
               />
               <label for="ccnum">Credit card number</label>
@@ -99,7 +101,7 @@
                 max="12"
                 name="expmonth"
                 formControlName="month"
-                placeholder="September"
+                placeholder="month in number"
               />
               <div class="row">
                 <div class="col-50">
@@ -111,7 +113,7 @@
                     min="2021"
                     name="expyear"
                     formControlName="year"
-                    placeholder="2025"
+                    placeholder="year"
                   />
                 </div>
                 <div class="col-50">
@@ -123,7 +125,7 @@
                     max="999"
                     id="cvv"
                     name="cvv"
-                    placeholder="352"
+                    placeholder="cvv"
                   />
                 </div>
               </div>
@@ -199,7 +201,12 @@
         <hr />
         <!-- employed and unemployed male -->
 
-        <p *ngIf="Student.EmploymentStatus == 'Employed' || (Student.Sex == 'Male' && Student.EmploymentStatus == 'Unemployed')">
+        <p
+          *ngIf="
+            Student.EmploymentStatus == 'Employed' ||
+            (Student.Sex == 'Male' && Student.EmploymentStatus == 'Unemployed')
+          "
+        >
           Total
           <span class="price" style="color: black"
             ><b>{{ fee }}</b></span
@@ -213,7 +220,11 @@
           >
         </p>
         <!-- women special -->
-        <p *ngIf="Student.EmploymentStatus == 'Unemployed' && Student.Sex == 'Female'">
+        <p
+          *ngIf="
+            Student.EmploymentStatus == 'Unemployed' && Student.Sex == 'Female'
+          "
+        >
           Total
           <span class="price" style="color: black"
             ><b>{{ womenFee }}</b></span

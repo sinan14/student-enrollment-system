@@ -3,7 +3,6 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 
-import * as $ from 'jquery';
 import { AbstractControl, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
@@ -129,7 +128,7 @@ export class StudentRegisterComponent implements OnInit {
       this.registerForm.get('ApprovalDate')!.value
     );
     await this._auth.registerUser(formData).subscribe(
-      (response:any) => {
+      (response: any) => {
         this.isLoading = false;
         if (response.status) {
           Swal.fire({
@@ -149,6 +148,7 @@ export class StudentRegisterComponent implements OnInit {
             icon: 'error',
           }).then(() => {
             this.ngOnInit();
+            window.location.reload();
           });
         }
       },
@@ -161,8 +161,7 @@ export class StudentRegisterComponent implements OnInit {
           text: 'some internal error',
           icon: 'error',
         }).then(() => {
-          // this.ngOnInit();
-          this._router.navigate(['/']);
+          window.location.reload();
         });
       }
     );

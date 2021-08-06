@@ -10,6 +10,8 @@ var imagedest = __dirname;
 var upload = multer({ dest: imagedest });
 const fs = require("fs");
 const generator = require("generate-password");
+const { verifyToken } = require("../middleware");
+
 //************************************************ */
 
 router.post("/register", upload.single("img"), (req, res) => {
@@ -98,7 +100,7 @@ router.put(
 //***************************    Getting all student      *************************/
 
 router.get(
-  "",
+  "",verifyToken,
   wrapAsync(async (req, res) => {
     const Students = await StudentData.find();
     if (Students) {
@@ -112,7 +114,8 @@ router.get(
 //***************            student fetching By Id      *****************************/
 
 router.get(
-  "/:id",
+  "/:id",verifyToken,
+
   wrapAsync(async (req, res) => {
     const Student = await StudentData.findById(req.params.id);
     // console.log(Student)
@@ -126,7 +129,7 @@ router.get(
 
 //************************        profile update        ******************************/
 router.put(
-  "/:id",
+  "/:id",verifyToken,
   wrapAsync(async (req, res) => {
     const { id } = req.params;
     // console.log(id);
@@ -145,7 +148,7 @@ router.put(
 
 //*******************           profiel photo update          ***********************/
 router.put(
-  "/:id/profilepic",
+  "/:id/profilepic",verifyToken,
   upload.single("img"),
   wrapAsync(async (req, res) => {
     const { id } = req.params;
@@ -172,7 +175,7 @@ router.put(
 //*************************    delete the student profile     *************************/
 
 router.delete(
-  "/:id",
+  "/:id",verifyToken,
   wrapAsync(async (req, res) => {
     const deletedStudent = await StudentData.findByIdAndDelete(req.params.id);
     if (deletedStudent) {
@@ -185,7 +188,7 @@ router.delete(
 
 // ********************       Mail sends on approving               ***************
 router.post(
-  "/:id/approve",
+  "/:id/approve",verifyToken,
   wrapAsync(async (req, res) => {
     const { id } = req.params;
     const { Email, Course } = req.body.Student;
@@ -230,7 +233,7 @@ router.post(
 
 // ********************       Mail sends on rejecting               ***************
 router.post(
-  "/:id/reject",
+  "/:id/reject",verifyToken,
   wrapAsync(async (req, res) => {
     const { id } = req.params;
     const { Course, Email } = req.body.Student;
