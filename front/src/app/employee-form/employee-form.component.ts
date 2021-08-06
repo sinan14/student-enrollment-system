@@ -19,7 +19,7 @@ export class EmployeeFormComponent implements OnInit {
   }
 
   phoneReg = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
-  emailReg = /^[a-z0-9.%+]+@[a-z09.-]+.[a-z]{2,4}/;
+  emailReg = /[a-z0-9._%+-]+@[a-z0-9.-]+\.([a-z]{3})+(\.([a-z]{2,}))?$/
 
   constructor(private _auth: AuthService, private _fb: FormBuilder) {}
   employeeForm = this._fb.group({

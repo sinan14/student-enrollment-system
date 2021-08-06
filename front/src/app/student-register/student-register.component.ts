@@ -54,7 +54,9 @@ export class StudentRegisterComponent implements OnInit {
     private _auth: AuthService
   ) {}
   isLoading: boolean = false;
-  emailReg = /^[a-z0-9.%+]+@[a-z09.-]+.[a-z]{2,4}/;
+  emailReg = /[a-z0-9._%+-]+@[a-z0-9.-]+\.([a-z]{3})+(\.([a-z]{2,}))?$/
+
+
   phoneReg = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
 
   registerForm = this._fb.group({
