@@ -8,6 +8,7 @@ import Swal from 'sweetalert2';
 })
 export class StudentServiceService {
   backendUrl = 'http://localhost:3000'
+  
   constructor(private _http: HttpClient,private _router:Router) {}
   fetchStudent(id: any) {
     return this._http.get(`${this.backendUrl}/students/` + id);
@@ -30,8 +31,7 @@ export class StudentServiceService {
     );
   }
   editStudent(Student: any, id) {
-    console.log('client update');
+    // console.log('client update');
     return this._http.put(`${this.backendUrl}/students/${id}`, { Student });
-    // .subscribe(data =>{console.log(data)})
   }
 }

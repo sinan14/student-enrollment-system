@@ -331,7 +331,7 @@
                 </table>
                 <div *ngIf="readonly">
                   <button
-                    *ngIf="showEditButton"
+                    *ngIf="owner || showDeleteButton"
                     (click)="update()"
                     class="btn btn-sm btn-warning"
                   >

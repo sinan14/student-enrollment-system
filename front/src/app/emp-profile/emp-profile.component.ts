@@ -21,8 +21,16 @@ export class EmpProfileComponent implements OnInit {
   emailReg = /[a-z0-9._%+-]+@[a-z0-9.-]+\.([a-z]{3})+(\.([a-z]{2,}))?$/
 
   showEditButton: boolean;
+  owner:boolean;
   showDeleteButton: boolean;
   readonly: boolean;
+
+ isOwner(){
+   if(this._auth.getId() == this.employee._id){
+     this.owner = true;
+
+   }
+ } 
   update(): void {
     this.readonly = !this.readonly;
   }
@@ -78,6 +86,7 @@ export class EmpProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.isAllowedToEdit();
+    this.isOwner();
     this.isAdmin();
     this.readonly = true;
     this.id = this._ActivatedRoute.snapshot.params['_id'];
