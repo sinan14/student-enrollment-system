@@ -32,7 +32,7 @@ export class StudentPaymentComponent implements OnInit {
 
   onSubmit() {
     if (!this.paymentForm.valid) {
-      console.log(this.paymentForm.value)
+      console.log(this.paymentForm.value);
       return;
     }
   }
@@ -84,13 +84,14 @@ export class StudentPaymentComponent implements OnInit {
   }
   updateProfile() {
     if (this.paymentForm.invalid) {
-      Swal.fire({
-        title: '🤦‍♂️🤦‍♂️🤦‍♂️danger!!',
-        timer: 1000,
-        showConfirmButton: false,
-        text: 'invalid credit card and details',
-        icon: 'error',
-      });
+      // Swal.fire({
+      //   title: '🤦‍♂️🤦‍♂️🤦‍♂️danger!!',
+      //   timer: 1000,
+      //   showConfirmButton: false,
+      //   text: 'invalid credit card and details',
+      //   icon: 'error',
+      // });
+      console.log(this.paymentForm.value)
       // window.location.reload();
       return;
     }
@@ -140,6 +141,54 @@ export class StudentPaymentComponent implements OnInit {
         this.studentFee = this.fee / 2;
         this.womenFee = this.fee / 2;
         // console.log(this.Student);
+        this.paymentForm = new FormGroup({
+          billName: new FormControl(null, [Validators.required]),
+          email: new FormControl(null, [
+            Validators.required,
+            Validators.pattern(this.emailReg),
+          ]),
+          address: new FormControl(null, [
+            Validators.required,
+            Validators.minLength(1),
+          ]),
+          state: new FormControl(null, [Validators.required]),
+          district: new FormControl(null, [Validators.required]),
+          zip: new FormControl(null, [
+            Validators.required,
+            Validators.max(999999),
+            Validators.min(100000),
+          ]),
+    
+          name: new FormControl(null, [Validators.required]),
+          cardnumber: new FormControl(null, [
+            Validators.required,
+            Validators.pattern(this.cardReg),
+          ]),
+          month: new FormControl(null, [
+            Validators.required,
+            Validators.max(12),
+            Validators.min(1),
+          ]),
+          year: new FormControl(null, [
+            Validators.required,
+            Validators.min(2021),
+            Validators.max(2050),
+          ]),
+          cvv: new FormControl(null, [
+            Validators.required,
+            Validators.min(100),
+            Validators.max(999),
+          ]),
+        });
+        //***********************                                 ************************* */
+    
+        this.paymentForm.patchValue({
+          billName: this.Student.Name,
+          email: this.Student.Email,
+          state: this.Student.State,
+          district: this.Student.District,
+          zip: this.Student.PinCode,
+        });
       },
       (errorMessage) => {
         Swal.fire({
@@ -152,52 +201,6 @@ export class StudentPaymentComponent implements OnInit {
       }
     );
     //****************************form */
-    this.paymentForm = new FormGroup({
-      billName: new FormControl(null, [Validators.required]),
-      email: new FormControl(null, [
-        Validators.required,
-        Validators.pattern(this.emailReg),
-      ]),
-      address: new FormControl(null, [Validators.required,Validators.minLength(4)]),
-      state: new FormControl(null, [Validators.required]),
-      district: new FormControl(null, [Validators.required]),
-      zip: new FormControl(null, [
-        Validators.required,
-        Validators.max(999999),
-        Validators.min(100000),
-      ]),
-
-      name: new FormControl(null, [Validators.required]),
-      cardnumber: new FormControl(null, [
-        Validators.required,
-        Validators.pattern(this.cardReg),
-      ]),
-      month: new FormControl(null, [
-        Validators.required,
-        Validators.max(12),
-        Validators.min(1),
-      ]),
-      year: new FormControl(null, [
-        Validators.required,
-        Validators.min(2021),
-        Validators.max(2050),
-      ]),
-      cvv: new FormControl(null, [
-        Validators.required,
-        Validators.min(100),
-        Validators.max(999),
-      ]),
-    });
-    //***********************                                 ************************* */
     
-    this.paymentForm.patchValue({
-      billName: this.Student.Name,
-      email:this.Student.Email,
-      state:this.Student.State,
-      district:this.Student.District,
-      zip:this.Student.PinCode
-
-      
-    });
   }
 }
