@@ -147,6 +147,13 @@ export class EmpProfileComponent implements OnInit {
       !this._auth.loggedIn &&
       !(this._auth.getUser() == 'admin' || this._auth.getUser() == 'employee')
     ) {
+      Swal.fire({
+        title: 'inalid',
+        text: 'form is invalid',
+        icon: 'warning',
+        timer: 1000,
+        showConfirmButton: false,
+      });
       return;
     }
     this.editProfile(this.employeeUpdateForm.value).subscribe(
@@ -209,7 +216,7 @@ export class EmpProfileComponent implements OnInit {
           this.isLoading = false;
           Swal.fire('danger!!', 'some internal error', 'error').then(
             (refresh) => {
-              this._router.navigate(['/'])
+              this._router.navigate(['/']);
             }
           );
         }

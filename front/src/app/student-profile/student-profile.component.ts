@@ -173,9 +173,16 @@ export class StudentProfileComponent implements OnInit {
   updateStudent() {
     if (
       this.studentUpdateForm.invalid &&
-      this._auth.loggedIn &&
-      (this._auth.getUser() == 'admin' || this._auth.getUser() == 'user')
+      !this._auth.loggedIn &&
+      !(this._auth.getUser() == 'admin' || this._auth.getUser() == 'user')
     ) {
+      Swal.fire({
+        title: 'inalid',
+        text: 'form is invalid',
+        icon: 'warning',
+        timer: 1000,
+        showConfirmButton: false,
+      });
       return;
     }
     this.isLoading = true;

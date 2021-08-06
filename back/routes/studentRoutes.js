@@ -10,7 +10,6 @@ var imagedest = __dirname;
 var upload = multer({ dest: imagedest });
 const fs = require("fs");
 const generator = require("generate-password");
-const { verifyToken } = require("../middleware");
 
 //************************************************ */
 
