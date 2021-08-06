@@ -192,7 +192,7 @@ router.post(
     const { id } = req.params;
     const { Email, Course } = req.body.Student;
     // console.log(id);
-    const awsLink = 12;
+    const awsLink = 'http://ec2-18-219-147-180.us-east-2.compute.amazonaws.com';
 
     const link = `${awsLink}/students/${id}/pay`;
     const transporter = nodemailer.createTransport({
