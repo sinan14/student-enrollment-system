@@ -37,7 +37,7 @@ router.post("/register", upload.single("img"), (req, res) => {
     ApprovalDate: req.body.ApprovalDate,
     Password: "NewRegister@ict",
     Suid: "New Register",
-    ExitExamMark:0,
+    ExitExamMark: 0,
     image: {
       data: fs.readFileSync(req.file.path),
       contentType: "image",
@@ -99,7 +99,8 @@ router.put(
 //***************************    Getting all student      *************************/
 
 router.get(
-  "",verifyToken,
+  "",
+  verifyToken,
   wrapAsync(async (req, res) => {
     const Students = await StudentData.find();
     if (Students) {
@@ -113,8 +114,7 @@ router.get(
 //***************            student fetching By Id      *****************************/
 
 router.get(
-  "/:id",verifyToken,
-
+  "/:id",
   wrapAsync(async (req, res) => {
     const Student = await StudentData.findById(req.params.id);
     // console.log(Student)
@@ -128,7 +128,8 @@ router.get(
 
 //************************        profile update        ******************************/
 router.put(
-  "/:id",verifyToken,
+  "/:id",
+  verifyToken,
   wrapAsync(async (req, res) => {
     const { id } = req.params;
     // console.log(id);
@@ -138,16 +139,17 @@ router.put(
     });
     // console.log(Student);
     if (Student) {
-      return res.send({status:true});
+      return res.send({ status: true });
     } else {
-      return res.send({status:false});
+      return res.send({ status: false });
     }
   })
 );
 
 //*******************           profiel photo update          ***********************/
 router.put(
-  "/:id/profilepic",verifyToken,
+  "/:id/profilepic",
+  verifyToken,
   upload.single("img"),
   wrapAsync(async (req, res) => {
     const { id } = req.params;
@@ -164,9 +166,9 @@ router.put(
       }
     );
     if (updatedimage) {
-      return res.send({status:true});
+      return res.send({ status: true });
     } else {
-      return res.send({status:false});
+      return res.send({ status: false });
     }
   })
 );
@@ -174,7 +176,8 @@ router.put(
 //*************************    delete the student profile     *************************/
 
 router.delete(
-  "/:id",verifyToken,
+  "/:id",
+  verifyToken,
   wrapAsync(async (req, res) => {
     const deletedStudent = await StudentData.findByIdAndDelete(req.params.id);
     if (deletedStudent) {
@@ -187,12 +190,13 @@ router.delete(
 
 // ********************       Mail sends on approving               ***************
 router.post(
-  "/:id/approve",verifyToken,
+  "/:id/approve",
+  verifyToken,
   wrapAsync(async (req, res) => {
     const { id } = req.params;
     const { Email, Course } = req.body.Student;
     // console.log(id);
-    const awsLink = 'http://ec2-18-219-147-180.us-east-2.compute.amazonaws.com';
+    const awsLink = "http://ec2-18-219-147-180.us-east-2.compute.amazonaws.com";
 
     const link = `${awsLink}/students/${id}/pay`;
     const transporter = nodemailer.createTransport({
@@ -232,7 +236,8 @@ router.post(
 
 // ********************       Mail sends on rejecting               ***************
 router.post(
-  "/:id/reject",verifyToken,
+  "/:id/reject",
+  verifyToken,
   wrapAsync(async (req, res) => {
     const { id } = req.params;
     const { Course, Email } = req.body.Student;

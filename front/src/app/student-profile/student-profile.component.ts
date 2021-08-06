@@ -18,6 +18,8 @@ import { ɵangular_packages_platform_browser_platform_browser_m } from '@angular
 })
 export class StudentProfileComponent implements OnInit {
   backendUrl = 'http://localhost:3000'
+  // backendUrl ='/api';
+
   isLoading: boolean;
   phoneReg = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
   passwordReg =

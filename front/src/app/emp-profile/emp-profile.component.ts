@@ -13,6 +13,8 @@ import { EmployeeService } from '../employee.service';
 })
 export class EmpProfileComponent implements OnInit {
   backendUrl = 'http://localhost:3000'
+  // backendUrl ='/api';
+
   id: string;
   isLoading: boolean = false;
   phoneReg = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;

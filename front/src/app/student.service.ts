@@ -7,9 +7,10 @@ import Swal from 'sweetalert2';
   providedIn: 'root',
 })
 export class StudentServiceService {
-  backendUrl = 'http://localhost:3000'
-  
-  constructor(private _http: HttpClient,private _router:Router) {}
+  backendUrl = 'http://localhost:3000';
+  // backendUrl = '/api';
+
+  constructor(private _http: HttpClient, private _router: Router) {}
   fetchStudent(id: any) {
     return this._http.get(`${this.backendUrl}/students/` + id);
   }

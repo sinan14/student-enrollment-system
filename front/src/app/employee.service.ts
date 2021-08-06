@@ -4,12 +4,13 @@ import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class EmployeeService {
   backendUrl = 'http://localhost:3000'
+  // backendUrl = '/api';
 
-  constructor(private _http: HttpClient,private _router:Router) {}
+  constructor(private _http: HttpClient, private _router: Router) {}
   fetchEmployee(id: any) {
     return this._http.get(`${this.backendUrl}/employee/` + id);
   }
@@ -34,5 +35,4 @@ export class EmployeeService {
     console.log('client update');
     return this._http.put(`${this.backendUrl}/employee/${id}`, { Employee });
   }
-
 }

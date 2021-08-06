@@ -13,7 +13,9 @@ import { tap } from 'rxjs/operators';
 })
 export class AllStudentsComponent implements OnInit {
   isLoading: boolean = false;
-  backendUrl = 'http://localhost:3000'
+  // backendUrl ='/api';
+  backendUrl = 'http://localhost:3000';
+
   Students = [
     {
       _id: '',
@@ -71,20 +73,20 @@ export class AllStudentsComponent implements OnInit {
         Student: { Email: `${Email}`, Course: `${Course}` },
       }),
       this._http.put(`${this.backendUrl}/students/${id}`, {
-        Student: { ApprovalDate: new Date(),Status:`payment remaining` },
+        Student: { ApprovalDate: new Date(), Status: `payment remaining` },
       }),
     ])
       .pipe(tap(console.log))
       .subscribe(
         (response: any) => {
           this.isLoading = false;
-          this.ngOnInit()
+          this.ngOnInit();
           Swal.fire({
             title: 'Approved',
             text: '😀😀',
             icon: 'success',
             timer: 500,
-            showConfirmButton:false
+            showConfirmButton: false,
           });
         },
         (errorMessage) => {

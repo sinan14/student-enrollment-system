@@ -5,18 +5,18 @@ import Swal from 'sweetalert2';
 
 @Injectable()
 export class AuthService {
-  backendUrl = 'http://localhost:3000'
+  backendUrl = 'http://localhost:3000';
+  // backendUrl = '/api';
+
   constructor(private _http: HttpClient, private _router: Router) {}
   //*************** register employee and student ***************/
   toStudentProfile() {
     const id = this.getId();
-    this._router.navigate([`/students/${id}`])
-    
+    this._router.navigate([`/students/${id}`]);
   }
-  toEmployeeProfile(){
+  toEmployeeProfile() {
     const id = this.getId();
-    this._router.navigate(['/employees/'+id])
-
+    this._router.navigate(['/employees/' + id]);
   }
   getId() {
     return localStorage.getItem('navigator');
@@ -25,10 +25,9 @@ export class AuthService {
     return localStorage.getItem('Name');
   }
   logOut() {
-    
     const name = this.getName();
-    if(name==null){
-      const name = 'Admin'
+    if (name == null) {
+      const name = 'Admin';
     }
     Swal.fire({
       title: '😪',

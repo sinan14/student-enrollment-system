@@ -10,6 +10,7 @@ import { Injector } from '@angular/core';
 })
 
 export class NewdatatableComponent implements AfterViewInit {
+  isLoading:boolean=false;
 
   constructor(private studentService:StudentServiceService, private router:Router,private injector:Injector) { }
   @ViewChild('dataTable')
@@ -24,8 +25,11 @@ export class NewdatatableComponent implements AfterViewInit {
  dataSet:string[][]=[]
  
 ngAfterViewInit(): void {
+  this.isLoading=true;
+
   this.studentService.fetchStudents()
   .subscribe((data:any)=>{
+    this.isLoading=false;
     console.log(data)
     data.forEach((value:any)=>{
       delete value['Password']

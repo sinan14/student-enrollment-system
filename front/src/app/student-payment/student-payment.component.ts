@@ -18,7 +18,9 @@ import { NgLocaleLocalization } from '@angular/common';
   styleUrls: ['./student-payment.component.css'],
 })
 export class StudentPaymentComponent implements OnInit {
-  backendUrl = 'http://localhost:3000'
+  backendUrl = 'http://localhost:3000';
+  // backendUrl = '/api';
+
   paymentForm: FormGroup;
   cardReg = /\b(?:\d[ -]*?){13,16}\b/;
 
@@ -92,7 +94,7 @@ export class StudentPaymentComponent implements OnInit {
       //   text: 'invalid credit card and details',
       //   icon: 'error',
       // });
-      console.log(this.paymentForm.value)
+      console.log(this.paymentForm.value);
       // window.location.reload();
       return;
     }
@@ -159,7 +161,7 @@ export class StudentPaymentComponent implements OnInit {
             Validators.max(999999),
             Validators.min(100000),
           ]),
-    
+
           name: new FormControl(null, [Validators.required]),
           cardnumber: new FormControl(null, [
             Validators.required,
@@ -182,7 +184,7 @@ export class StudentPaymentComponent implements OnInit {
           ]),
         });
         //***********************                                 ************************* */
-    
+
         this.paymentForm.patchValue({
           billName: this.Student.Name,
           email: this.Student.Email,
@@ -202,6 +204,5 @@ export class StudentPaymentComponent implements OnInit {
       }
     );
     //****************************form */
-    
   }
 }
