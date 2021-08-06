@@ -13,6 +13,7 @@ import { tap } from 'rxjs/operators';
 })
 export class AllStudentsComponent implements OnInit {
   isLoading: boolean = false;
+  backendUrl = 'http://localhost:3000'
   Students = [
     {
       _id: '',
@@ -66,10 +67,10 @@ export class AllStudentsComponent implements OnInit {
   onApprove(id, Course, Email) {
     this.isLoading = true;
     forkJoin([
-      this._http.post(`http://localhost:3000/students/${id}/approve`, {
+      this._http.post(`${this.backendUrl}/students/${id}/approve`, {
         Student: { Email: `${Email}`, Course: `${Course}` },
       }),
-      this._http.put(`http://localhost:3000/students/${id}`, {
+      this._http.put(`${this.backendUrl}/students/${id}`, {
         Student: { ApprovalDate: new Date(),Status:`payment remaining` },
       }),
     ])
@@ -79,7 +80,7 @@ export class AllStudentsComponent implements OnInit {
           this.isLoading = false;
           this.ngOnInit()
           Swal.fire({
-            title: 'Good',
+            title: 'Approved',
             text: '😀😀',
             icon: 'success',
             timer: 500,

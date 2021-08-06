@@ -19,7 +19,7 @@ export class EmployeeFormComponent implements OnInit {
   }
 
   phoneReg = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
-  emailReg = /[a-z0-9._%+-]+@[a-z0-9.-]+\.([a-z]{3})+(\.([a-z]{2,}))?$/
+  emailReg = /[a-z0-9._%+-]+@[a-z0-9.-]+\.([a-z]{3})+(\.([a-z]{2,}))?$/;
 
   constructor(private _auth: AuthService, private _fb: FormBuilder) {}
   employeeForm = this._fb.group({
@@ -55,12 +55,10 @@ export class EmployeeFormComponent implements OnInit {
         if (response) {
           Swal.fire({
             title: 'Good Job💖💖💖',
-           
+
             text: 'successfully registered your password is \n  Ict@2021 ',
             icon: 'success',
-          }).then(() => {
-
-          });
+          }).then(() => {});
         } else {
           Swal.fire({
             title: 'Oops...🤷‍♂️🤷‍♂️',

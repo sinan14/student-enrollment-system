@@ -12,6 +12,7 @@ import { EmployeeService } from '../employee.service';
   styleUrls: ['./emp-profile.component.css'],
 })
 export class EmpProfileComponent implements OnInit {
+  backendUrl = 'http://localhost:3000'
   id: string;
   isLoading: boolean = false;
   phoneReg = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
@@ -136,7 +137,7 @@ export class EmpProfileComponent implements OnInit {
   }
   editProfile(changedDetails) {
     return this._http.put(
-      `http://localhost:3000/employee/${this.employee._id}`,
+      `${this.backendUrl}/employee/${this.employee._id}`,
 
       changedDetails
     );
@@ -200,13 +201,13 @@ export class EmpProfileComponent implements OnInit {
   //***************************************don't touch */
 
   getStudentById() {
-    return this._http.get<any>(`http://localhost:3000/employee/${this.id}`);
+    return this._http.get<any>(`${this.backendUrl}/employee/${this.id}`);
   }
 
   deleteProfile() {
     this.isLoading = true;
     return this._http
-      .delete(`http://localhost:3000/employee/${this.employee._id}`)
+      .delete(`${this.backendUrl}/employee/${this.employee._id}`)
       .subscribe(
         (employeesData) => {
           this.isLoading = false;

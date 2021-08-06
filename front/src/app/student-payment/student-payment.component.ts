@@ -18,6 +18,7 @@ import { NgLocaleLocalization } from '@angular/common';
   styleUrls: ['./student-payment.component.css'],
 })
 export class StudentPaymentComponent implements OnInit {
+  backendUrl = 'http://localhost:3000'
   paymentForm: FormGroup;
   cardReg = /\b(?:\d[ -]*?){13,16}\b/;
 
@@ -73,7 +74,7 @@ export class StudentPaymentComponent implements OnInit {
   ) {}
 
   editProfile(studentPaymentInfo) {
-    return this._http.put(`http://localhost:3000/students/${this.id}/pay`, {
+    return this._http.put(`${this.backendUrl}/students/${this.id}/pay`, {
       Student: {
         Course: `${this.Student.Course}`,
         Email: `${this.Student.Email}`,

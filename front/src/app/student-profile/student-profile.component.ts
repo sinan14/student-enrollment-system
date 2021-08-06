@@ -17,6 +17,7 @@ import { ɵangular_packages_platform_browser_platform_browser_m } from '@angular
   styleUrls: ['./student-profile.component.css'],
 })
 export class StudentProfileComponent implements OnInit {
+  backendUrl = 'http://localhost:3000'
   isLoading: boolean;
   phoneReg = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
   passwordReg =
@@ -164,7 +165,7 @@ export class StudentProfileComponent implements OnInit {
   //*************************************************** */
   editProfile(item: any) {
     return this._http.put(
-      `http://localhost:3000/students/${this.Student._id}`,
+      `${this.backendUrl}/students/${this.Student._id}`,
       {
         Student: item,
       }
@@ -236,7 +237,7 @@ export class StudentProfileComponent implements OnInit {
   uploadPic(pic: any) {
     console.log(pic);
     return this._http.put(
-      `http://localhost:3000/students/${this.Student._id}/profilepic`,
+      `${this.backendUrl}/students/${this.Student._id}/profilepic`,
       pic
     );
   }
@@ -293,10 +294,10 @@ export class StudentProfileComponent implements OnInit {
   onApprove(id, Course, Email) {
     this.isLoading = true;
     forkJoin([
-      this._http.post(`http://localhost:3000/students/${id}/approve`, {
+      this._http.post(`${this.backendUrl}/students/${id}/approve`, {
         Student: { Email: `${Email}`, Course: `${Course}` },
       }),
-      this._http.put(`http://localhost:3000/students/${id}`, {
+      this._http.put(`${this.backendUrl}/students/${id}`, {
         Student: { ApprovalDate: new Date(), Status: 'payment remaining' },
       }),
     ])
@@ -321,10 +322,10 @@ export class StudentProfileComponent implements OnInit {
   onReject(id, Course, Email) {
     this.isLoading = true;
     forkJoin([
-      this._http.post(`http://localhost:3000/students/${id}/reject/`, {
+      this._http.post(`${this.backendUrl}/students/${id}/reject/`, {
         Student: { Email: `${Email}`, Course: `${Course}` },
       }),
-      this._http.delete(`http://localhost:3000/students/${id}`),
+      this._http.delete(`${this.backendUrl}/students/${id}`),
     ])
       .pipe(tap(console.log))
       .subscribe(

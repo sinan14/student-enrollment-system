@@ -7,17 +7,18 @@ import Swal from 'sweetalert2';
   providedIn: 'root',
 })
 export class StudentServiceService {
+  backendUrl = 'http://localhost:3000'
   constructor(private _http: HttpClient,private _router:Router) {}
   fetchStudent(id: any) {
-    return this._http.get('http://localhost:3000/students/' + id);
+    return this._http.get(`${this.backendUrl}/students/` + id);
   }
 
   fetchStudents() {
-    return this._http.get('http://localhost:3000/students');
+    return this._http.get(`${this.backendUrl}/students`);
   }
 
   destroyStudent(id: any) {
-    return this._http.delete('http://localhost:3000/students/' + id).subscribe(
+    return this._http.delete(`${this.backendUrl}/students/` + id).subscribe(
       (studentData) => {
         this._router.navigate([`/students`]);
       },
@@ -30,7 +31,7 @@ export class StudentServiceService {
   }
   editStudent(Student: any, id) {
     console.log('client update');
-    return this._http.put(`http://localhost:3000/students/${id}`, { Student });
+    return this._http.put(`${this.backendUrl}/students/${id}`, { Student });
     // .subscribe(data =>{console.log(data)})
   }
 }
