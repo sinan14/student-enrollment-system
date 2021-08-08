@@ -182,6 +182,7 @@ export class StudentProfileComponent implements OnInit {
         timer: 1000,
         showConfirmButton: false,
       });
+      this.isLoading = false;
       return;
     }
     this.isLoading = true;
@@ -259,6 +260,7 @@ export class StudentProfileComponent implements OnInit {
             timer: 1000,
             showConfirmButton: false,
           });
+          this.isLoading = false;
         }
       },
       (error) => {

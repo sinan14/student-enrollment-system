@@ -121,8 +121,8 @@ export class EmpProfileComponent implements OnInit {
           ),
           PassOfYear: new FormControl(this.employee.PassOfYear, [
             Validators.required,
-            Validators.min(2010),
-            Validators.max(2023),
+            Validators.min(2000),
+            Validators.max(2021),
           ]),
           SkillSet: new FormControl(this.employee.SkillSet, [
             Validators.required,
@@ -163,9 +163,11 @@ export class EmpProfileComponent implements OnInit {
         title: 'inalid',
         text: 'form is invalid',
         icon: 'warning',
+
         timer: 1000,
         showConfirmButton: false,
       });
+      this.isLoading = false;
       return;
     }
     this.editProfile(this.employeeUpdateForm.value).subscribe(

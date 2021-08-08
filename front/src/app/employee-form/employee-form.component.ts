@@ -46,6 +46,7 @@ export class EmployeeFormComponent implements OnInit {
 
   registerEmployee() {
     if (this.employeeForm.invalid) {
+      this.isLoading = false;
       return;
     }
     this.isLoading = true;
@@ -58,7 +59,9 @@ export class EmployeeFormComponent implements OnInit {
 
             text: 'successfully registered your password is \n  Ict@2021 ',
             icon: 'success',
-          }).then(() => {});
+          }).then(() => {
+            this.isLoading = false;
+          });
         } else {
           Swal.fire({
             title: 'Oops...🤷‍♂️🤷‍♂️',
