@@ -5,8 +5,8 @@ import Swal from 'sweetalert2';
 
 @Injectable()
 export class AuthService {
-  backendUrl = 'http://localhost:3000';
-  // backendUrl = '/api';
+  // backendUrl = 'http://localhost:3000';
+  backendUrl = '/api';
 
   constructor(private _http: HttpClient, private _router: Router) {}
   //*************** register employee and student ***************/

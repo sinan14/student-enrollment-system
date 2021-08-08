@@ -18,8 +18,8 @@ import { NgLocaleLocalization } from '@angular/common';
   styleUrls: ['./student-payment.component.css'],
 })
 export class StudentPaymentComponent implements OnInit {
-  backendUrl = 'http://localhost:3000';
-  // backendUrl = '/api';
+  // backendUrl = 'http://localhost:3000';
+  backendUrl = '/api';
 
   paymentForm: FormGroup;
   cardReg = /\b(?:\d[ -]*?){13,16}\b/;

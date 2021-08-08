@@ -17,8 +17,8 @@ import { ɵangular_packages_platform_browser_platform_browser_m } from '@angular
   styleUrls: ['./student-profile.component.css'],
 })
 export class StudentProfileComponent implements OnInit {
-  backendUrl = 'http://localhost:3000'
-  // backendUrl ='/api';
+  // backendUrl = 'http://localhost:3000'
+  backendUrl ='/api';
 
   isLoading: boolean;
   phoneReg = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;

@@ -12,8 +12,8 @@ import { EmployeeService } from '../employee.service';
   styleUrls: ['./emp-profile.component.css'],
 })
 export class EmpProfileComponent implements OnInit {
-  backendUrl = 'http://localhost:3000'
-  // backendUrl ='/api';
+  // backendUrl = 'http://localhost:3000'
+  backendUrl ='/api';
 
   id: string;
   isLoading: boolean = false;

@@ -13,8 +13,8 @@ import { tap } from 'rxjs/operators';
 })
 export class AllStudentsComponent implements OnInit {
   isLoading: boolean = false;
-  // backendUrl ='/api';
-  backendUrl = 'http://localhost:3000';
+  backendUrl = '/api';
+  // backendUrl = 'http://localhost:3000';
 
   Students = [
     {
