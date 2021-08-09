@@ -1,17 +1,18 @@
+
 <section id="section">
   <div></div>
   <div id="heading">welcome {{ Student.Name }} complete your registration</div>
   <div class="row">
     <div class="col-75">
       <div class="container">
-        <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()">
+        <form [formGroup]="paymentForm" (ngSubmit)="updateProfile()">
           <div class="row">
             <div class="col-50">
               <h3>Billing Address</h3>
               <label for="fname"><i class="fa fa-user"></i> Full Name</label>
               <span class="help-block" *ngIf="isValid('billName')"
-                    >Name cannot be blank</span
-                  >
+                >Name cannot be blank</span
+              >
               <input
                 type="text"
                 id="fname"
@@ -19,12 +20,12 @@
                 formControlName="billName"
                 placeholder="name"
               />
-              
+
               <label for="email"><i class="fa fa-envelope"></i> Email</label>
 
               <span class="help-block" *ngIf="isValid('email')"
-              >Enter valid Email</span
-            >
+                >Enter valid Email</span
+              >
 
               <input
                 type="text"
@@ -38,8 +39,8 @@
               >
 
               <span class="help-block" *ngIf="isValid('address')"
-              >Address cannot be blank</span
-            >
+                >Address cannot be blank</span
+              >
               <input
                 type="text"
                 id="adr"
@@ -49,8 +50,8 @@
               />
               <label for="city"><i class="fa fa-institution"></i> City</label>
               <span class="help-block" *ngIf="isValid('district')"
-              >district cannot be blank</span
-            >
+                >district cannot be blank</span
+              >
 
               <input
                 type="text"
@@ -63,8 +64,8 @@
               <div class="row">
                 <div class="col-50">
                   <span class="help-block" *ngIf="isValid('state')"
-                  >State cannot be blank</span
-                >
+                    >State cannot be blank</span
+                  >
 
                   <label for="state">State</label>
                   <input
@@ -77,9 +78,8 @@
                 </div>
                 <div class="col-50">
                   <span class="help-block" *ngIf="isValid('zip')"
-                  >zip cannot be blank</span
-                >
-
+                    >zip cannot be blank</span
+                  >
 
                   <label for="zip">Zip</label>
                   <input
@@ -93,6 +93,11 @@
                 </div>
               </div>
             </div>
+            <!-- loading spinner -->
+
+            <div *ngIf="isLoading" style="text-align: center">
+              <app-loading-spinner></app-loading-spinner>
+            </div>
 
             <div class="col-50">
               <h3>Payment</h3>
@@ -105,8 +110,8 @@
               </div>
               <label for="cname">Name on Card</label>
               <span class="help-block" *ngIf="isValid('name')"
-              >Name cannot be blank</span
-            >
+                >Name cannot be blank</span
+              >
               <input
                 type="text"
                 id="cname"
@@ -116,8 +121,8 @@
               />
               <label for="ccnum">Credit card number</label>
               <span class="help-block" *ngIf="isValid('cardnumber')"
-              >Use Valid Credit Card</span
-            >
+                >Use Valid Credit Card</span
+              >
               <input
                 type="text"
                 formControlName="cardnumber"
@@ -128,8 +133,8 @@
               <label for="expmonth">Exp Month</label>
 
               <span class="help-block" *ngIf="isValid('month')"
-              >invalid month</span
-            >
+                >invalid month</span
+              >
               <input
                 type="number"
                 id="expmonth"
@@ -142,8 +147,8 @@
               <div class="row">
                 <div class="col-50">
                   <span class="help-block" *ngIf="isValid('year')"
-                  >invalid year</span
-                >
+                    >invalid year</span
+                  >
                   <label for="expyear">Exp Year</label>
                   <input
                     min="2022"
@@ -157,8 +162,8 @@
                 </div>
                 <div class="col-50">
                   <span class="help-block" *ngIf="isValid('cvv')"
-                  >invalid CVV</span
-                >
+                    >invalid CVV</span
+                  >
                   <label for="cvv">CVV</label>
                   <input
                     type="number"
@@ -175,24 +180,17 @@
           </div>
 
           <button
-            type="submit"
             *ngIf="
               (Student.EmploymentStatus == 'Unemployed' &&
                 Student.Sex == 'Male') ||
               Student.EmploymentStatus == 'Employed'
             "
-            (click)="updateProfile()"
             class="btn"
           >
             procced to pay {{ fee }}
           </button>
 
-          <button
-            *ngIf="Student.EmploymentStatus == 'Student'"
-            type="submit"
-            (click)="updateProfile()"
-            class="btn"
-          >
+          <button *ngIf="Student.EmploymentStatus == 'Student'" class="btn">
             procced to pay {{ studentFee }}
           </button>
 
@@ -201,8 +199,6 @@
               Student.EmploymentStatus == 'Unemployed' &&
               Student.Sex == 'Female'
             "
-            type="submit"
-            (click)="updateProfile()"
             class="btn"
           >
             procced to pay {{ womenFee }}
