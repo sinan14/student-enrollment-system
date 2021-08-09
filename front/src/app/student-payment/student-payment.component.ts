@@ -18,8 +18,9 @@ import { NgLocaleLocalization } from '@angular/common';
   styleUrls: ['./student-payment.component.css'],
 })
 export class StudentPaymentComponent implements OnInit {
-  // backendUrl = 'http://localhost:3000';
-  backendUrl = '/api';
+  backendUrl = 'http://localhost:3000';
+//   backendUrl = '/api';
+  isLoading: boolean = false;
 
   paymentForm: FormGroup;
   cardReg = /\b(?:\d[ -]*?){13,16}\b/;
@@ -33,12 +34,6 @@ export class StudentPaymentComponent implements OnInit {
     );
   }
 
-  onSubmit() {
-    if (!this.paymentForm.valid) {
-      // console.log(this.paymentForm.value);
-      return;
-    }
-  }
 
   //****************************************** */
   id: string;
@@ -86,21 +81,25 @@ export class StudentPaymentComponent implements OnInit {
     });
   }
   updateProfile() {
+    this.isLoading = true;
     if (this.paymentForm.invalid) {
-      // Swal.fire({
-      //   title: '🤦‍♂️🤦‍♂️🤦‍♂️danger!!',
-      //   timer: 1000,
-      //   showConfirmButton: false,
-      //   text: 'invalid credit card and details',
-      //   icon: 'error',
-      // });
-      console.log(this.paymentForm.value);
+      Swal.fire({
+        title: '🤦‍♂️🤦‍♂️🤦‍♂️danger!!',
+        timer: 1000,
+        showConfirmButton: false,
+        text: 'invalid credit card and details',
+        icon: 'error',
+      });
+      // console.log(this.paymentForm.value);
       // window.location.reload();
+      this.isLoading=false;
       return;
     }
     this.editProfile(this.Student).subscribe(
       (response) => {
+        this.isLoading = false;
         if (response) {
+          this.isLoading = false;
           Swal.fire({
             title: 'Good Job✌✌✌',
             icon: 'success',
@@ -111,6 +110,7 @@ export class StudentPaymentComponent implements OnInit {
             this._router.navigate(['/login']);
           });
         } else {
+          this.isLoading = false;
           Swal.fire({
             title: '🤦‍♂️🤦‍♂️error',
             icon: 'error',
@@ -119,6 +119,8 @@ export class StudentPaymentComponent implements OnInit {
         }
       },
       (errorMessage) => {
+        this.isLoading =false;
+
         Swal.fire({
           title: '🤦‍♂️🤦‍♂️🤦‍♂️danger!!',
           timer: 1000,
@@ -132,12 +134,16 @@ export class StudentPaymentComponent implements OnInit {
 
   ngOnInit(): void {
     //fetching student
+    this.isLoading = true;
     this.id = this._activatedRoute.snapshot.params['_id'];
     this._StudentService.fetchStudent(this.id).subscribe(
       (studentData: any) => {
+        this.isLoading = false;
         if (studentData.error) {
+          this.isLoading = false;
           this._router.navigate(['/error'], { state: studentData });
         }
+        this.isLoading = false;
         this.Student = JSON.parse(JSON.stringify(studentData));
         this.fee = this.courseFee[this.Student.Course];
         this.elevatedFee = this.fee * (10 / 100) + this.fee;
@@ -194,6 +200,7 @@ export class StudentPaymentComponent implements OnInit {
         });
       },
       (errorMessage) => {
+        this.isLoading = false;
         Swal.fire({
           title: '🤦‍♂️🤦‍♂️🤦‍♂️danger!!',
           text: 'some internal error',
@@ -206,3 +213,4 @@ export class StudentPaymentComponent implements OnInit {
     //****************************form */
   }
 }
+
