@@ -13,8 +13,6 @@ import { tap } from 'rxjs/operators';
 })
 export class AllStudentsComponent implements OnInit {
   isLoading: boolean = false;
-  backendUrl = '/api';
-  // backendUrl = 'http://localhost:3000';
 
   Students = [
     {
@@ -69,12 +67,22 @@ export class AllStudentsComponent implements OnInit {
   onApprove(id, Course, Email) {
     this.isLoading = true;
     forkJoin([
-      this._http.post(`${this.backendUrl}/students/${id}/approve`, {
-        Student: { Email: `${Email}`, Course: `${Course}` },
-      }),
-      this._http.put(`${this.backendUrl}/students/${id}`, {
-        Student: { ApprovalDate: new Date(), Status: `payment remaining` },
-      }),
+      this._studentService.approvalMail(id, Course, Email),
+
+      this._studentService.editStudent(
+        {
+          ApprovalDate: new Date(),
+          Status: 'payment remaining',
+        },
+        id
+      ),
+
+      // this._http.post(`${this.backendUrl}/students/${id}/approve`, {
+      //   Student: { Email: `${Email}`, Course: `${Course}` },
+      // }),
+      // this._http.put(`${this.backendUrl}/students/${id}`, {
+      //   Student: { ApprovalDate: new Date(), Status: `payment remaining` },
+      // }),
     ])
       .pipe(tap(console.log))
       .subscribe(

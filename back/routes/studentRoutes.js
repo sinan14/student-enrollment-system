@@ -133,7 +133,7 @@ router.put(
   wrapAsync(async (req, res) => {
     const { id } = req.params;
     // console.log(id);
-    // console.log(req.body.Student);
+    console.log(req.body.Student);
     const Student = await StudentData.findByIdAndUpdate(id, {
       ...req.body.Student,
     });
@@ -195,7 +195,7 @@ router.post(
   wrapAsync(async (req, res) => {
     const { id } = req.params;
     const { Email, Course } = req.body.Student;
-    // console.log(id);
+    console.log(req.body.Student);
     const awsLink = "http://ec2-18-219-147-180.us-east-2.compute.amazonaws.com";
 
     const link = `${awsLink}/students/${id}/pay`;
@@ -216,18 +216,18 @@ router.post(
       subject: `You Selected`,
 
       html: `<p>you are receiving this email because ictak approved your request</p>
-      <p></p>
-      <p>for joining the course ${Course}</p><p></p>
+      <br />
+      <p>for joining the course ${Course}</p><br />
       <p>To complete the registration process Please click on the following link to pay the tution fee for the program</p>
-      <p></p>
+      <br />
       <p><b><a href="${link}">${link}</a></b></p>`,
     };
     transporter.sendMail(mailOptions, (err, response) => {
       if (err) {
-        console.log("there is an error", err);
+        // console.log("there is an error", err);
         return res.send({ status: false });
       } else {
-        console.log("here is the res", response);
+        // console.log("here is the res", response);
         return res.send({ status: true });
       }
     });
@@ -255,16 +255,17 @@ router.post(
       from: "projectjads@gmail.com",
       to: `${Email}`,
       subject: `Application Rejected`,
-      text: `you are receiving this email because ictak rejected\n\nyour 
-        request for joining the 
-        Course ${Course} due to lack of clarification of details on application`,
+      html: `<p>you are receiving this email because ictak rejected your request</p>
+      <br />
+      <p>for joining the Course ${Course} due to lack of clarification of details on application
+      </p> `,
     };
     transporter.sendMail(mailOptions, (err, response) => {
       if (err) {
         // console.log("there is an error", err);
         return res.send(false);
       } else {
-        console.log("here is the res", response);
+        // console.log("here is the res", response);
         return res.send(true);
       }
     });
@@ -287,15 +288,15 @@ router.put(
     });
     const { id } = req.params;
     const { Course, Status, Email, PaymentDate } = req.body.Student;
-    console.log(Status);
+    // console.log(Status);
     const studentPass = `1@${password}`;
 
     const firstrow = Course.slice(0, 4).toLowerCase();
     const first = firstrow.charAt(0).toUpperCase() + firstrow.slice(1);
     const suid = `${first}${uuid}`;
-    console.log(suid);
-    console.log(Email);
-    console.log(`your password is        ${studentPass}`);
+    // console.log(suid);
+    // console.log(Email);
+    // console.log(`your password is        ${studentPass}`);
     const student = await StudentData.findByIdAndUpdate(
       { _id: id },
       {
@@ -328,22 +329,22 @@ router.put(
         subject: `payment received`,
 
         html: `<p>you are receiving this email because ictak received the payment done by you for the course${Course}</p>
-              <p></p>
+              <br />
               <p>now you can login to our site for details and to see your profile by using </p>
-              <p></p>
+              <br />
               <p>password : <strong><b><em>${studentPass}</em></b></strong></p>
-              <p></p>
+              <br />
               <p>your student id is : <b><em>${suid}</em></b></p>
-              <p></p>
+              <br />
               <p>you can also reset your password in your profile too</p>`,
       };
       transporter.sendMail(mailOptions, (err, response) => {
         if (err) {
-          console.log("there is an error", err);
+          // console.log("there is an error", err);
           return res.send(false);
         } else {
           // console.log("here is the res", response);
-          console.log(student);
+          // console.log(student);
           return res.send(true);
         }
       });

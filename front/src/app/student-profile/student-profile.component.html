@@ -21,7 +21,7 @@
                 *ngIf="changePhoto"
                 class="mb-3"
                 [formGroup]="photoUpdateForm"
-                (ngSubmit)="addPic()"
+                (ngSubmit)="onImageUpload()"
               >
                 <div class="mb-3">
                   <div class="form-file custom-file">
@@ -74,7 +74,10 @@
               <app-loading-spinner></app-loading-spinner>
             </div>
             <!-- <form (ngSubmit)="updateProfile()"> -->
-            <form [formGroup]="studentUpdateForm" (ngSubmit)="updateStudent()">
+            <form
+              [formGroup]="studentUpdateForm"
+              (ngSubmit)="onUpdateStudent()"
+            >
               <div class="card-body pt-0">
                 <table class="table table-responsive">
                   <tr>
@@ -396,7 +399,7 @@
                     </td>
                   </tr>
                   <!-- exitExamMark -->
-                  <tr *ngIf="_auth.getUser()=='admin'">
+                  <tr *ngIf="_auth.getUser() == 'admin'">
                     <th width="30%">Exit Exam Mark</th>
                     <td width="2%">:</td>
                     <td *ngIf="readonly">
@@ -446,7 +449,7 @@
                     </td>
                   </tr>
                 </table>
-                
+
                 <div *ngIf="readonly && Student.ApprovalDate != ''">
                   <button
                     *ngIf="showEditButton"
@@ -481,19 +484,17 @@
               </div>
             </form>
             <!-- fdafafaf -->
-            <div *ngIf="_auth.getUser()=='admin'" >
-              <button *ngIf="Student.ApprovalDate ==''"
-                (click)="
-                  onApprove(Student._id, Student.Course, Student.Email)
-                "
+            <div *ngIf="_auth.getUser() == 'admin'">
+              <button
+                *ngIf="Student.ApprovalDate == ''"
+                (click)="onApprove(Student._id, Student.Course, Student.Email)"
                 class="btn btn-sm btn-success"
               >
                 Approve
               </button>
-              <button  *ngIf="Student.ApprovalDate == ''"
-                (click)="
-                  onReject(Student._id, Student.Course, Student.Email)
-                "
+              <button
+                *ngIf="Student.ApprovalDate == ''"
+                (click)="onReject(Student._id, Student.Course, Student.Email)"
                 class="btn btn-sm btn-danger"
               >
                 reject

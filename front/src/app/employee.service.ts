@@ -7,7 +7,7 @@ import Swal from 'sweetalert2';
   providedIn: 'root',
 })
 export class EmployeeService {
-  // backendUrl = 'http://localhost:3000'
+  // backendUrl = 'http://localhost:3000';
   backendUrl = '/api';
 
   constructor(private _http: HttpClient, private _router: Router) {}
@@ -20,19 +20,10 @@ export class EmployeeService {
   }
 
   deleteEmployee(id: any) {
-    return this._http.delete(`${this.backendUrl}/employee/` + id).subscribe(
-      (studentData) => {
-        this._router.navigate([`/employee`]);
-      },
-      (errorMessage) => {
-        Swal.fire('danger!!', 'some internal error', 'error').then(
-          (refresh) => {}
-        );
-      }
-    );
+    return this._http.delete(`${this.backendUrl}/employee/` + id);
   }
-  editEmployee(Employee: any, id) {
+  editEmployee(changedDetails: any, id:any) {
     console.log('client update');
-    return this._http.put(`${this.backendUrl}/employee/${id}`, { Employee });
+    return this._http.put(`${this.backendUrl}/employee/${id}`, changedDetails);
   }
 }

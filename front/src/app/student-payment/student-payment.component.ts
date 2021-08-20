@@ -18,8 +18,6 @@ import { NgLocaleLocalization } from '@angular/common';
   styleUrls: ['./student-payment.component.css'],
 })
 export class StudentPaymentComponent implements OnInit {
-  backendUrl = 'http://localhost:3000';
-//   backendUrl = '/api';
   isLoading: boolean = false;
 
   paymentForm: FormGroup;
@@ -33,8 +31,6 @@ export class StudentPaymentComponent implements OnInit {
       this.paymentForm.get(controlName).touched
     );
   }
-
-
   //****************************************** */
   id: string;
   fee: number;
@@ -64,23 +60,13 @@ export class StudentPaymentComponent implements OnInit {
     PaymentDate: new Date(),
   };
   constructor(
-    private _StudentService: StudentServiceService,
+    private _studentService: StudentServiceService,
     private _router: Router,
     private _http: HttpClient,
     private _activatedRoute: ActivatedRoute
   ) {}
 
-  editProfile(studentPaymentInfo) {
-    return this._http.put(`${this.backendUrl}/students/${this.id}/pay`, {
-      Student: {
-        Course: `${this.Student.Course}`,
-        Email: `${this.Student.Email}`,
-        Status: 'Active',
-        PaymentDate: new Date(),
-      },
-    });
-  }
-  updateProfile() {
+  onPayment() {
     this.isLoading = true;
     if (this.paymentForm.invalid) {
       Swal.fire({
@@ -92,10 +78,10 @@ export class StudentPaymentComponent implements OnInit {
       });
       // console.log(this.paymentForm.value);
       // window.location.reload();
-      this.isLoading=false;
+      this.isLoading = false;
       return;
     }
-    this.editProfile(this.Student).subscribe(
+    this._studentService.onPayment(this.Student).subscribe(
       (response) => {
         this.isLoading = false;
         if (response) {
@@ -119,7 +105,7 @@ export class StudentPaymentComponent implements OnInit {
         }
       },
       (errorMessage) => {
-        this.isLoading =false;
+        this.isLoading = false;
 
         Swal.fire({
           title: '🤦‍♂️🤦‍♂️🤦‍♂️danger!!',
@@ -136,7 +122,7 @@ export class StudentPaymentComponent implements OnInit {
     //fetching student
     this.isLoading = true;
     this.id = this._activatedRoute.snapshot.params['_id'];
-    this._StudentService.fetchStudent(this.id).subscribe(
+    this._studentService.fetchStudent(this.id).subscribe(
       (studentData: any) => {
         this.isLoading = false;
         if (studentData.error) {
@@ -149,7 +135,7 @@ export class StudentPaymentComponent implements OnInit {
         this.elevatedFee = this.fee * (10 / 100) + this.fee;
         this.studentFee = this.fee / 2;
         this.womenFee = this.fee / 2;
-        // console.log(this.Student);
+        //
         this.paymentForm = new FormGroup({
           billName: new FormControl(null, [Validators.required]),
           email: new FormControl(null, [
@@ -213,4 +199,3 @@ export class StudentPaymentComponent implements OnInit {
     //****************************form */
   }
 }
-

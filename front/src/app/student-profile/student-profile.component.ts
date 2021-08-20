@@ -17,9 +17,6 @@ import { ɵangular_packages_platform_browser_platform_browser_m } from '@angular
   styleUrls: ['./student-profile.component.css'],
 })
 export class StudentProfileComponent implements OnInit {
-  // backendUrl = 'http://localhost:3000'
-  backendUrl ='/api';
-
   isLoading: boolean;
   phoneReg = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
   passwordReg =
@@ -41,9 +38,6 @@ export class StudentProfileComponent implements OnInit {
   discard(): void {
     this.readonly = !this.readonly;
     this.ngOnInit();
-  }
-  deleteProfile() {
-    this._studentService.destroyStudent(this.Student._id);
   }
 
   studentUpdateForm: FormGroup;
@@ -165,15 +159,8 @@ export class StudentProfileComponent implements OnInit {
   }
 
   //*************************************************** */
-  editProfile(item: any) {
-    return this._http.put(
-      `${this.backendUrl}/students/${this.Student._id}`,
-      {
-        Student: item,
-      }
-    );
-  }
-  updateStudent() {
+
+  onUpdateStudent() {
     if (this.studentUpdateForm.invalid) {
       Swal.fire({
         title: 'inalid',
@@ -236,20 +223,11 @@ export class StudentProfileComponent implements OnInit {
   photoUpdateForm: FormGroup = new FormGroup({
     img: new FormControl(''),
   });
-
-  uploadPic(pic: any) {
-    console.log(pic);
-    return this._http.put(
-      `${this.backendUrl}/students/${this.Student._id}/profilepic`,
-      pic
-    );
-  }
-
-  async addPic() {
+  async onImageUpload() {
     this.isLoading = true;
     const formData = new FormData();
     formData.append('img', this.photoUpdateForm.get('img')!.value);
-    await this.uploadPic(formData).subscribe(
+    await this._studentService.uploadPic(formData, this.Student._id).subscribe(
       (res: any) => {
         this.isLoading = false;
         if (res.status) {
@@ -293,17 +271,19 @@ export class StudentProfileComponent implements OnInit {
     return window.btoa(binary);
   }
 
-  //************************************************************ */
+  //**************************    on approve   ************************************** */
 
   onApprove(id, Course, Email) {
     this.isLoading = true;
     forkJoin([
-      this._http.post(`${this.backendUrl}/students/${id}/approve`, {
-        Student: { Email: `${Email}`, Course: `${Course}` },
-      }),
-      this._http.put(`${this.backendUrl}/students/${id}`, {
-        Student: { ApprovalDate: new Date(), Status: 'payment remaining' },
-      }),
+      this._studentService.approvalMail(id, Course, Email),
+
+      this._studentService.editStudent(
+        {
+          Student: { ApprovalDate: new Date(), Status: 'payment remaining' },
+        },
+        id
+      ),
     ])
       .pipe(tap(console.log))
       .subscribe(
@@ -322,14 +302,12 @@ export class StudentProfileComponent implements OnInit {
         }
       );
   }
-  //************************************************************ */
+  //********************************    on reject     **************************** */
   onReject(id, Course, Email) {
     this.isLoading = true;
     forkJoin([
-      this._http.post(`${this.backendUrl}/students/${id}/reject/`, {
-        Student: { Email: `${Email}`, Course: `${Course}` },
-      }),
-      this._http.delete(`${this.backendUrl}/students/${id}`),
+      this._studentService.rejectionMail(id, Course, Email),
+      this._studentService.deleteStudent(id),
     ])
       .pipe(tap(console.log))
       .subscribe(
@@ -357,5 +335,22 @@ export class StudentProfileComponent implements OnInit {
         }
       );
   }
+
   //************************************************* */
+  deleteProfile() {
+    this._studentService.deleteStudent(this.Student._id).subscribe(
+      (StudentData) => {
+        this.isLoading = false;
+        this._router.navigate([`/s`]);
+      },
+      (errorMessage) => {
+        this.isLoading = false;
+        Swal.fire('danger!!', 'some internal error', 'error').then(
+          (refresh) => {
+            this._router.navigate(['/']);
+          }
+        );
+      }
+    );
+  }
 }
